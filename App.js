@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 import Homescreen from './Components/homescreen';
+import Login from './Components/login/Login';
 
 export default function App() {
   const [text, setText] = React.useState(false);
@@ -13,8 +14,9 @@ export default function App() {
   const textTrue = 'its true';
   
   return (
-    <Homescreen/>
-    
+    // <Homescreen/>
+    <Login/>
+
     // <View style={styles.container}>
     //   <Text onPress={()=> {
     //     setText(!text);
