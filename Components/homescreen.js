@@ -3,29 +3,38 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   SafeAreaView,
   TouchableHighlight,
-  Button,
-  Alert,
-  Platform,
-  StatusBar,
-  Dimensions,
+
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 export default function Homescreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{top: 100}}>
+      <View style={{ top: 100 }}>
         <Entypo name="scissors" size={200} color="#ED3B5B" />
-        <Text style={{ fontSize: 45, color: "#ED3B5B" , textAlign: "center", fontWeight: "bold"}}>divvy</Text>
+        <Text
+          style={{
+            fontSize: 45,
+            color: "#ED3B5B",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          divvy
+        </Text>
       </View>
 
-      <View style={{width: "100%", flex: 1,  alignItems: 'center',
-    justifyContent: 'center', top: 100}}>
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          top: 100,
+        }}
+      >
         <TouchableHighlight
           style={{ width: "90%", backgroundColor: "#ED3B5B", borderRadius: 45 }}
         >
@@ -71,8 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "100%"
+    height: "100%",
   },
-
-
 });
