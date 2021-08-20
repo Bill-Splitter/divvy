@@ -4,8 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 
-import Homescreen from './Components/homescreen';
-import Login from './Components/login/Login';
+// import Homescreen from './Components/homescreen';
+// import Login from './Components/login/Login';
+import ProfilePage from './Client/Components/Camera'
 
 export default function App() {
   const [text, setText] = React.useState(false);
@@ -15,7 +16,7 @@ export default function App() {
   
   return (
     // <Homescreen/>
-    <Login/>
+    <ProfilePage></ProfilePage>
 
     // <View style={styles.container}>
     //   <Text onPress={()=> {
