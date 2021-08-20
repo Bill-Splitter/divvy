@@ -2,6 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+
+
+import Homescreen from './Components/homescreen';
+import Login from './Components/login/Login';
+
 export default function App() {
   const [text, setText] = React.useState(false);
   const [count, setCount] = React.useState(0);
@@ -9,17 +14,20 @@ export default function App() {
   const textTrue = 'its true';
   
   return (
-    <View style={styles.container}>
-      <Text onPress={()=> {
-        setText(!text);
-        setCount(count + 1);
-      }}>{text ? 
-        <Text style={styles.textTrue}>{textTrue}</Text> 
-        : 
-        <Text style={styles.textFalse}>{textFalse}</Text>
-      } + times pressed: {count}</Text>
-      <StatusBar style="auto" />
-    </View>
+    // <Homescreen/>
+    <Login/>
+
+    // <View style={styles.container}>
+    //   <Text onPress={()=> {
+    //     setText(!text);
+    //     setCount(count + 1);
+    //   }}>{text ? 
+    //     <Text style={styles.textTrue}>{textTrue}</Text> 
+    //     : 
+    //     <Text style={styles.textFalse}>{textFalse}</Text>
+    //   } + times pressed: {count}</Text>
+    //   <StatusBar style="auto" />
+    // </View>
   );
 }
 
