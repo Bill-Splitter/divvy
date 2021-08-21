@@ -19,12 +19,9 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
-
-
-export default function Login() {
-
+export default function Signup() {
   return (
-    <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%"  }}>
+    <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%", paddingTop: 25}}>
       <Banner></Banner>
       <View
         style={{
@@ -46,11 +43,12 @@ export default function Login() {
             width: "80%",
           }}
         >
-          Login
+          Signup
         </Text>
         <TextInput placeholder="username" style={styles.input}></TextInput>
+        <TextInput placeholder="email" style={styles.input}></TextInput>
+        <TextInput placeholder="phone number" style={styles.input}></TextInput>
         <TextInput placeholder="password" style={styles.input}></TextInput>
-
         <TouchableHighlight
           style={{ width: "50%", backgroundColor: "#ED3B5B", borderRadius: 45, marginTop: 20 }}
 
@@ -66,7 +64,6 @@ export default function Login() {
             Login
           </Text>
         </TouchableHighlight>
-
       </View>
     </SafeAreaView>
   );

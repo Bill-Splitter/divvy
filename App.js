@@ -1,50 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import Homescreen from "./client/Components/Homescreen.js";
+import Signup from "./client/Components/login/Signup.js";
+import Login from "./client/Components/login/Login.js";
+import Banner from "./client/Components/login/Banner.js";
 
+import ProfilePage from "./client/Components/ProfilePage.js";
 
-// import Homescreen from './Components/homescreen';
-// import Login from './Components/login/Login';
-import ProfilePage from './Client/Components/Camera'
+const AuthStack = createNativeStackNavigator();
+//const HomeStack = createNativeStackNavigator()
 
 export default function App() {
-  const [text, setText] = React.useState(false);
-  const [count, setCount] = React.useState(0);
-  const textFalse = 'its false';
-  const textTrue = 'its true';
-  
   return (
-    // <Homescreen/>
-    <ProfilePage></ProfilePage>
-
-    // <View style={styles.container}>
-    //   <Text onPress={()=> {
-    //     setText(!text);
-    //     setCount(count + 1);
-    //   }}>{text ? 
-    //     <Text style={styles.textTrue}>{textTrue}</Text> 
-    //     : 
-    //     <Text style={styles.textFalse}>{textFalse}</Text>
-    //   } + times pressed: {count}</Text>
-    //   <StatusBar style="auto" />
-    // </View>
+    <NavigationContainer>
+      <AuthStack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <AuthStack.Screen name="Homescreen" component={Homescreen} />
+        <AuthStack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: "Login" }}
+        />
+        <AuthStack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ title: "Sign Up" }}
+        />
+             <AuthStack.Screen
+          name="Banner"
+          component={Banner}
+        />
+      </AuthStack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textTrue: {
-    fontSize: 20,
-    backgroundColor: 'purple',
-  },
-  textFalse: {
-    fontSize: 30,
-    backgroundColor: 'orange',
-  }
-});

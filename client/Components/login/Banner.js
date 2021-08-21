@@ -17,12 +17,20 @@ import {
   Header,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Banner() {
+  const navigation = useNavigation();
+
   return (
-    <View style={{ width: "100%", height: "20%", }}>
-      <View style={{ marginLeft: 10, padding: 5, }}>
-        <AntDesign name="left" size={24} color="#ED3B5B" />
+    <View style={{ width: "100%", height: "20%" }}>
+      <View style={{ marginLeft: 10, padding: 5 }}>
+        <AntDesign
+          name="left"
+          size={24}
+          color="#ED3B5B"
+          onPress={() => navigation.navigate("Homescreen")}
+        />
       </View>
       <View
         style={{

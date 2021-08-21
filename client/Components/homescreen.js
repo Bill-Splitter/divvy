@@ -5,11 +5,15 @@ import {
   View,
   SafeAreaView,
   TouchableHighlight,
+  Button
+  
 
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function Homescreen() {
+export default function Homescreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ top: 100 }}>
@@ -22,7 +26,7 @@ export default function Homescreen() {
             fontWeight: "bold",
           }}
         >
-          divvy
+          divvvvvy
         </Text>
       </View>
 
@@ -37,6 +41,7 @@ export default function Homescreen() {
       >
         <TouchableHighlight
           style={{ width: "90%", backgroundColor: "#ED3B5B", borderRadius: 45 }}
+          onPress={() => navigation.navigate("Login")}
         >
           <Text
             style={{
@@ -50,6 +55,7 @@ export default function Homescreen() {
           </Text>
         </TouchableHighlight>
         <TouchableHighlight
+          onPress={() => navigation.navigate("Signup")}
           style={{
             width: "90%",
             borderRadius: 45,
@@ -69,6 +75,7 @@ export default function Homescreen() {
             Sign Up
           </Text>
         </TouchableHighlight>
+
       </View>
     </SafeAreaView>
   );
