@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+
 import {
   StyleSheet,
   Text,
@@ -11,20 +13,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { logout } from "../store";
 
-export default function profilePage() {
+const ProfilePage = (props) => {
+
   const navigation = useNavigation();
 
   const logout = () => {
-    //logic logic needed here
+    props.logout;
     navigation.navigate("Homescreen");
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ textAlign: "center" }}>
-        <Text style={styles.bigText}>Username</Text>
-        <Text style={styles.littleText}>Username@email.com</Text>
+        <Text style={styles.bigText}>{props.user.username}</Text>
+        <Text style={styles.littleText}>{props.user.email}</Text>
       </View>
       <View style={styles.borderBar}></View>
 
@@ -116,7 +120,15 @@ export default function profilePage() {
       </View>
     </SafeAreaView>
   );
-}
+};
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout()),
+});
+
+export default connect(mapStateToProps, null)(ProfilePage);
 
 const styles = StyleSheet.create({
   container: {

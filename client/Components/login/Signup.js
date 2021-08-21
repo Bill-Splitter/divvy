@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { signupThunk } from "../../store";
 import { connect } from "react-redux";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   StyleSheet,
@@ -15,6 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
 const Signup = (props) => {
+  const navigation = useNavigation();
   const [username, setUsername] = React.useState();
   const [email, setEmail] = React.useState();
   const [phone, setPhone] = React.useState();
@@ -26,15 +28,20 @@ const Signup = (props) => {
       alert("all fields must be filled");
     } else if (check !== password) {
       alert("passwords do not match");
+    } else if (!email.includes("@")) {
+      alert("not a valid email");
+    } else if (password.length < 4) {
+      alert("password must be at least four characters");
     } else {
       const data = {
         username: username,
         email: email,
         phone: phone,
         password: password,
+        phoneNumber: phone
       };
       props.signUp(data);
-      alert("signed up");
+      navigation.navigate("Home");
     }
   };
 

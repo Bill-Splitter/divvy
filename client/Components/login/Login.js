@@ -24,7 +24,6 @@ const Login = (props,) => {
       alert("all fields must be filled");
     } else {
       props.login(username, password);
-      alert("hi");
       navigation.navigate('Home')
     }
   };
