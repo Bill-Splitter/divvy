@@ -26,7 +26,8 @@ export const loginThunk = (username, password) => {
     try {
       console.log(username, password);
       const x = await instance.get('/api/users/login')
-      console.error(x)
+      console.log(x.data)
+      
 
       //axious get requiest
     } catch (error) {

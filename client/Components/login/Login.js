@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loginThunk } from "../../store";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   StyleSheet,
@@ -13,7 +14,8 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
-const Login = (props) => {
+const Login = (props,) => {
+  const navigation = useNavigation();
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
 
@@ -23,6 +25,7 @@ const Login = (props) => {
     } else {
       props.login(username, password);
       alert("hi");
+      navigation.navigate('Home')
     }
   };
 

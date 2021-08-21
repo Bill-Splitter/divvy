@@ -13,17 +13,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-
-router.get("/login", async (req,res,next) => {
-  try{
-    console.log('login route being hit')
-    res.json("hello")
-
+router.get("/login", async (req, res, next) => {
+  try {
+    console.log("login route being hit");
+    res.json("hello");
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-    next(err)
-  }
-})
+});
 /*
 router.get('/:userId', async (req, res, next) => {
   try {

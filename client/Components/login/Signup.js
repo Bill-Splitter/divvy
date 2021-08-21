@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { signupThunk } from "../../store";
 import { connect } from "react-redux";
+import { Entypo } from "@expo/vector-icons";
 
 import {
   StyleSheet,
@@ -32,9 +33,8 @@ const Signup = (props) => {
         phone: phone,
         password: password,
       };
-       props.signUp(data);
-       alert("signed up")
-
+      props.signUp(data);
+      alert("signed up");
     }
   };
 
@@ -42,6 +42,7 @@ const Signup = (props) => {
     <SafeAreaView style={styles.container}>
       <Banner></Banner>
       <View style={styles.form}>
+        <Entypo name="scissors" size={50} color="#ED3B5B" />
         <Text style={styles.formTitle}>Create a new account</Text>
         <TextInput
           placeholder="Username"
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -50,
+    marginTop: -100,
   },
 
   formTitle: {
