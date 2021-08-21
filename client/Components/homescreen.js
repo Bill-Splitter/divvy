@@ -26,7 +26,7 @@ export default function Homescreen({navigation}) {
             fontWeight: "bold",
           }}
         >
-          divvvvvy
+          divy
         </Text>
       </View>
 
