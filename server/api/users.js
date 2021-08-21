@@ -1,19 +1,29 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { User },
-} = require('../db');
+} = require("../db");
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
-  
+router.get("/", async (req, res, next) => {
   try {
-    const users = await User.findAll({include: 'friend'});
+    const users = await User.findAll({ include: "friend" });
     res.json(users);
   } catch (err) {
     next(err);
   }
 });
 
+
+router.get("/login", async (req,res,next) => {
+  try{
+    console.log('login route being hit')
+    res.json("hello")
+
+  }
+  catch(err){
+    next(err)
+  }
+})
 /*
 router.get('/:userId', async (req, res, next) => {
   try {

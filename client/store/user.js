@@ -1,4 +1,5 @@
 import axios from "axios";
+const instance = axios.create({baseURL: 'http://localhost:8080'})
 
 //action types
 const LOGIN = "LOGIN";
@@ -24,6 +25,8 @@ export const loginThunk = (username, password) => {
   return async (dispatch) => {
     try {
       console.log(username, password);
+      const x = await instance.get('/api/users/login')
+      console.error(x)
 
       //axious get requiest
     } catch (error) {

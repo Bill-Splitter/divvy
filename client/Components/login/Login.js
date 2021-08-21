@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { loginThunk } from "../../store";
-
 
 import {
   StyleSheet,
@@ -18,28 +17,27 @@ const Login = (props) => {
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
 
-
   const clickSubmit = () => {
-    if ( !username ||  !password) {
+    if (!username || !password) {
       alert("all fields must be filled");
-    } else{
-      props.login(username,password)
-      alert("hi")
+    } else {
+      props.login(username, password);
+      alert("hi");
     }
-  
-
-  }
+  };
 
   return (
     <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
       <Banner></Banner>
       <View style={styles.view}>
         <Text style={styles.loginText}>Login</Text>
-        <TextInput placeholder="username" 
+        <TextInput
+          placeholder="username"
           style={styles.input}
           value={username}
           maxLength={30}
-          onChangeText={(text) => setUsername(text)}></TextInput>
+          onChangeText={(text) => setUsername(text)}
+        ></TextInput>
 
         <TextInput
           placeholder="password"
@@ -59,18 +57,17 @@ const Login = (props) => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
-  user: state
+  user: state,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (username,password) => dispatch(loginThunk(username,password)),
-
+  login: (username, password) => dispatch(loginThunk(username, password)),
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   input: {
@@ -91,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: -50,
+    // marginTop: 200
   },
   loginText: {
     fontSize: 40,
