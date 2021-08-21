@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.08,
     color: "#ED3B5B",
-    backgroundColor: "lightgrey",
+    backgroundColor: "#ED3B5B",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
     height: "100%",
     height: 50,
     margin: 12,
@@ -68,12 +68,15 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 25,
-    color: "#ED3B5B",
+    color: "white",
     textAlign: "center",
   },
   thumbnail: {
     width: 300,
     height: 300,
     resizeMode: "contain",
+  },
+  button: {
+    width: "60%",
   },
 });

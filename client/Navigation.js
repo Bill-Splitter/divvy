@@ -7,6 +7,7 @@ import Settings from "./Components/Home/Settings.js";
 import Friends from "./Components/Home/Friends.js";
 import Messages from "./Components/Home/Messages.js";
 import Transactions from "./Components/Home/Transactions.js";
+import Cameras from "./Components/Home/Camera";
 
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -24,6 +25,7 @@ const Home = () => {
       }}
     >
       <HomeStack.Screen name="ProfilePage" component={ProfilePage} />
+      <HomeStack.Screen name="Camera" component={Cameras} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
       <HomeStack.Screen name="Transactions" component={Transactions} />

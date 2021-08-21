@@ -16,7 +16,6 @@ import { Entypo } from "@expo/vector-icons";
 import { logout } from "../store";
 
 const ProfilePage = (props) => {
-
   const navigation = useNavigation();
 
   const logout = () => {
@@ -35,7 +34,7 @@ const ProfilePage = (props) => {
       <View style={styles.listContainer}>
         <TouchableHighlight
           style={styles.listElementContainer}
-          onPress={() => navigation.navigate("Transactions")}
+          onPress={() => navigation.navigate("Camera")}
           underlayColor={"white"}
         >
           <View>

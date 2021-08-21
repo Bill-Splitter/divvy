@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { connect } from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -13,9 +14,11 @@ import {
 import { Camera } from "expo-camera";
 import { SafeAreaView } from "react-native";
 import ImagePicker from "./ImagePicker";
+import Banner2 from "./Banner2";
+import { sendPhotoThunk } from "../../store/bill";
 
 let camera: Camera;
-export default function App() {
+const Cameras = (props) => {
   // add to 'newsplit function at profile component
   const [startCamera, setStartCamera] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
@@ -39,11 +42,18 @@ export default function App() {
     const photo: any = await camera.takePictureAsync();
     console.log(photo);
     setPreviewVisible(true);
-    //setStartCamera(false)
     setCapturedImage(photo);
   };
 
-  const __savePhoto = () => {};
+  const __savePhoto = () => {
+    console.log(capturedImage, "this is the image!");
+    let image = capturedImage.uri;
+    props.sendPhoto(image);
+
+    //thunkcreater (image)
+    //axios. get ////api key image
+    //navigate - bill view
+  };
 
   const __retakePicture = () => {
     setCapturedImage(null);
@@ -61,21 +71,29 @@ export default function App() {
     }
   };
 
-  const __switchCamera = () => {
-    if (cameraType === "back") {
-      setCameraType("front");
-    } else {
-      setCameraType("back");
-    }
-  };
+  __startCamera();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView
+      style={{
+        backgroundColor: "#fff",
+        height: "100%",
+        justifyContent: "space-between",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Banner2 />
       {startCamera ? (
         <View
           style={{
             flex: 1,
             width: "100%",
+            height: "200%",
+            padding: 0,
+            marginTop: -100,
+            justifyContent: "space-between",
+            backgroundColor: "#fff",
           }}
         >
           {previewVisible && capturedImage ? (
@@ -86,7 +104,7 @@ export default function App() {
             />
           ) : (
             <Camera
-              type={cameraType}
+              type={"back"}
               flashMode={flashMode}
               style={{ flex: 1 }}
               ref={(r) => {
@@ -97,6 +115,7 @@ export default function App() {
                 style={{
                   flex: 1,
                   width: "100%",
+                  height: "100%",
                   backgroundColor: "transparent",
                   flexDirection: "row",
                 }}
@@ -124,24 +143,7 @@ export default function App() {
                         fontSize: 20,
                       }}
                     >
-                      ⚡️
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={__switchCamera}
-                    style={{
-                      marginTop: 20,
-                      borderRadius: "50%",
-                      height: 25,
-                      width: 25,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 20,
-                      }}
-                    >
-                      {cameraType === "front" ? "🤳" : "📷"}
+                      {/* ⚡️ */}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -181,52 +183,25 @@ export default function App() {
           <ImagePicker />
         </View>
       ) : (
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: "#fff",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            onPress={__startCamera}
-            style={{
-              width: 130,
-              borderRadius: 4,
-              backgroundColor: "#14274e",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              height: 40,
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            >
-              Press here to scan your Reciept
-            </Text>
-          </TouchableOpacity>
+        <View>
+          <Text> Camera Perms failed </Text>
         </View>
       )}
 
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+const mapStateToProps = (state) => ({
+  bill: state.bill,
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  sendPhoto: (photo) => dispatch(sendPhotoThunk(photo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cameras);
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
   console.log("sdsfds", photo);
