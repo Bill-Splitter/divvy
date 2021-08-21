@@ -28,8 +28,6 @@ const Home = () => {
       <HomeStack.Screen name="Friends" component={Friends} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
-
-
     </HomeStack.Navigator>
   );
 };

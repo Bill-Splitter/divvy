@@ -17,8 +17,8 @@ export default function profilePage() {
 
   const logout = () => {
     //logic logic needed here
-    navigation.navigate("Homescreen")
-  }
+    navigation.navigate("Homescreen");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -107,8 +107,10 @@ export default function profilePage() {
           paddingBottom: 20,
         }}
       >
-        <TouchableHighlight style={styles.submitButton}
-        onPress={() => logout()}>
+        <TouchableHighlight
+          style={styles.submitButton}
+          onPress={() => logout()}
+        >
           <Text style={styles.submitText}>Logout</Text>
         </TouchableHighlight>
       </View>
