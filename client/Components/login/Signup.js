@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { signupThunk } from "../../store";
+import { connect } from "react-redux";
 
 import {
   StyleSheet,
@@ -11,7 +13,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
-export default function Signup() {
+const Signup = (props) => {
   const [username, setUsername] = React.useState();
   const [email, setEmail] = React.useState();
   const [phone, setPhone] = React.useState();
@@ -24,7 +26,15 @@ export default function Signup() {
     } else if (check !== password) {
       alert("passwords do not match");
     } else {
-      alert("account made");
+      const data = {
+        username: username,
+        email: email,
+        phone: phone,
+        password: password,
+      };
+       props.signUp(data);
+       alert("signed up")
+
     }
   };
 
@@ -78,7 +88,17 @@ export default function Signup() {
       </View>
     </SafeAreaView>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  user: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  signUp: (data) => dispatch(signupThunk(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 const styles = StyleSheet.create({
   container: {

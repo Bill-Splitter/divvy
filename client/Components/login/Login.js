@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
+import { loginThunk } from "../../store";
+
 
 import {
   StyleSheet,
@@ -11,9 +14,21 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
-export default function Login() {
+const Login = (props) => {
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
+
+
+  const clickSubmit = () => {
+    if ( !username ||  !password) {
+      alert("all fields must be filled");
+    } else{
+      props.login(username,password)
+      alert("hi")
+    }
+  
+
+  }
 
   return (
     <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
@@ -37,7 +52,7 @@ export default function Login() {
 
         <TouchableHighlight
           style={styles.loginButton}
-          onPress={() => alert(`username: ${username} password: ${password}`)}
+          onPress={() => clickSubmit()}
         >
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableHighlight>
@@ -45,6 +60,17 @@ export default function Login() {
     </SafeAreaView>
   );
 }
+
+const mapStateToProps = (state) => ({
+  user: state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (username,password) => dispatch(loginThunk(username,password)),
+
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
 
 const styles = StyleSheet.create({
   input: {

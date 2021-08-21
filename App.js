@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./client/store/";
+import store from "./client/store/index.js";
 
 import NavigationCon from "./client/Navigation";
 
