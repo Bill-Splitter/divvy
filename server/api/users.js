@@ -26,7 +26,6 @@ router.get("/login", async (req, res, next) => {
       }
     })
     if(user) {
-      console.log(user)
       res.json(user)
     }else{
       res.json("invalid login")
@@ -40,7 +39,6 @@ router.get("/login", async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
-  console.log(req.body)
   try {
     res.status(201).send(await User.create(req.body.formData));
   }catch (error) {

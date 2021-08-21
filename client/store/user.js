@@ -50,9 +50,8 @@ export const signupThunk = (formData) => {
   return async (dispatch) => {
     try {
       const x = await instance.post("/api/users/", { formData });
-      const user = x.data
+      const user = x.data;
       dispatch(login(user));
-
 
       //axious post request
     } catch (error) {
@@ -65,7 +64,6 @@ export const signupThunk = (formData) => {
 export default function (state = {}, action) {
   switch (action.type) {
     case LOGIN:
-      console.log(action.user);
       return action.user;
     case LOGOUT:
       return {};
