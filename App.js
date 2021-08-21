@@ -9,6 +9,11 @@ import Signup from "./client/Components/login/Signup.js";
 import Login from "./client/Components/login/Login.js";
 import Banner from "./client/Components/login/Banner.js";
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+import store from "./client/store/";
+
 import ProfilePage from "./client/Components/ProfilePage.js";
 
 const AuthStack = createNativeStackNavigator();
@@ -16,28 +21,27 @@ const AuthStack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AuthStack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <AuthStack.Screen name="Homescreen" component={Homescreen} />
-        <AuthStack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: "Login" }}
-        />
-        <AuthStack.Screen
-          name="Signup"
-          component={Signup}
-          options={{ title: "Sign Up" }}
-        />
-             <AuthStack.Screen
-          name="Banner"
-          component={Banner}
-        />
-      </AuthStack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AuthStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <AuthStack.Screen name="Homescreen" component={Homescreen} />
+          <AuthStack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: "Login" }}
+          />
+          <AuthStack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ title: "Sign Up" }}
+          />
+          <AuthStack.Screen name="Banner" component={Banner} />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
