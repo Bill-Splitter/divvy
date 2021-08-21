@@ -1,56 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { loginThunk } from "../../store";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   SafeAreaView,
   TouchableHighlight,
-  Button,
-  Alert,
-  Platform,
-  StatusBar,
-  Dimensions,
   TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
+const Login = (props,) => {
+  const navigation = useNavigation();
+  const [username, setUsername] = React.useState();
+  const [password, setPassword] = React.useState();
 
-export default function Login() {
+  const clickSubmit = () => {
+    if (!username || !password) {
+      alert("all fields must be filled");
+    } else {
+      props.login(username, password);
+      navigation.navigate('Home')
+    }
+  };
+
   return (
-    <SafeAreaView style={{flex: 0}}>
-    <Banner></Banner>
-    <View style={{width: "100%", flex: 0, alignContent: 'center', textAlign: "left", justifyContent: 'center', alignItems: "center" }}>
-    <Text style={{fontSize: 40, color: '#ED3B5B', textAlign: "left", marginBottom: 20, width: "80%"}}>
-        Login
-    </Text>
-    <TextInput placeholder="username" style={styles.input}>
+    <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
+      <Banner></Banner>
+      <View style={styles.view}>
+        <Text style={styles.loginText}>Login</Text>
+        <TextInput
+          placeholder="username"
+          style={styles.input}
+          value={username}
+          maxLength={30}
+          onChangeText={(text) => setUsername(text)}
+        ></TextInput>
 
-    </TextInput>
-    <TextInput placeholder="password" style={styles.input}>
+        <TextInput
+          placeholder="password"
+          secureTextEntry={true}
+          style={styles.input}
+          value={password}
+          maxLength={30}
+          onChangeText={(text) => setPassword(text)}
+        ></TextInput>
 
-    </TextInput>
-
-    </View>
- 
-
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => clickSubmit()}
+        >
+          <Text style={styles.loginButtonText}>Login</Text>
+        </TouchableHighlight>
+      </View>
     </SafeAreaView>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  user: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (username, password) => dispatch(loginThunk(username, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
-    input: {
-      height: 50,
-      margin: 12,
-      borderWidth: 1,
-      borderColor: '#313359',
-      padding: 10,
-      width: "90%",
-      borderRadius: 999,
-      paddingLeft: 20
-    },
-  });
+  input: {
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    borderColor: "#313359",
+    padding: 10,
+    width: "90%",
+    borderRadius: 999,
+    paddingLeft: 20,
+  },
+  view: {
+    width: "100%",
+    flex: 0,
+    alignContent: "center",
+    textAlign: "left",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -50,
+    // marginTop: 200
+  },
+  loginText: {
+    fontSize: 40,
+    color: "#ED3B5B",
+    textAlign: "left",
+    marginBottom: 20,
+    width: "80%",
+  },
+
+  loginButton: {
+    width: "50%",
+    backgroundColor: "#ED3B5B",
+    borderRadius: 45,
+    marginTop: 20,
+  },
+
+  loginButtonText: {
+    fontSize: 25,
+    color: "white",
+    padding: 16,
+    textAlign: "center",
+  },
+});

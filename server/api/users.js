@@ -1,53 +1,47 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { User },
-} = require('../db');
+} = require("../db");
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
-  
+router.get("/", async (req, res, next) => {
   try {
-    const users = await User.findAll({include: 'friend'});
+    const users = await User.findAll({ include: "friend" });
     res.json(users);
   } catch (err) {
     next(err);
   }
 });
 
-/*
-router.get('/:userId', async (req, res, next) => {
+router.get("/login", async (req, res, next) => {
+  const userName = req.query.username
+  const password = req.query.password
+
   try {
-    const user = await User.findByPk(req.params.userId);
-    res.json(user);
+
+    let user = await User.findOne({
+      where: {
+        username: userName,
+        password: password,
+      }
+    })
+    if(user) {
+      res.json(user)
+    }else{
+      res.json("invalid login")
+    }
+   
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/:userId', requireToken, isAdmin, async (req, res, next) => {
-  try {
-    const userToDelete = await User.findByPk(req.params.userId);
-    await userToDelete.destroy();
-    res.sendStatus(204);
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.put('/:userId', requireToken, isAdmin, async (req, res, next) => {
-  try {
-    let user = await User.findByPk(req.params.userId);
-    res.json(await user.update(req.body));
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.post('/', requireToken, isAdmin, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    res.status(201).send(await User.create(req.body));
-  } catch (error) {
+    res.status(201).send(await User.create(req.body.formData));
+  }catch (error) {
     next(error);
   }
-});
-*/
+})

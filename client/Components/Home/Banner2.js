@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Banner() {
+export default function Banner2() {
   const navigation = useNavigation();
 
   return (
@@ -14,7 +14,7 @@ export default function Banner() {
           name="left"
           size={24}
           color="#ED3B5B"
-          onPress={() => navigation.navigate("Homescreen")}
+          onPress={() => navigation.goBack()}
         />
       </View>
       <View style={styles.spacer}>
