@@ -4,6 +4,11 @@ const db = require('./db');
 
 const User = require('./models/User');
 const Bill = require('./models/Bill');
+const Group = require('./models/Group');
+//const FriendRequest = require('./models/FriendRequest');
+
+
+
 
 //associations could go here!
 
@@ -15,13 +20,19 @@ Bill.belongsTo(User);
 Bill.belongsToMany(User, {as: 'owes', through: 'payee'});
 User.belongsToMany(Bill, {as: 'owed', through: 'payee'});
 
-//Users being friends with eachother
-//when we want to switch to fb style friends, add pending field to friendship model
+
 User.belongsToMany(User, {as: 'friend', through: 'friendship'});
+User.belongsToMany(User, {as: 'requestee', through: 'friendRequest'});
+
+
+User.belongsToMany(User, {as: 'friendGroup', through: Group});
+
+
+
 
 module.exports = {
   db,
   models: {
-    User, Bill
+    User, Bill, Group
   },
 };

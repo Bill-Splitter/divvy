@@ -6,7 +6,7 @@ module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
-    const users = await User.findAll({ include: "friend" });
+    const users = await User.findAll({ include: ["friend", "requestee", "friendGroup"] });
     res.json(users);
   } catch (err) {
     next(err);

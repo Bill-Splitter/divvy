@@ -17,7 +17,7 @@ export const sendPhotoThunk = (image) => {
   return async (dispatch) => {
     try {
       const data = await axios.get(
-        `https://api.ocr.space/parse/imageurl?apikey=${ApiKey}&url=https://thumbs.dreamstime.com/z/shop-receipt-template-vector-sticker-100021139.jpg`
+        `https://api.ocr.space/parse/imageurl?apikey=${ApiKey}&url=https://media-cdn.tripadvisor.com/media/photo-p/0e/54/47/43/receipt.jpg&isTable=true&OCREngine=2`
       );
 
       dispatch(setData(data.data));

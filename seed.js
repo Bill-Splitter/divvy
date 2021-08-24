@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Bill },
+  models: { User, Bill, FriendRequest },
 } = require('./server/db');
 
 //declaring user objects
@@ -31,13 +31,18 @@ const userSeed = [{
   email: 'jermey@gmail.com',
   phoneNumber: 2,
   password: '123',
+},{
+  username: 'Jacky',
+  email: 'jacky@gmail.com',
+  phoneNumber: 2,
+  password: '123',
 },];
 
 //declaring bill objects
 const billSeed = [
-  {parsedBill: '$100'},
-  {parsedBill: '$50'},
-  {parsedBill: '$ur fucked, this is the fbi'},
+  { total: 432.00, name: "Dinner with friends", type: "simple", completed: true},
+  { total: 324.49, type: 'complex', completed: false, name: "date with bff"},
+  { total: 3294.49, type: 'complex', completed: true, name: "date with gf"},
 ];
 
 
@@ -67,23 +72,42 @@ async function seed() {
   console.log(`seeded ${bills.length} bills`);
   console.log(`seeded successfully`);
   
+
+  //ADDING FRIENDS
   //jack is friends w jim & julian
   await users[0].addFriend([users[1], users[2]]);
-  
+  await users[1].addFriend(users[0]); //jim.friend(jack)
+  await users[2].addFriend(users[0]); //julian.friend(jack)
+
   //james is friends w jeremy
   await users[3].addFriend(users[4]);
+  await users[4].addFriend(users[3]);
   console.log(`set friends between users successfully`);
+
+
+  //CREATING FRIEND GROUPS
+  //added jim & julian to jack's friendGroup
+  await users[0].addFriendGroup([users[1], users[2]]);
+  console.log(`created friend users' friend groups successfully`);
+
+
+  //CREATING PENDING FRIEND REQUESTS
+  //jacky has friend requests from Jeremy & James
+  await users[5].addRequestee([users[4], users[3], users[2], users[1], users[0]]);
+  console.log('set pending friend requests successfully');
   
+
+  //SETTING OWNERS OF BILLS
   //setting jack as the owner of bill 0 & 1
-  await bills[0].setUser(users[0]);
-  await bills[1].setUser(users[0]);
-  
+  await bills[0].setUser(users[0]); //dinner w friends
+  await bills[1].setUser(users[0]); //date w bff
+
   //setting jermey as owner of bill 2
-  await bills[2].setUser(users[4]);
+  await bills[2].setUser(users[4]); //date w gf
   console.log(`set owners of bills successfully`);
   
   //setting users who owe money/payees of the bills (WIP)
-  await bills[0].addOwes([users[1], users[2]]);
+  //await bills[1].addOwes([users[1], users[2]]);
   //console.log(`set payees of bills successfully`);
 
   // formatted like the existing values in statement was originally
