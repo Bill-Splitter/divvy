@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { setGroup } from "../../store/split";
 
 import {
   StyleSheet,
@@ -13,78 +14,90 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
 
-const allGroups = [
-  {
-    id: 1,
-    groupName: "Mushrooms",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-  {
-    id: 2,
-    groupName: "Broccoli",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-  {
-    id: 3,
-    groupName: "Lettuce",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-  {
-    id: 4,
-    groupName: "Carrots",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-  {
-    id: 5,
-    groupName: "Onions",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-  {
-    id: 6,
-    groupName: "Lettuce",
-    users: [1, 2, 3, 4, 5, 6],
-  },
-];
-
-export default GroupList = () => {
+const GroupList = (props) => {
   const navigation = useNavigation();
+  const allGroups = props.groups || [];
+
+  const selectGroup = (groupname, users) => {
+    props.setGroup(groupname, users);
+    navigation.navigate("Summary");
+  };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
       <Banner2 />
-      <View style={styles.view}>
-        <Text style={styles.groupText}>Your Groups</Text>
+      <View
+        style={{
+          display: "flex",
+          backgroundColor: "white",
+          height: "100%",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <View>
-          <TouchableHighlight
-            style={styles.listElementContainer}
-            onPress={() => navigation.navigate("Summary")}
-            underlayColor={"white"}
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Group List</Text>
+          </View>
+
+          <View style={styles.borderBar}></View>
+          <View>
+            <TouchableHighlight
+              style={styles.listElementContainer}
+              underlayColor={"white"}
+            >
+              <View style={styles.listElement}>
+                {allGroups.map((element, index) => {
+                  return (
+                    <Text
+                      style={styles.listText}
+                      key={index}
+                      onPress={() =>
+                        selectGroup(element.groupname, element.users)
+                      }
+                    >
+                      {element.groupname}
+                    </Text>
+                  );
+                })}
+              </View>
+            </TouchableHighlight>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <View style={styles.listElement}>
-              {allGroups.map((element) => {
-                return (
-                  <Text style={styles.listText} key={element.id}>
-                    {element.groupName}
-                  </Text>
-                );
-              })}
-            </View>
-          </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.loginButton}
+              onPress={() => navigation.navigate("Summary")}
+            >
+              <Text style={styles.loginButtonText}>Create New Group</Text>
+            </TouchableHighlight>
+          </View>
         </View>
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => navigation.navigate("FriendsList")}
-        >
-          <Text style={styles.loginButtonText}>Create New Group</Text>
-        </TouchableHighlight>
       </View>
     </View>
   );
 };
+
+const mapStateToProps = (state) => ({
+  groups: state.user.groups,
+});
+const mapDispatchToProps = (dispatch) => ({
+  setGroup: (group, users) => dispatch(setGroup(group, users)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupList);
+
 const styles = StyleSheet.create({
   listElementContainer: {
     backgroundColor: "#fff",
-    alignItems: "center",
+    alignItems: "flex-start",
+    marginLeft: 20,
   },
 
   listText: {
@@ -109,13 +122,13 @@ const styles = StyleSheet.create({
   },
   view: {
     width: "100%",
-    flex: 1,
+    backgroundColor: "blue",
     alignContent: "center",
     textAlign: "left",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
     marginTop: 0,
-    // marginTop: 200
   },
 
   loginButtonText: {
@@ -123,5 +136,28 @@ const styles = StyleSheet.create({
     color: "white",
     padding: 16,
     textAlign: "center",
+  },
+
+  borderBar: {
+    width: "100%",
+    borderBottomWidth: 1,
+    backgroundColor: "#D7CBCB",
+    borderColor: "#D7CBCB",
+    marginTop: 10,
+    height: 1,
+  },
+  headerText: {
+    fontSize: 40,
+    color: "#ED3B5B",
+    textAlign: "left",
+    fontWeight: "bold",
+    paddingLeft: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    backgroundColor: "white",
+    width: "100%",
+  },
+  header: {
+    width: "100%",
   },
 });

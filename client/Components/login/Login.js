@@ -14,7 +14,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
-const Login = (props,) => {
+const Login = (props) => {
   const navigation = useNavigation();
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
@@ -24,7 +24,7 @@ const Login = (props,) => {
       alert("all fields must be filled");
     } else {
       props.login(username, password);
-      navigation.navigate('Home')
+      navigation.navigate("BottomTabNav");
     }
   };
 
