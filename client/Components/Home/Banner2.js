@@ -1,24 +1,31 @@
 import React from "react";
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Banner2() {
+export default function Banner2(props) {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftArrow}>
-        <AntDesign
-          name="left"
-          size={35}
-          color="#fff"
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-      <View style={styles.spacer}>
-        <View style={styles.bottomBar}></View>
+      <TouchableHighlight
+        underlayColor={"#ED3B5B"}
+        style={styles.leftArrow}
+        onPress={() => navigation.goBack()}
+      >
+        <AntDesign name="left" size={35} color="#fff" />
+      </TouchableHighlight>
+
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: -40,
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 24 }}>{props.name}</Text>
       </View>
     </View>
   );
@@ -38,10 +45,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ED3B5B",
   },
   leftArrow: {
-    // alignContent: "center",
-    // textAlign: "center",
-    marginTop: 30,
-    marginLeft: 10,
-    padding: 12,
+    marginTop: 45,
+    marginLeft: -5,
+    padding: 10,
+    width: "25%",
+    zIndex: 99,
   },
 });

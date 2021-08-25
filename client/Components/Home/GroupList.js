@@ -26,7 +26,7 @@ const GroupList = (props) => {
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 />
+      <Banner2 name={"Select Group"} />
       <View
         style={{
           display: "flex",
@@ -37,12 +37,12 @@ const GroupList = (props) => {
         }}
       >
         <View>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <Text style={styles.headerText}>Group List</Text>
-          </View>
-
-          <View style={styles.borderBar}></View>
-          <View>
+          </View> */}
+          {/* 
+          <View style={styles.borderBar}></View> */}
+          <ScrollView style={{ minHeight: "85%" }}>
             <TouchableHighlight
               style={styles.listElementContainer}
               underlayColor={"white"}
@@ -63,13 +63,15 @@ const GroupList = (props) => {
                 })}
               </View>
             </TouchableHighlight>
-          </View>
+          </ScrollView>
           <View
             style={{
               width: "100%",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              position: "absolute",
+              bottom: 0,
             }}
           >
             <TouchableHighlight

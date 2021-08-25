@@ -33,7 +33,7 @@ const SimpleSplitCreation = (props) => {
   };
 
   return (
-    <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2 />
       <View style={styles.view}>
         <Text style={styles.loginText}>Create Divvy Event</Text>
@@ -49,16 +49,15 @@ const SimpleSplitCreation = (props) => {
           placeholder="Enter Total w/ Tax"
           style={styles.input}
           value={total}
-          maxLength={30}
+          maxLength={6}
           onChangeText={(text) => setTotal(text)}
         ></TextInput>
 
         <TextInput
           placeholder="Tip (optional)"
-          secureTextEntry={true}
           style={styles.input}
           value={tip}
-          maxLength={30}
+          maxLength={6}
           onChangeText={(text) => setTip(text)}
         ></TextInput>
 
@@ -103,10 +102,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     textAlign: "left",
-    justifyContent: "center",
+
     alignItems: "center",
-    marginTop: 0,
-    // marginTop: 200
+    marginTop: 25,
   },
   loginText: {
     fontSize: 40,
