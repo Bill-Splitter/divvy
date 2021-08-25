@@ -19,11 +19,8 @@ import BottomNav from "./BottomNav";
 export default DivvyView = (props) => {
   const navigation = useNavigation();
   return (
-    <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 />
-
-      <View style={styles.borderBar}></View>
-
+    <View style={{ backgroundColor: "white", height: "100%" }}>
+      <Banner2 name={"Select a split"} />
       <View style={styles.listContainer}>
         <TouchableHighlight
           style={styles.listElementContainer}
@@ -35,9 +32,9 @@ export default DivvyView = (props) => {
               <Entypo name="scissors" size={35} color="#ED3B5B" />
               <Text style={styles.listText}>Itemized Split</Text>
             </View>
-            <View style={styles.borderBar}></View>
           </View>
         </TouchableHighlight>
+        <View style={styles.borderBar}></View>
 
         <TouchableHighlight
           style={styles.listElementContainer}
@@ -49,9 +46,10 @@ export default DivvyView = (props) => {
               <MaterialIcons name="attach-money" size={35} color="#ED3B5B" />
               <Text style={styles.listText}>Simple Split</Text>
             </View>
-            <View style={styles.borderBar}></View>
+         
           </View>
         </TouchableHighlight>
+        <View style={styles.borderBar}></View>
       </View>
     </View>
   );
@@ -69,25 +67,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   listElementContainer: {
-    width: "100%",
+    width: "90%",
   },
   listText: {
-    fontSize: 35,
+    fontSize: 30,
     color: "#ED3B5B",
-    padding: 15,
+    padding: 20,
     textAlign: "center",
   },
   borderBar: {
-    width: "100%",
+    width: "90%",
     borderBottomWidth: 1,
     backgroundColor: "#D7CBCB",
     borderColor: "#D7CBCB",
-    marginTop: 10,
+
     height: 1,
   },
   listContainer: {
-    width: "90%",
-    flex: 1,
+    width: "100%",
+    display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },

@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
@@ -24,7 +25,7 @@ const Summary = (props) => {
   };
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner2 />
+      <Banner2 name={props.info.group}/>
       <View
         style={{
           display: "flex",
@@ -34,7 +35,7 @@ const Summary = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <View style={styles.info}>
+        <ScrollView style={styles.info}>
           <View style={styles.header}>
             <Text style={styles.headerText}>Event Summary</Text>
           </View>
@@ -67,7 +68,7 @@ const Summary = (props) => {
               </View>
             );
           })}
-        </View>
+        </ScrollView>
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
           <Text style={styles.eventName}>{props.info.name}</Text>
@@ -113,21 +114,23 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     width: "33.33%",
     color: "#ED3B5B",
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
   },
   listName: {
     textAlign: "left",
     color: "#ED3B5B",
     width: "33.33%",
-    fontSize: 30,
+    fontSize: 25,
     paddingLeft: 15,
+    fontWeight: "bold"
   },
   listPercent: {
     width: "33.33%",
     textAlign: "center",
     color: "#ED3B5B",
-    fontSize: 30,
+    fontSize: 25,
+    fontWeight: "bold"
   },
 
   headerText: {
