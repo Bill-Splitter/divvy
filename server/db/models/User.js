@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-const User = db.define('user', {
+const User = db.define("user", {
   username: {
     type: Sequelize.STRING,
     unique: true,
@@ -21,11 +21,21 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue:
-      'https://www.zeldadungeon.net/wiki/images/f/fc/Malon_%28Oracle_of_Seasons%29.png',
+      "https://www.zeldadungeon.net/wiki/images/f/fc/Malon_%28Oracle_of_Seasons%29.png",
     validate: {
       isUrl: true,
+    },
+  },
+  groups: {
+    type: Sequelize.TEXT,
+    defaultValue: "[]",
+    get: function () {
+      return JSON.parse(this.getDataValue("groups"));
+    },
+    set: function (val) {
+      return this.setDataValue("groups", JSON.stringify(val));
     },
   },
 });
