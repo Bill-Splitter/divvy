@@ -23,6 +23,7 @@ router.get("/login", async (req, res, next) => {
         username: userName,
         password: password,
       },
+      include: ["friend", "requestee"],
     });
     if (user) {
       res.json(user);

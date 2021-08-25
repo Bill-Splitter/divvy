@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
@@ -34,6 +35,30 @@ const allFriends = [
     id: 5,
     username: "Ash ",
   },
+  {
+    id: 6,
+    username: "Jake Paul",
+  },
+  {
+    id: 7,
+    username: "John Thomas",
+  },
+  {
+    id: 8,
+    username: "Von Haas",
+  },
+  {
+    id: 9,
+    username: "Ash ",
+  },
+  {
+    id: 10,
+    username: "Von Haas",
+  },
+  {
+    id: 11,
+    username: "Ash ",
+  },
 ];
 
 export default FriendsList = () => {
@@ -52,7 +77,7 @@ export default FriendsList = () => {
           maxLength={30}
           onChangeText={(text) => setEvent(text)}
         ></TextInput>
-        <View>
+        <ScrollView style={{ width: "100%" }}>
           <TouchableHighlight
             style={styles.listElementContainer}
             onPress={() => navigation.navigate("DivvyView")}
@@ -69,7 +94,7 @@ export default FriendsList = () => {
               })}
             </View>
           </TouchableHighlight>
-        </View>
+        </ScrollView>
         <TouchableHighlight
           style={styles.loginButton}
           onPress={() => navigation.navigate("GroupList")}

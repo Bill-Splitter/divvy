@@ -38,10 +38,10 @@ const Signup = (props) => {
         email: email,
         phone: phone,
         password: password,
-        phoneNumber: phone
+        phoneNumber: phone,
       };
       props.signUp(data);
-      navigation.navigate("Home");
+      navigation.navigate("BottomTabNav");
     }
   };
 

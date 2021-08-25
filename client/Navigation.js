@@ -80,7 +80,7 @@ export default function NavigationCon() {
 
         {/* issue arose here when the components were comented out */}
         {/* <AuthStack.Screen name="Banner" component={Banner} /> */}
-        <AuthStack.Screen name="Home" component={Home} />
+        {/* <AuthStack.Screen name="Home" component={BottomTabNav} /> */}
       </AuthStack.Navigator>
     </NavigationContainer>
   );

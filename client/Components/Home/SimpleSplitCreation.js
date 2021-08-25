@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { setData } from "../../store/split";
 
 import {
   StyleSheet,
@@ -13,20 +14,23 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
 
-export default SimpleSplitCreation = (props) => {
+const SimpleSplitCreation = (props) => {
   const navigation = useNavigation();
   const [total, setTotal] = React.useState();
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
 
-  // const clickSubmit = () => {
-  //   if (!total) {
-  //     alert("Must enter total");
-  //   } else {
-  //     props.total(total, tip);
-  //     navigation.navigate("InviteFriends");
-  //   }
-  // };
+  const clickSubmit = () => {
+    console.log(total, tip, event);
+    if (!tip) setTip(0);
+    if (!total || !event) {
+      alert("Must enter total");
+    } else {
+      const totalDollars = Number(total) + Number(tip);
+      props.submit(event, totalDollars);
+      navigation.navigate("GroupList");
+    }
+  };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
@@ -60,7 +64,7 @@ export default SimpleSplitCreation = (props) => {
 
         <TouchableHighlight
           style={styles.loginButton}
-          onPress={() => navigation.navigate("GroupList")}
+          onPress={() => clickSubmit()}
         >
           <Text style={styles.loginButtonText}>Select Group</Text>
         </TouchableHighlight>
@@ -69,17 +73,19 @@ export default SimpleSplitCreation = (props) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-// });
+const mapStateToProps = (state) => ({
+  name: state.split.name,
+  total: state.split.total,
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   login: (username, password) => dispatch(loginThunk(username, password)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  submit: (name, total) => dispatch(setData(name, total)),
+});
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(SimpleSplitCreation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SimpleSplitCreation);
 
 const styles = StyleSheet.create({
   input: {

@@ -8,11 +8,11 @@ const {
 const group = [
   {
     groupname: "three amigos",
-    users: [2, 3, 4],
+    users: [2, 3],
   },
   {
     groupname: "wednesday bowling",
-    users: [3, 2],
+    users: [2, 3],
   },
 ];
 
