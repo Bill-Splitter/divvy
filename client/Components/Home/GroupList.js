@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
