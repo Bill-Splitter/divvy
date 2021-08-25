@@ -17,7 +17,7 @@ export default function App() {
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-    if (pickerResult.cancelled === true) {
+    if (pikerResult.cancelled === true) {
       return;
     }
 

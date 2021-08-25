@@ -1,7 +1,3 @@
-import Homescreen from "./Components/Homescreen.js";
-import Signup from "./Components/login/Signup.js";
-import Login from "./Components/login/Login.js";
-import Banner from "./Components/login/Banner.js";
 import ProfilePage from "./Components/ProfilePage.js";
 import Settings from "./Components/Home/Settings.js";
 import Friends from "./Components/Home/Friends.js";
@@ -19,7 +15,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -46,28 +41,14 @@ const Home = () => {
   );
 };
 
-export default function NavigationCon() {
+export default function BottomTabNavigator() {
   return (
     <NavigationContainer>
-      <AuthStack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <AuthStack.Screen name="Homescreen" component={Homescreen} />
-        <AuthStack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: "Login" }}
-        />
-        <AuthStack.Screen
-          name="Signup"
-          component={Signup}
-          options={{ title: "Sign Up" }}
-        />
-        <AuthStack.Screen name="Banner" component={Banner} />
-        <AuthStack.Screen name="Home" component={Home} />
-      </AuthStack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="New Divvy" component={DivvyView} />
+        <Tab.Screen name="Friends" component={FriendsList} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

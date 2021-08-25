@@ -14,34 +14,39 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/login", async (req, res, next) => {
-  const userName = req.query.username
-  const password = req.query.password
+  const userName = req.query.username;
+  const password = req.query.password;
 
   try {
-
     let user = await User.findOne({
       where: {
         username: userName,
         password: password,
-      }
-    })
-    if(user) {
-      res.json(user)
-    }else{
-      res.json("invalid login")
+      },
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.json("invalid login");
     }
-   
   } catch (err) {
     next(err);
   }
 });
 
-
-
-router.post('/', async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
-    res.status(201).send(await User.create(req.body.formData));
-  }catch (error) {
+    const userToUpdate = await User.findByPk(req.params.id);
+    res.json(await userToUpdate.update(req.body));
+  } catch (error) {
     next(error);
   }
-})
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    res.status(201).send(await User.create(req.body.formData));
+  } catch (error) {
+    next(error);
+  }
+});
