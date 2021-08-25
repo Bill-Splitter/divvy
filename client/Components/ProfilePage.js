@@ -34,7 +34,7 @@ const ProfilePage = (props) => {
       <View style={styles.listContainer}>
         <TouchableHighlight
           style={styles.listElementContainer}
-          onPress={() => navigation.navigate("Camera")}
+          onPress={() => navigation.navigate("DivvyView")}
           underlayColor={"white"}
         >
           <View>

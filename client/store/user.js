@@ -5,6 +5,7 @@ const instance = axios.create({ baseURL: "http://localhost:8080" });
 const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
 const LOGOUT = "LOGOUT";
+const UPDATE_USER = "UPDATE_USER";
 
 //action creators
 export const login = (user) => {
@@ -24,6 +25,13 @@ export const signup = (account) => {
   return {
     type: SIGNUP,
     account,
+  };
+};
+
+export const updateUser = (user) => {
+  return {
+    type: UPDATE_USER,
+    user,
   };
 };
 
@@ -54,6 +62,20 @@ export const signupThunk = (formData) => {
       dispatch(login(user));
 
       //axious post request
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const updateUserThunk = (user) => {
+  return async (dispatch) => {
+    try {
+      const { data: updated } = await instance.put(
+        `/api/users/${user.id}`,
+        user
+      );
+      dispatch(updateUser(updated));
     } catch (error) {
       console.error(error);
     }

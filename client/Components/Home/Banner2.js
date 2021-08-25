@@ -12,8 +12,8 @@ export default function Banner2() {
       <View style={styles.leftArrow}>
         <AntDesign
           name="left"
-          size={24}
-          color="#ED3B5B"
+          size={35}
+          color="#fff"
           onPress={() => navigation.goBack()}
         />
       </View>
@@ -25,14 +25,6 @@ export default function Banner2() {
 }
 
 const styles = StyleSheet.create({
-  bottomBar: {
-    width: "90%",
-    borderBottomWidth: 1,
-    backgroundColor: "#D7CBCB",
-    borderColor: "#D7CBCB",
-    marginTop: 10,
-    height: 1,
-  },
   spacer: {
     flex: 0,
     flexDirection: "column",
@@ -42,10 +34,14 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    height: "20%",
+    height: "13%",
+    backgroundColor: "#ED3B5B",
   },
   leftArrow: {
+    // alignContent: "center",
+    // textAlign: "center",
+    marginTop: 30,
     marginLeft: 10,
-    padding: 5,
+    padding: 12,
   },
 });

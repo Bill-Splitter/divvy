@@ -7,9 +7,9 @@ import Banner2 from "./Banner2";
 
 export default Messages = () => {
   return (
-    <SafeAreaView style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2/>
+    <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
+      <Banner2 />
       <Text>Messages</Text>
-    </SafeAreaView>
+    </View>
   );
 };

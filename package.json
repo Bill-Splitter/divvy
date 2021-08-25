@@ -11,6 +11,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@react-navigation/stack": "^6.0.7",
@@ -27,6 +28,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.4",
@@ -34,8 +36,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^6.6.5",
-    "react-native-safe-area-context": "3.2.0"
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
