@@ -8,8 +8,8 @@ import BottomTabNavigator from "./client/BottomTabNav";
 export default function App() {
   return (
     <Provider store={store}>
-      {/* <NavigationCon /> */}
-      <BottomTabNavigator />
+      <NavigationCon />
+      {/* <BottomTabNavigator /> */}
     </Provider>
   );
 }

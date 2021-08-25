@@ -45,7 +45,7 @@ const Settings = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Banner2 />
       <View style={styles.form}>
         <Entypo name="scissors" size={50} color="#ED3B5B" />
@@ -93,7 +93,7 @@ const Settings = (props) => {
           <Text style={styles.submitText}>save changes</Text>
         </TouchableHighlight>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

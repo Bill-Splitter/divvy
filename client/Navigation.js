@@ -11,8 +11,8 @@ import Transactions from "./Components/Home/Transactions.js";
 import DivvyView from "./Components/Home/DivvyView.js";
 import SimpleSplitCreation from "./Components/Home/SimpleSplitCreation.js";
 import GroupList from "./Components/Home/GroupList.js";
-
 import FriendsList from "./Components/Home/FriendsList.js";
+import Summary from "./Components/Home/Summary.js";
 
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -40,9 +40,20 @@ const Home = () => {
       <HomeStack.Screen name="FriendsList" component={FriendsList} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
+      <HomeStack.Screen name="Summary" component={Summary} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
     </HomeStack.Navigator>
+  );
+};
+
+const BottomTabNav = () => {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="New Divvy" component={DivvyView} />
+      <Tab.Screen name="Friends" component={FriendsList} />
+    </Tab.Navigator>
   );
 };
 
@@ -65,7 +76,10 @@ export default function NavigationCon() {
           component={Signup}
           options={{ title: "Sign Up" }}
         />
-        <AuthStack.Screen name="Banner" component={Banner} />
+        <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
+
+        {/* issue arose here when the components were comented out */}
+        {/* <AuthStack.Screen name="Banner" component={Banner} /> */}
         <AuthStack.Screen name="Home" component={Home} />
       </AuthStack.Navigator>
     </NavigationContainer>

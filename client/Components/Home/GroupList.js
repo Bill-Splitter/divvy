@@ -16,27 +16,33 @@ import Banner2 from "./Banner2";
 const allGroups = [
   {
     id: 1,
-    name: "Mushrooms",
+    groupName: "Mushrooms",
+    users: [1, 2, 3, 4, 5, 6],
   },
   {
     id: 2,
-    name: "Broccoli",
+    groupName: "Broccoli",
+    users: [1, 2, 3, 4, 5, 6],
   },
   {
     id: 3,
-    name: "Lettuce",
+    groupName: "Lettuce",
+    users: [1, 2, 3, 4, 5, 6],
   },
   {
     id: 4,
-    name: "Carrots",
+    groupName: "Carrots",
+    users: [1, 2, 3, 4, 5, 6],
   },
   {
     id: 5,
-    name: "Onions",
+    groupName: "Onions",
+    users: [1, 2, 3, 4, 5, 6],
   },
   {
     id: 6,
-    name: "Lettuce",
+    groupName: "Lettuce",
+    users: [1, 2, 3, 4, 5, 6],
   },
 ];
 
@@ -51,14 +57,14 @@ export default GroupList = () => {
         <View>
           <TouchableHighlight
             style={styles.listElementContainer}
-            onPress={() => navigation.navigate("DivvyView")}
+            onPress={() => navigation.navigate("Summary")}
             underlayColor={"white"}
           >
             <View style={styles.listElement}>
               {allGroups.map((element) => {
                 return (
                   <Text style={styles.listText} key={element.id}>
-                    {element.name}
+                    {element.groupName}
                   </Text>
                 );
               })}
