@@ -19,7 +19,7 @@ const ProfilePage = (props) => {
   const navigation = useNavigation();
 
   const logout = () => {
-    props.logout;
+
     navigation.navigate("Homescreen");
   };
 
