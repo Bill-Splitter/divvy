@@ -1,14 +1,9 @@
 //this is the access point for all things database related!
 
-const db = require('./db');
+const db = require("./db");
 
-const User = require('./models/User');
-const Bill = require('./models/Bill');
-const Group = require('./models/Group');
-//const FriendRequest = require('./models/FriendRequest');
-
-
-
+const User = require("./models/User");
+const Bill = require("./models/Bill");
 
 //associations could go here!
 
@@ -17,22 +12,16 @@ User.hasMany(Bill);
 Bill.belongsTo(User);
 
 //The Users who owe money to the respective owners of the Bills
-Bill.belongsToMany(User, {as: 'owes', through: 'payee'});
-User.belongsToMany(Bill, {as: 'owed', through: 'payee'});
+Bill.belongsToMany(User, { as: "owes", through: "payee" });
+User.belongsToMany(Bill, { as: "owed", through: "payee" });
 
-
-User.belongsToMany(User, {as: 'friend', through: 'friendship'});
-User.belongsToMany(User, {as: 'requestee', through: 'friendRequest'});
-
-
-User.belongsToMany(User, {as: 'friendGroup', through: Group});
-
-
-
+User.belongsToMany(User, { as: "friend", through: "friendship" });
+User.belongsToMany(User, { as: "requestee", through: "friendRequest" });
 
 module.exports = {
   db,
   models: {
-    User, Bill, Group
+    User,
+    Bill,
   },
 };
