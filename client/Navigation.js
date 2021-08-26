@@ -14,6 +14,7 @@ import GroupList from "./Components/Home/GroupList.js";
 import FriendsList from "./Components/Home/FriendsList.js";
 import Summary from "./Components/Home/Summary.js";
 import AddFriend from "./Components/Home/AddFriend.js";
+import FriendRequests from "./Components/Home/FriendRequests.js";
 
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -45,6 +46,7 @@ const Home = () => {
       <HomeStack.Screen name="AddFriend" component={AddFriend} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
+      <HomeStack.Screen name="FriendRequests" component={FriendRequests} />
     </HomeStack.Navigator>
   );
 };

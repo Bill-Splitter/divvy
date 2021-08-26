@@ -13,7 +13,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
 import { logout } from "../store";
+
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
@@ -22,13 +25,17 @@ const ProfilePage = (props) => {
     navigation.navigate("Homescreen");
   };
 
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ textAlign: "center" }}>
-        <Text style={styles.bigText}>{props.user.username}</Text>
-        <Text style={styles.littleText}>{props.user.email}</Text>
+      <View style={{backgroundColor: "#ED3B5B", height: "13%"}}>
+        <View style={{ textAlign: "center" }}>
+          <Text style={styles.bigText}>{props.user.username}</Text>
+          <Text style={styles.littleText}>{props.user.email}</Text>
+        </View>
       </View>
-      <View style={styles.borderBar}></View>
+      {/* 
+      <View style={styles.borderBar}></View> */}
 
       <View style={styles.listContainer}>
         <TouchableHighlight
@@ -38,7 +45,7 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Entypo name="scissors" size={24} color="#ED3B5B" />
+            <View style={styles.icon}><Entypo name="scissors" size={24} color="#ED3B5B" /></View>
               <Text style={styles.listText}>New Divvy</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -52,7 +59,7 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="attach-money" size={24} color="#ED3B5B" />
+            <View style={styles.icon}><FontAwesome5 name="money-check"  size={24} color="#ED3B5B" /></View>
               <Text style={styles.listText}>Transactions</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -66,7 +73,7 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Ionicons name="person-outline" size={24} color="#ED3B5B" />
+            <View style={styles.icon}><FontAwesome5 name="user-friends"  size={24} color="#ED3B5B" /></View>
               <Text style={styles.listText}>Friends</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -80,7 +87,7 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Feather name="message-square" size={24} color="#ED3B5B" />
+            <View style={styles.icon}><Feather name="message-square" size={24} color="#ED3B5B" /></View>
               <Text style={styles.listText}>Messages</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -88,13 +95,13 @@ const ProfilePage = (props) => {
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.listElementContainer}
-          onPress={() => navigation.navigate("Transactions")}
+          onPress={() => navigation.navigate("FriendRequests")}
           underlayColor={"white"}
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="attach-money" size={24} color="#ED3B5B" />
-              <Text style={styles.listText}>Friend Requests</Text>
+              <View style={styles.icon}><FontAwesome name="user-plus" size={24} color="#ED3B5B"/></View>
+              <Text style={styles.listText}>Friend Requests{props.user.requestee.length > 0 ? ( <Text style={styles.listText}> ( {props.user.requestee.length} )</Text>) : (<></>)}</Text>
             </View>
             <View style={styles.borderBar}></View>
           </View>
@@ -107,7 +114,7 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Feather name="settings" size={24} color="#ED3B5B" />
+            <View style={styles.icon}><FontAwesome name="gear" size={25}  color="#ED3B5B" /></View>
               <Text style={styles.listText}>Settings</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -178,14 +185,15 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontSize: 25,
-    color: "#ED3B5B",
+    color: "white",
     padding: 10,
     paddingLeft: 100,
     fontWeight: "bold",
+    marginTop: 25
   },
   littleText: {
     fontSize: 15,
-    color: "#ED3B5B",
+    color: "white",
     paddingLeft: 100,
     padding: 2,
   },
@@ -201,4 +209,7 @@ const styles = StyleSheet.create({
     padding: 16,
     textAlign: "center",
   },
+  icon: {
+    width: 35,
+  }
 });
