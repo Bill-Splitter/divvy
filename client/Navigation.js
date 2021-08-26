@@ -13,6 +13,7 @@ import SimpleSplitCreation from "./Components/Home/SimpleSplitCreation.js";
 import GroupList from "./Components/Home/GroupList.js";
 import FriendsList from "./Components/Home/FriendsList.js";
 import Summary from "./Components/Home/Summary.js";
+import AddFriend from "./Components/Home/AddFriend.js";
 
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -41,6 +42,7 @@ const Home = () => {
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
       <HomeStack.Screen name="Summary" component={Summary} />
+      <HomeStack.Screen name="AddFriend" component={AddFriend} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
     </HomeStack.Navigator>

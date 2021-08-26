@@ -19,7 +19,6 @@ const ProfilePage = (props) => {
   const navigation = useNavigation();
 
   const logout = () => {
-
     navigation.navigate("Homescreen");
   };
 
@@ -83,6 +82,19 @@ const ProfilePage = (props) => {
             <View style={styles.listElement}>
               <Feather name="message-square" size={24} color="#ED3B5B" />
               <Text style={styles.listText}>Messages</Text>
+            </View>
+            <View style={styles.borderBar}></View>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.listElementContainer}
+          onPress={() => navigation.navigate("Transactions")}
+          underlayColor={"white"}
+        >
+          <View>
+            <View style={styles.listElement}>
+              <MaterialIcons name="attach-money" size={24} color="#ED3B5B" />
+              <Text style={styles.listText}>Friend Requests</Text>
             </View>
             <View style={styles.borderBar}></View>
           </View>

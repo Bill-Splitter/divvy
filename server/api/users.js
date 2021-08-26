@@ -51,3 +51,27 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post("/addFriend/", async (req, res, next) => {
+  const senderId = req.body.senderId;
+  const phoneNumber = req.body.phoneNumber;
+
+  console.log(req.body);
+
+  try {
+    const receiver = await User.findOne({
+      where: {
+        phoneNumber: phoneNumber,
+      },
+    });
+    if (receiver) {
+      receiver.addRequestee(senderId);
+      console.log("sent valid friend request");
+    } else {
+      // res.sendStatus(500);
+    }
+  } catch (error) {
+    next(error);
+  }
+  res.sendStatus(200);
+});
