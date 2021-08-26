@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
+
+
+
 import {
   StyleSheet,
   Text,
@@ -25,6 +28,11 @@ const ProfilePage = (props) => {
     navigation.navigate("Homescreen");
   };
 
+
+  let friendRequests = 0
+  if(props.user.requestee){
+    friendRequests = props.user.requestee.length
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,7 +109,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}><FontAwesome name="user-plus" size={24} color="#ED3B5B"/></View>
-              <Text style={styles.listText}>Friend Requests{props.user.requestee.length > 0 ? ( <Text style={styles.listText}> ( {props.user.requestee.length} )</Text>) : (<></>)}</Text>
+              <Text style={styles.listText}>Friend Requests{friendRequests > 0 ? ( <Text style={styles.listText}> ( {props.user.requestee.length} )</Text>) : (<></>)}</Text>
             </View>
             <View style={styles.borderBar}></View>
           </View>

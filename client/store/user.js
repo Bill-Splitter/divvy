@@ -1,11 +1,14 @@
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:8080" });
 
+
 //action types
 const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
 const LOGOUT = "LOGOUT";
 const UPDATE_USER = "UPDATE_USER";
+const APPROVE_REQUEST = "APPROVE_REQUEST";
+const DENY_REQUEST = "DENY_REQUEST"
 
 //action creators
 export const login = (user) => {
@@ -34,6 +37,17 @@ export const updateUser = (user) => {
     user,
   };
 };
+
+// export const approveRequest = () => {
+//   return {
+//     type: APPROVE_REQUEST
+//   }
+// }
+// export const denyRequest = () => {
+//   return {
+//     type: DENY_REQUEST
+//   }
+// }
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -67,6 +81,41 @@ export const signupThunk = (formData) => {
     }
   };
 };
+
+export const approveFriendRequest = (id, user) => {
+  return async (dispatch) => {
+    try{
+      console.log(id,user, "thunky")
+      const returnedUser = await instance.post("api/users/approveRequest/", {
+        sender: user,
+        receiver: id
+      })
+      console.log(returnedUser.data)
+
+    }catch(error){
+      console.error(error)
+    }
+  }
+  
+}
+
+export const denyFriendRequest = (id,user) => {
+  return async (dispatch) => {
+    try{
+      console.log(id,user, "thunky")
+      const returnedUser = await instance.post("api/users/approveRequest/", {
+        sender: user,
+        receiver: id
+      })
+      console.log(returnedUser.data)
+
+    }catch(error){
+      console.error(error)
+    }
+  }
+
+
+}
 
 export const updateUserThunk = (user) => {
   return async (dispatch) => {
@@ -105,6 +154,10 @@ export default function (state = {}, action) {
       return {};
     case SIGNUP:
       return action.signup;
+    // case APPROVE_REQUEST:
+    //   return state
+    case DENY_REQUEST:
+        return state
     default:
       return state;
   }
