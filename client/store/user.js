@@ -38,11 +38,12 @@ export const updateUser = (user) => {
   };
 };
 
-// export const approveRequest = () => {
-//   return {
-//     type: APPROVE_REQUEST
-//   }
-// }
+export const approveRequest = (user) => {
+  return {
+    type: APPROVE_REQUEST,
+    user: user
+  }
+}
 // export const denyRequest = () => {
 //   return {
 //     type: DENY_REQUEST
@@ -90,7 +91,8 @@ export const approveFriendRequest = (id, user) => {
         sender: user,
         receiver: id
       })
-      console.log(returnedUser.data)
+      const data = (returnedUser.data)
+      dispatch(approveRequest(data))
 
     }catch(error){
       console.error(error)
@@ -154,8 +156,14 @@ export default function (state = {}, action) {
       return {};
     case SIGNUP:
       return action.signup;
-    // case APPROVE_REQUEST:
-    //   return state
+    case APPROVE_REQUEST:
+      const user = state
+ 
+      user.requestee = user.requestee.filter((element) => {
+        if(element.id !== action.user.id) return element
+      })
+      user.friend.push(action.user)
+      return state
     case DENY_REQUEST:
         return state
     default:

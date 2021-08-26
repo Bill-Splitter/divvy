@@ -55,27 +55,22 @@ router.post("/", async (req, res, next) => {
 router.post("/approveRequest", async (req, res, next) => {
   const senderId = req.body.sender;
   const receiverId = req.body.receiver;
-  console.log(senderId, receiverId)
+  console.log(senderId, receiverId);
 
   try {
     const user1 = await User.findByPk(senderId);
     const user2 = await User.findByPk(receiverId);
-    if(user1 && user2){
+    if (user1 && user2) {
       user1.addFriend(user2);
       user2.addFriend(user1);
 
-      user2.removeRequestee(senderId)
-      user1.removeRequestee(senderId)
-      user2.removeRequestee(receiverId)
-      user1.removeRequestee(receiverId)
-     
-      res.json(user1);
+      user2.removeRequestee(senderId);
+      user1.removeRequestee(senderId);
+      user2.removeRequestee(receiverId);
+      user1.removeRequestee(receiverId);
 
-    }
-    else next(error)
-
-
-   
+      res.json(user2);
+    } else next(error);
   } catch (error) {
     next(error);
   }
