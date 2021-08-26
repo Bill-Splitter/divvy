@@ -82,6 +82,20 @@ export const updateUserThunk = (user) => {
   };
 };
 
+export const sendFriendRequest = (senderId, phoneNumber) => {
+  console.log(senderId, phoneNumber, "is the input");
+  return async (dispatch) => {
+    try {
+      await instance.post("/api/users/addFriend/", {
+        senderId: senderId,
+        phoneNumber: phoneNumber,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {

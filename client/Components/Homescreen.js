@@ -16,7 +16,7 @@ export default function Homescreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={{ top: 100 }}>
         <Entypo name="scissors" size={200} color="#ED3B5B" />
-        <Text style={styles.logoText}>divy</Text>
+        <Text style={styles.logoText}>divvy</Text>
       </View>
 
       <View style={styles.buttonHolder}>
