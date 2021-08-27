@@ -55,12 +55,12 @@ const Summary = (props) => {
           {friendArray.map((element) => {
             return (
               <View key={element.id} style={styles.listRow}>
-                <Text style={styles.listName}>{element.username}</Text>
+                <Text numberOfLines={1} style={styles.listName}>{element.fName} {element.lName}</Text>
                 <Text style={styles.listPercent}>
                   {Math.floor(100 / (friendArray.length + 1))}
                   {"%"}
                 </Text>
-                <Text style={styles.listText}>
+                <Text numberOfLines={1} style={styles.listText}>
                   {"$"}{" "}
                   {(props.info.total / (friendArray.length + 1)).toFixed(2)}
                 </Text>
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "space-between",
     padding: 10,
+    alignItems: "center"
   },
   listText: {
     textAlign: "right",
@@ -115,17 +116,19 @@ const styles = StyleSheet.create({
     color: "#ED3B5B",
     fontSize: 25,
     fontWeight: "bold",
+  
   },
   listName: {
     textAlign: "left",
     color: "#ED3B5B",
-    width: "33.33%",
-    fontSize: 25,
+    width: "45%",
+    fontSize: 20,
     paddingLeft: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+
   },
   listPercent: {
-    width: "33.33%",
+    width: "20%",
     textAlign: "center",
     color: "#ED3B5B",
     fontSize: 25,

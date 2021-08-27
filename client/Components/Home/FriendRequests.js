@@ -48,12 +48,14 @@ const FriendRequests = (props) => {
                   style={styles.image}
                 />
                 <View>
-                  <Text style={styles.listText}>{element.username} </Text>
+                  <Text numberOfLines={1} style={styles.listText}>
+                    {element.fName} {element.lName}{" "}
+                  </Text>
                   <Text style={styles.listTextSmall}>
                     Email: {element.email}
                   </Text>
-                  <Text style={styles.listTextSmall}>
-                    Phone: {element.phoneNumber}
+                  <Text numberOfLines={1} style={styles.listTextSmall}>
+                    Username: {element.username}, Phone: {element.phoneNumber}
                   </Text>
                 </View>
               </View>
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-    width: "90%"
+    width: "90%",
   },
   image: {
     width: 70,

@@ -25,7 +25,9 @@ export default function Banner2(props) {
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: "white", fontSize: 24 }}>{props.name}</Text>
+        <Text numberOfLines={1} style={{ color: "white", fontSize: 24 }}>
+          {props.name}
+        </Text>
       </View>
     </View>
   );

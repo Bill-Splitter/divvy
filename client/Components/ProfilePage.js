@@ -30,43 +30,45 @@ const ProfilePage = (props) => {
     if (user.requestee) setNotis(user.requestee.length);
     const unsubscribe = navigation.addListener("focus", () => {
       dispatch(getUpdatedUserInfo());
-      if (user.requestee) setNotis(user.requestee.length)
+      if (user.requestee) setNotis(user.requestee.length);
     });
   });
-
 
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
-
-        <View style={{ textAlign: "center", display: 'flex', flexDirection: "row" , alignItems: "center"}}>
-        <Image
-                      source={{
-                        uri: user.imageUrl,
-                      }}
-                      style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: 999,
-                        overflow: "hidden",
-                        marginTop: 40,
-                        marginLeft: 10,
-                        borderWidth: 2,
-                        borderColor: "white",
-                        marginRight: 10,
-                      }}
-                    />
-                    <View>
-                    <Text style={styles.bigText}>{user.username}</Text>
-          <Text style={styles.littleText}>{user.email}</Text>
-
-                    </View>
-
+        <View
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={{
+              uri: user.imageUrl,
+            }}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: 999,
+              overflow: "hidden",
+              marginTop: 40,
+              marginLeft: 10,
+              borderWidth: 2,
+              borderColor: "white",
+              marginRight: 10,
+            }}
+          />
+          <View>
+            <Text numberOfLines={1} style={styles.bigText}>{user.fName} {user.lName}</Text>
+            <Text numberOfLines={1} style={styles.littleText}>{user.email}</Text>
+          </View>
         </View>
       </View>
 
       <View style={styles.listContainer}>
-      
         <TouchableHighlight
           style={styles.listElementContainer}
           onPress={() => navigation.navigate("DivvyView")}

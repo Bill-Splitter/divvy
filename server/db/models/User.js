@@ -20,6 +20,16 @@ const User = db.define("user", {
   password: {
     type: Sequelize.STRING,
   },
+  fName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+
+  },
+  lName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+
+  },
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue:
