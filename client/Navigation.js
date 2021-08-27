@@ -54,13 +54,8 @@ const Home = () => {
 };
 
 const BottomTabNav = () => {
-  const navigation = useNavigation();
-  let requests = useSelector((state) => state.user.requestee || []);
-  let user = useSelector((state) => state.user.id);
 
-  if (!user) {
-    navigation.navigate("Homescreen");
-  }
+  let requests = useSelector((state) => state.user.requestee || []);
 
   return (
     <Tab.Navigator
