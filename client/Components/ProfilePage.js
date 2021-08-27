@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableHighlight,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -37,13 +38,35 @@ const ProfilePage = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
-        <View style={{ textAlign: "center" }}>
-          <Text style={styles.bigText}>{user.username}</Text>
+
+        <View style={{ textAlign: "center", display: 'flex', flexDirection: "row" , alignItems: "center"}}>
+        <Image
+                      source={{
+                        uri: user.imageUrl,
+                      }}
+                      style={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: 999,
+                        overflow: "hidden",
+                        marginTop: 40,
+                        marginLeft: 10,
+                        borderWidth: 2,
+                        borderColor: "white",
+                        marginRight: 10,
+                      }}
+                    />
+                    <View>
+                    <Text style={styles.bigText}>{user.username}</Text>
           <Text style={styles.littleText}>{user.email}</Text>
+
+                    </View>
+
         </View>
       </View>
 
       <View style={styles.listContainer}>
+      
         <TouchableHighlight
           style={styles.listElementContainer}
           onPress={() => navigation.navigate("DivvyView")}
@@ -205,16 +228,17 @@ const styles = StyleSheet.create({
   bigText: {
     fontSize: 25,
     color: "white",
-    padding: 10,
-    paddingLeft: 100,
+    padding: 2,
+    marginLeft: 5,
+
     fontWeight: "bold",
-    marginTop: 25,
+    marginTop: 35,
   },
   littleText: {
     fontSize: 15,
     color: "white",
-    paddingLeft: 100,
-    padding: 2,
+    marginLeft: 10,
+    padding: 0,
   },
   submitButton: {
     width: "50%",
