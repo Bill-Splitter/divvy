@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-
-
-
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   StyleSheet,
@@ -16,34 +13,42 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { logout } from "../store";
-
+import { getUpdatedUserInfo } from "../store";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
+  let user = useSelector((state) => state.user);
+  const [notis, setNotis] = React.useState(user.requestee.length);
+
+  const dispatch = useDispatch();
+
+
 
   const logout = () => {
+
     navigation.navigate("Homescreen");
   };
 
-
-  let friendRequests = 0
-  if(props.user.requestee){
-    friendRequests = props.user.requestee.length
-  }
+  React.useEffect(() => {
+    setNotis(user.requestee.length)
+    const unsubscribe = navigation.addListener("focus", () => {
+      dispatch(getUpdatedUserInfo());
+      setNotis(user.requestee.length);
+    });
+  });
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{backgroundColor: "#ED3B5B", height: "13%"}}>
+      <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
         <View style={{ textAlign: "center" }}>
-          <Text style={styles.bigText}>{props.user.username}</Text>
-          <Text style={styles.littleText}>{props.user.email}</Text>
+          <Text style={styles.bigText}>{user.username}</Text>
+          <Text style={styles.littleText}>{user.email}</Text>
         </View>
       </View>
-      {/* 
-      <View style={styles.borderBar}></View> */}
+
 
       <View style={styles.listContainer}>
         <TouchableHighlight
@@ -53,7 +58,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-            <View style={styles.icon}><Entypo name="scissors" size={24} color="#ED3B5B" /></View>
+              <View style={styles.icon}>
+                <Entypo name="scissors" size={24} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>New Divvy</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -67,7 +74,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-            <View style={styles.icon}><FontAwesome5 name="money-check"  size={24} color="#ED3B5B" /></View>
+              <View style={styles.icon}>
+                <FontAwesome5 name="money-check" size={24} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Transactions</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -81,7 +90,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-            <View style={styles.icon}><FontAwesome5 name="user-friends"  size={24} color="#ED3B5B" /></View>
+              <View style={styles.icon}>
+                <FontAwesome5 name="user-friends" size={24} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Friends</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -95,7 +106,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-            <View style={styles.icon}><Feather name="message-square" size={24} color="#ED3B5B" /></View>
+              <View style={styles.icon}>
+                <Feather name="message-square" size={24} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Messages</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -108,8 +121,17 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <View style={styles.icon}><FontAwesome name="user-plus" size={24} color="#ED3B5B"/></View>
-              <Text style={styles.listText}>Friend Requests{friendRequests > 0 ? ( <Text style={styles.listText}> ( {props.user.requestee.length} )</Text>) : (<></>)}</Text>
+              <View style={styles.icon}>
+                <FontAwesome name="user-plus" size={24} color="#ED3B5B" />
+              </View>
+              <Text style={styles.listText}>
+                Friend Requests
+                {notis > 0 ? (
+                  <Text style={styles.listText}> ( {notis} )</Text>
+                ) : (
+                  <></>
+                )}
+              </Text>
             </View>
             <View style={styles.borderBar}></View>
           </View>
@@ -122,7 +144,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-            <View style={styles.icon}><FontAwesome name="gear" size={25}  color="#ED3B5B" /></View>
+              <View style={styles.icon}>
+                <FontAwesome name="gear" size={25} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Settings</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -147,14 +171,8 @@ const ProfilePage = (props) => {
     </SafeAreaView>
   );
 };
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-});
 
-export default connect(mapStateToProps, null)(ProfilePage);
+export default ProfilePage;
 
 const styles = StyleSheet.create({
   container: {
@@ -197,7 +215,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 100,
     fontWeight: "bold",
-    marginTop: 25
+    marginTop: 25,
   },
   littleText: {
     fontSize: 15,
@@ -219,5 +237,5 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 35,
-  }
+  },
 });

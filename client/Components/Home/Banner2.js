@@ -10,7 +10,7 @@ export default function Banner2(props) {
   return (
     <View style={styles.container}>
       <TouchableHighlight
-        underlayColor={"#ED3B5B"}
+        underlayColor={"transparent"}
         style={styles.leftArrow}
         onPress={() => navigation.goBack()}
       >

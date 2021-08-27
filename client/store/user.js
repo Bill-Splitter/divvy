@@ -8,7 +8,8 @@ const SIGNUP = "SIGNUP";
 const LOGOUT = "LOGOUT";
 const UPDATE_USER = "UPDATE_USER";
 const APPROVE_REQUEST = "APPROVE_REQUEST";
-const DENY_REQUEST = "DENY_REQUEST"
+const DENY_REQUEST = "DENY_REQUEST";
+const GET_USER_INFO = "GET_USER_INFO";
 
 //action creators
 export const login = (user) => {
@@ -17,6 +18,12 @@ export const login = (user) => {
     user,
   };
 };
+
+export const getUpdatedUserInfo = () => {
+  return {
+    type: GET_USER_INFO
+  }
+}
 
 export const logout = () => {
   return {
@@ -156,6 +163,8 @@ export default function (state = {}, action) {
       return {};
     case SIGNUP:
       return action.signup;
+    case GET_USER_INFO: 
+      return state
     case APPROVE_REQUEST:
       const user = state
  
