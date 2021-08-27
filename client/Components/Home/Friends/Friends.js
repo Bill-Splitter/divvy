@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 
 const Friends = (props) => {
   const navigation = useNavigation();
