@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const {
   models: { User },
 } = require("../db");
@@ -52,10 +53,24 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/denyRequest/", async (req, res, next) => {
+  console.log(req.body);
+  const sender = req.body.sender;
+  const receiver = req.body.receiver;
+
+  try {
+    const user = await User.findByPk(sender);
+    user.removeRequestee(receiver);
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/approveRequest", async (req, res, next) => {
   const senderId = req.body.sender;
   const receiverId = req.body.receiver;
-  console.log(senderId, receiverId);
+
 
   try {
     const user1 = await User.findByPk(senderId);
@@ -80,7 +95,7 @@ router.post("/addFriend/", async (req, res, next) => {
   const senderId = req.body.senderId;
   const phoneNumber = req.body.phoneNumber;
 
-  console.log(req.body);
+
 
   try {
     const receiver = await User.findOne({
@@ -90,7 +105,6 @@ router.post("/addFriend/", async (req, res, next) => {
     });
     if (receiver) {
       receiver.addRequestee(senderId);
-      console.log("sent valid friend request");
     } else {
       // res.sendStatus(500);
     }

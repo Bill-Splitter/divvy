@@ -1,7 +1,6 @@
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:8080" });
 
-
 //action types
 const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
@@ -21,9 +20,9 @@ export const login = (user) => {
 
 export const getUpdatedUserInfo = () => {
   return {
-    type: GET_USER_INFO
-  }
-}
+    type: GET_USER_INFO,
+  };
+};
 
 export const logout = () => {
   return {
@@ -48,14 +47,15 @@ export const updateUser = (user) => {
 export const approveRequest = (user) => {
   return {
     type: APPROVE_REQUEST,
-    user: user
+    user: user,
+  };
+};
+export const denyRequest = (id) => {
+  return {
+    type: DENY_REQUEST,
+    id
   }
 }
-// export const denyRequest = () => {
-//   return {
-//     type: DENY_REQUEST
-//   }
-// }
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -92,39 +92,35 @@ export const signupThunk = (formData) => {
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
-    try{
-      console.log(id,user, "thunky")
+    try {
       const returnedUser = await instance.post("api/users/approveRequest/", {
         sender: user,
-        receiver: id
-      })
-      const data = (returnedUser.data)
-      dispatch(approveRequest(data))
-
-    }catch(error){
-      console.error(error)
+        receiver: id,
+      });
+      const data = returnedUser.data;
+      dispatch(approveRequest(data));
+    } catch (error) {
+      console.error(error);
     }
-  }
-  
-}
+  };
+};
 
-export const denyFriendRequest = (id,user) => {
+export const denyFriendRequest = (id, user) => {
   return async (dispatch) => {
-    try{
-      console.log(id,user, "thunky")
-      const returnedUser = await instance.post("api/users/approveRequest/", {
-        sender: user,
-        receiver: id
-      })
-      console.log(returnedUser.data)
+    try {
+       await instance.delete("api/users/denyRequest/", {
+        data: {
+          sender: user,
+          receiver: id,
+        },
+      });
 
-    }catch(error){
-      console.error(error)
+      dispatch(denyRequest(id))
+    } catch (error) {
+      console.error(error);
     }
-  }
-
-
-}
+  };
+};
 
 export const updateUserThunk = (user) => {
   return async (dispatch) => {
@@ -141,7 +137,6 @@ export const updateUserThunk = (user) => {
 };
 
 export const sendFriendRequest = (senderId, phoneNumber) => {
-  console.log(senderId, phoneNumber, "is the input");
   return async (dispatch) => {
     try {
       await instance.post("/api/users/addFriend/", {
@@ -163,18 +158,22 @@ export default function (state = {}, action) {
       return {};
     case SIGNUP:
       return action.signup;
-    case GET_USER_INFO: 
-      return state
+    case GET_USER_INFO:
+      return state;
     case APPROVE_REQUEST:
-      const user = state
- 
+      const user = state;
+
       user.requestee = user.requestee.filter((element) => {
-        if(element.id !== action.user.id) return element
-      })
-      user.friend.push(action.user)
-      return state
+        if (element.id !== action.user.id) return element;
+      });
+      user.friend.push(action.user);
+      return state;
     case DENY_REQUEST:
-        return state
+      const user2 = state;
+      user2.requestee = user2.requestee.filter((element) => {
+        if (element.id !== action.id) return element;
+      });
+      return state;
     default:
       return state;
   }
