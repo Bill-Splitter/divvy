@@ -22,9 +22,19 @@ const Signup = (props) => {
   const [phone, setPhone] = React.useState();
   const [password, setPassword] = React.useState();
   const [check, setCheck] = React.useState();
+  const [fName, setFName] = React.useState();
+  const [lName, setLName] = React.useState();
 
   const clickSubmit = () => {
-    if (!email || !username || !phone || !password || !check) {
+    if (
+      !email ||
+      !username ||
+      !phone ||
+      !password ||
+      !check ||
+      !lName ||
+      !fName
+    ) {
       alert("all fields must be filled");
     } else if (check !== password) {
       alert("passwords do not match");
@@ -33,12 +43,17 @@ const Signup = (props) => {
     } else if (password.length < 4) {
       alert("password must be at least four characters");
     } else {
+      const f = fName[0].toUpperCase() + fName.slice(1).toLowerCase().trim()
+      const l = lName[0].toUpperCase() + lName.slice(1).toLowerCase().trim()
       const data = {
-        username: username,
-        email: email,
-        phone: phone,
-        password: password,
-        phoneNumber: phone,
+        username: username.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        password: password.trim(),
+        phoneNumber: phone.trim(),
+        fName: f,
+        lName: l,
+
       };
       props.signUp(data);
       navigation.navigate("BottomTabNav");
@@ -56,6 +71,20 @@ const Signup = (props) => {
           style={styles.input}
           maxLength={30}
           onChangeText={(text) => setUsername(text)}
+          textContentType={"username"}
+        ></TextInput>
+        <TextInput
+          placeholder="First Name"
+          style={styles.input}
+          maxLength={30}
+          onChangeText={(text) => setFName(text)}
+          textContentType={"username"}
+        ></TextInput>
+        <TextInput
+          placeholder="Last Name"
+          style={styles.input}
+          maxLength={30}
+          onChangeText={(text) => setLName(text)}
           textContentType={"username"}
         ></TextInput>
         <TextInput

@@ -8,7 +8,7 @@ import Banner2 from "./Banner2";
 export default Transactions = () => {
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 />
+      <Banner2 name={'Transactions'}/>
       <Text>Transactions</Text>
     </View>
   );
