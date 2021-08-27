@@ -17,6 +17,13 @@ const Bill = db.define("bill", {
 
   parsedBill: {
     type: Sequelize.TEXT,
+    defaultValue: "{}",
+    get: function () {
+      return JSON.parse(this.getDataValue("parsedBill"));
+    },
+    set: function (val) {
+      return this.setDataValue("parsedBill", JSON.stringify(val));
+    },
   },
 
   total: {
@@ -29,7 +36,7 @@ const Bill = db.define("bill", {
 
   date: {
     type: Sequelize.DATE,
-    defaultValue: Sequelize.now,
+    defaultValue: Date.now(),
   },
 
   completed: {

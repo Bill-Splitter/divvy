@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
-import { denyFriendRequest } from "../../store";
-import { approveFriendRequest, getUpdatedUserInfo } from "../../store";
+import { denyFriendRequest } from "../../../store";
+import { approveFriendRequest, getUpdatedUserInfo } from "../../../store";
 import { useDispatch, useSelector } from "react-redux";
 
 import {

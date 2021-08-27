@@ -1,37 +1,33 @@
-// import axios from "axios";
+import axios from "axios";
 
 // const ApiKey = "cca55ddcec88957";
 
-// const SET_DATA = "SET_DATA";
+const SET_BILL = "SET_BILL";
+const instance = axios.create({ baseURL: "http://localhost:8080" });
 
-// const initialState = {};
+const initialState = {
+  bill: {},
+};
 
-// const setData = (data) => {
-//   return {
-//     type: SET_DATA,
-//     data,
-//   };
-// };
+export const createBillThunk = (bill, userid, friends) => {
+  console.log(userid, "thunk");
+  return async (dispatch) => {
+    try {
+      const newBill = await instance.post("api/bills/", {
+        bill: bill,
+        userid: userid,
+        friendArray: friends,
+      });
+      const data = newBill.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
-// export const sendPhotoThunk = (image) => {
-//   return async (dispatch) => {
-//     try {
-//       const data = await axios.get(
-//         `https://api.ocr.space/parse/imageurl?apikey=${ApiKey}&url=https://media-cdn.tripadvisor.com/media/photo-p/0e/54/47/43/receipt.jpg&isTable=true&OCREngine=2`
-//       );
-
-//       dispatch(setData(data.data));
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-// };
-
-// export default function (state = initialState, action) {
-//   switch (action.type) {
-//     case SET_DATA:
-//       return action.data;
-//     default:
-//       return state;
-//   }
-// }
+export default function (state = initialState, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}

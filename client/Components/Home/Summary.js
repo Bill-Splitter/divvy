@@ -1,30 +1,67 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";  
+import { createBillThunk } from "../../store/bill";
 
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableHighlight,
-  TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+
 import Banner2 from "./Banner2";
 
-const Summary = (props) => {
-  const friendArray = props.friends.friend || [];
+const Summary = () => {
 
+  const info = useSelector((state)=> state.split )
+  const friends = useSelector((state) => state.user)
+  const userId = useSelector((state => state.user.id))
+  const dispatch = useDispatch();
+  const friendArray = friends.friend || []
   const navigation = useNavigation();
 
   const sendInvoices = () => {
-    alert("sending invoices, each user will be charge");
+    Alert.alert(
+      "Sending Invoices",
+      "Each user will be sent a request for their repsective amount.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "Send", onPress: () => submit() },
+      ]
+    );
+  };
+
+  const submit = () => {
+    const billText = {
+      title:  info.name,
+      total: info.total,
+      group: info.group,
+      userAmounts: (info.total / (friendArray.length + 1)).toFixed(2)
+    }
+
+    const newBill = {
+      type: "simple",
+      name: info.name,
+      total: info.total,
+      parsedBill: billText,
+      completed: true,
+      userId: userId,
+      date: Date.now()
+    };
+    dispatch(createBillThunk(newBill,userId, friendArray))
+    navigation.navigate("ProfilePage")
+
   };
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner2 name={props.info.group}/>
+      <Banner2 name={info.group} />
       <View
         style={{
           display: "flex",
@@ -48,21 +85,23 @@ const Summary = (props) => {
 
             <Text style={styles.listText}>
               {"$ "}
-              {(props.info.total / (friendArray.length + 1)).toFixed(2)}
+              {(info.total / (friendArray.length + 1)).toFixed(2)}
             </Text>
           </View>
 
           {friendArray.map((element) => {
             return (
               <View key={element.id} style={styles.listRow}>
-                <Text numberOfLines={1} style={styles.listName}>{element.fName} {element.lName}</Text>
+                <Text numberOfLines={1} style={styles.listName}>
+                  {element.fName} {element.lName}
+                </Text>
                 <Text style={styles.listPercent}>
                   {Math.floor(100 / (friendArray.length + 1))}
                   {"%"}
                 </Text>
                 <Text numberOfLines={1} style={styles.listText}>
                   {"$"}{" "}
-                  {(props.info.total / (friendArray.length + 1)).toFixed(2)}
+                  {(info.total / (friendArray.length + 1)).toFixed(2)}
                 </Text>
               </View>
             );
@@ -70,9 +109,9 @@ const Summary = (props) => {
         </ScrollView>
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
-          <Text style={styles.eventName}>{props.info.name}</Text>
+          <Text style={styles.eventName}>{info.name}</Text>
           <Text style={styles.totalAmount}>
-            Total:{"  "} ${props.info.total}
+            Total:{"  "} ${info.total}
           </Text>
           <TouchableHighlight
             style={styles.sendInvoice}
@@ -86,18 +125,8 @@ const Summary = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    info: state.split,
-    friends: state.user,
-  };
-};
 
-const mapDispatchToProps = (dispatch) => ({
-  signUp: (data) => dispatch(signupThunk(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Summary);
+export default Summary;
 
 const styles = StyleSheet.create({
   listRow: {
@@ -107,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "space-between",
     padding: 10,
-    alignItems: "center"
+    alignItems: "center",
   },
   listText: {
     textAlign: "right",
@@ -116,7 +145,6 @@ const styles = StyleSheet.create({
     color: "#ED3B5B",
     fontSize: 25,
     fontWeight: "bold",
-  
   },
   listName: {
     textAlign: "left",
@@ -125,14 +153,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 15,
     fontWeight: "bold",
-
   },
   listPercent: {
     width: "20%",
     textAlign: "center",
     color: "#ED3B5B",
     fontSize: 25,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   headerText: {
