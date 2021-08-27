@@ -22,12 +22,8 @@ const FriendRequests = (props) => {
 
   const approve = (id, user) => {
     dispatch(approveFriendRequest(id, user));
-    console.log(id, user);
-    // setRequests(props.requestArray || [])
-    // update()
   };
   const deny = (id, user) => {
-    console.log(id, user);
     dispatch(denyFriendRequest(id, user));
   };
 

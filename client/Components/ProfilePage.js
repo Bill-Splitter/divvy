@@ -31,16 +31,14 @@ const ProfilePage = (props) => {
   React.useEffect(() => {
     if (user.requestee) setNotis(user.requestee.length);
     const unsubscribe = navigation.addListener("focus", () => {
-      console.log("unsubscribe");
       dispatch(getUpdatedUserInfo());
       if (user.requestee) setNotis(user.requestee.length)
     });
   });
 
-  console.log("rendering");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
         <View style={{ textAlign: "center" }}>
           <Text style={styles.bigText}>{user.username}</Text>
@@ -166,7 +164,7 @@ const ProfilePage = (props) => {
           <Text style={styles.submitText}>Logout</Text>
         </TouchableHighlight>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

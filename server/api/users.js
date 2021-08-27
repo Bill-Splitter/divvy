@@ -54,7 +54,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/denyRequest/", async (req, res, next) => {
-  console.log(req.body);
+
   const sender = req.body.sender;
   const receiver = req.body.receiver;
 

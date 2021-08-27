@@ -16,7 +16,6 @@ import Banner2 from "./Banner2";
 
 const Summary = (props) => {
   const friendArray = props.friends.friend || [];
-  console.log(friendArray.length);
 
   const navigation = useNavigation();
 
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
   },
   sendInvoice: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: "#3bedac",
     borderRadius: 45,
     marginTop: 20,
     marginBottom: 5,
