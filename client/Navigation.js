@@ -72,7 +72,7 @@ const BottomTabNav = () => {
             case "Home":
               return <AntDesign name="home" size={size} color={color} />;
             case "New Divvy":
-              return <Entypo name="scissors" size={size} color={color} />;
+              return <Entypo name="scissors" size={size + 15} color={color} />;
             case "Friends":
               return (
                 <Ionicons

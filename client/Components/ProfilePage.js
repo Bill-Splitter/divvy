@@ -77,7 +77,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <Entypo name="scissors" size={24} color="#ED3B5B" />
+                <Entypo name="scissors" size={39} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>New Divvy</Text>
             </View>
@@ -93,7 +93,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome5 name="money-check" size={24} color="#ED3B5B" />
+                <FontAwesome5 name="money-check" size={30} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>Transactions</Text>
             </View>
@@ -109,7 +109,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome5 name="user-friends" size={24} color="#ED3B5B" />
+                <FontAwesome5 name="user-friends" size={30} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>Friends</Text>
             </View>
@@ -125,7 +125,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <Feather name="message-square" size={24} color="#ED3B5B" />
+                <Feather name="message-square" size={30} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>Messages</Text>
             </View>
@@ -140,7 +140,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome name="user-plus" size={24} color="#ED3B5B" />
+                <FontAwesome name="user-plus" size={30} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>
                 Friend Requests
@@ -163,7 +163,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome name="gear" size={25} color="#ED3B5B" />
+                <FontAwesome name="gear" size={35} color="#ED3B5B" />
               </View>
               <Text style={styles.listText}>Settings</Text>
             </View>
@@ -256,5 +256,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 35,
+    alignItems: "center"
   },
 });
