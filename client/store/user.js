@@ -10,6 +10,7 @@ const UPDATE_USER = "UPDATE_USER";
 const APPROVE_REQUEST = "APPROVE_REQUEST";
 const DENY_REQUEST = "DENY_REQUEST";
 const GET_USER_INFO = "GET_USER_INFO";
+const DELETE_FRIEND = "DELETE_FRIEND"
 
 //action creators
 export const login = (user) => {
@@ -18,6 +19,8 @@ export const login = (user) => {
     user,
   };
 };
+
+
 
 export const getUpdatedUserInfo = () => {
   return {
@@ -57,6 +60,12 @@ export const denyRequest = (id) => {
     id
   }
 }
+export const deleteFriend = (friendId) => {
+  return {
+    type: DELETE_FRIEND,
+    id: friendId
+  }
+}
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -90,6 +99,25 @@ export const signupThunk = (formData) => {
     }
   };
 };
+
+export const deleteFriendThunk = (myId, friendId) => {
+  return async(dispatch) => {
+    try {
+      console.log("friend", friendId, myId)
+      await instance.delete("api/users/deleteFriend/", {
+        data: {
+          user1: myId,
+          user2: friendId,
+        },
+      });
+
+      dispatch(deleteFriend(friendId))
+
+    } catch(error){
+      console.error(error)
+    }
+  }
+}
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
@@ -166,6 +194,12 @@ export default function (state = {}, action) {
       return action.signup;
     case GET_USER_INFO:
       return state;
+    case DELETE_FRIEND:
+      let temp = state
+      temp.friend = temp.friend.filter((element) => {
+        if(element.id != action.id) return element
+      })
+      return temp
 
     case APPROVE_REQUEST:
       const user = state;

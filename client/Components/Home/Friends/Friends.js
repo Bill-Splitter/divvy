@@ -1,37 +1,34 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFriendThunk } from "../../../store";
+import ItemBox from "./ItemBox";
 import {
   StyleSheet,
   Text,
   View,
   TouchableHighlight,
-  ScrollView,
-  Image,
+  FlatList,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "../Banner2";
 
-const Friends = (props) => {
+
+const Friends = () => {
   const navigation = useNavigation();
-  const [friend, setFriend] = React.useState();
+  const friends = useSelector((state) => state.user.friend);
+  const myId = useSelector((state) => state.user.id)
+  const dispatch = useDispatch();
 
-  const allFriends = props.friends || [];
+  const allFriends = friends || [];
+
+  const deleteItem = (id) => {
+    dispatch(deleteFriendThunk(myId,id))
+  };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      {/* <Banner2 name="Select Friends" /> */}
       <View style={styles.container}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: 40,
-          }}
-        >
+        <View style={styles.holder}>
           <TouchableHighlight
             underlayColor={"#ED3B5B"}
             style={styles.leftArrow}
@@ -50,72 +47,45 @@ const Friends = (props) => {
               display: "flex",
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 56,
-                paddingRight: 10,
-              }}
-            >
-              +
-            </Text>
+            <Text style={styles.plusText}>+</Text>
           </TouchableHighlight>
         </View>
       </View>
       <View style={styles.view}>
-        <ScrollView style={{ width: "100%" }}>
+        <View style={{ width: "100%" }}>
           <TouchableHighlight
             style={styles.listElementContainer}
-            onPress={() => navigation.navigate("DivvyView")}
             underlayColor={"white"}
           >
-            <View style={styles.listElement}>
-              {allFriends.map((element, index) => {
+            <FlatList
+              data={allFriends}
+              renderItem={(item) => {
                 return (
-                  <View
-                    key={index}
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Image
-                      source={{
-                        uri: element.imageUrl,
-                      }}
-                      style={{
-                        width: 45,
-                        height: 45,
-                        borderRadius: 999,
-                        overflow: "hidden",
-                        borderWidth: 2,
-                        borderColor: "#ED3B5B",
-                        marginRight: 10,
-                      }}
-                    />
-                    <Text style={styles.listText}>{element.username}</Text>
-                  </View>
+                  <ItemBox
+                    data={item}
+                    handleDelete={() => deleteItem(item.item.id)}
+                  />
                 );
-              })}
-            </View>
+              }}
+              ItemSeparatorComponent={() => {
+                return <View style={styles.seperatorLine}></View>;
+              }}
+            />
           </TouchableHighlight>
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    friends: state.user.friend,
-  };
-};
 
-export default connect(mapStateToProps)(Friends);
+export default Friends;
+
 const styles = StyleSheet.create({
   listElementContainer: {
     backgroundColor: "#fff",
-    marginLeft: 20,
+    marginLeft: 0,
+    display: "flex",
+    height: "100%",
   },
   listText: {
     fontSize: 32,
@@ -137,6 +107,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignContent: "center",
   },
+  deleteBox: {
+    backgroundColor: "#ED3B5B",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 100,
+    height: "100%",
+  },
   view: {
     width: "100%",
     flex: 1,
@@ -146,8 +123,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 0,
   },
+  seperatorLine: {
+    height: 1,
+    backgroundColor: "pink",
+  },
   image: {
-
+    width: 50,
+    height: 50,
+    borderRadius: 999,
+    overflow: "hidden",
+    borderWidth: 2,
+    borderColor: "#ED3B5B",
+    marginRight: 10,
+    marginLeft: 10,
   },
   input: {
     height: 50,
@@ -182,5 +170,18 @@ const styles = StyleSheet.create({
   leftArrow: {
     zIndex: 99,
     padding: 10,
+  },
+
+  holder: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 40,
+  },
+  plusText: {
+    color: "white",
+    fontSize: 56,
+    paddingRight: 10,
   },
 });
