@@ -146,7 +146,6 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
 
       if(fren.data === "not found"){
         console.error("not found")
-
         throw "error"
       }
     } catch (error) {

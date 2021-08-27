@@ -11,9 +11,9 @@ import {
   TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 import { Entypo } from "@expo/vector-icons";
-import { updateUserThunk } from "../../store";
+import { updateUserThunk } from "../../../store";
 
 const Settings = (props) => {
   const navigation = useNavigation();

@@ -14,14 +14,27 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:userId", async (req, res, next) => {
+  const userId = req.params.userId;
+  try {
+    const bills = await Bill.findAll({
+      where: {
+        userId: userId,
+      },
+    });
+    res.json(bills);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const bill = await Bill.create(req.body.bill);
     req.body.friendArray.forEach((element) => {
       bill.addOwes(element.id);
     });
-    res.sendStatus(201)
-
+    res.sendStatus(201);
   } catch (error) {
     next(error);
   }

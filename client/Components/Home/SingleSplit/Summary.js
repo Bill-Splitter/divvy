@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";  
-import { createBillThunk } from "../../store/bill";
+import { createBillThunk } from "../../../store/bill";
 
 import {
   StyleSheet,
@@ -13,7 +13,7 @@ import {
   Alert,
 } from "react-native";
 
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 
 const Summary = () => {
 
@@ -24,13 +24,16 @@ const Summary = () => {
   const friendArray = friends.friend || []
   const navigation = useNavigation();
 
+
+  console.log("-=====================================",info.idArray)
+
   const sendInvoices = () => {
     Alert.alert(
       "Sending Invoices",
       "Each user will be sent a request for their repsective amount.",
       [
         {
-          text: "Cancel",
+          text: "Cancel", onPress: ()=> console.log("-=====================================",info.idArray),
           style: "cancel",
         },
         { text: "Send", onPress: () => submit() },
@@ -39,6 +42,7 @@ const Summary = () => {
   };
 
   const submit = () => {
+    console.log("-=====================================",info.idArray)
     const billText = {
       title:  info.name,
       total: info.total,
@@ -55,10 +59,15 @@ const Summary = () => {
       userId: userId,
       date: Date.now()
     };
-    dispatch(createBillThunk(newBill,userId, friendArray))
+    dispatch(createBillThunk(newBill,userId, groupFriends))
     navigation.navigate("ProfilePage")
 
   };
+
+  const groupFriends = friendArray.filter((element) => {
+    if(info.idArray.includes(element.id)) return element  
+  })
+
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
       <Banner2 name={info.group} />
@@ -89,7 +98,7 @@ const Summary = () => {
             </Text>
           </View>
 
-          {friendArray.map((element) => {
+          {groupFriends.map((element) => {
             return (
               <View key={element.id} style={styles.listRow}>
                 <Text numberOfLines={1} style={styles.listName}>
