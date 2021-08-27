@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setData } from "../../store/split";
+import { setData } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
@@ -17,7 +17,7 @@ import {
   TextInput,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 
 const SimpleSplitCreation = (props) => {
   const navigation = useNavigation();

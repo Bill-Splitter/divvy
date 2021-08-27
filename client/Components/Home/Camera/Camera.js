@@ -14,8 +14,8 @@ import {
 import { Camera } from "expo-camera";
 import { SafeAreaView } from "react-native";
 import ImagePicker from "./ImagePicker";
-import Banner2 from "./Banner2";
-import { sendPhotoThunk } from "../../store/bill";
+import Banner2 from "../Banner2";
+import { sendPhotoThunk } from "../../../store/bill";
 
 let camera: Camera;
 const Cameras = (props) => {

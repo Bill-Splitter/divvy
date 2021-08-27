@@ -13,8 +13,7 @@ import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { logout } from "../store";
-import { getUpdatedUserInfo } from "../store";
+import { getUpdatedUserInfo } from "../../store";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
