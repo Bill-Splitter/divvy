@@ -3,14 +3,12 @@ import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import {
-  StyleSheet,
+ 
   Text,
   View,
-  SafeAreaView,
   TouchableHighlight,
   TextInput,
-  ScrollView,
-  Image,
+
 } from "react-native";
 
 import Banner2 from "./Banner2";
@@ -21,20 +19,18 @@ const AddFriend = (props) => {
   const [phoneNumber, setPhoneNumber] = React.useState();
 
   const clickSubmit = () => {
-    props.sendRequest(props.user.id, phoneNumber);
+    props.sendRequest(props.user.id, phoneNumber.trim());
     navigation.navigate("Friends");
   };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name="Add By Phone Number"></Banner2>
+      <Banner2 name="Add A Friend"></Banner2>
       <View style={styles.container}>
         <TextInput
-          placeholder="Phone Number"
+          placeholder="Username or Phone Number"
           style={styles.input}
           onChangeText={(text) => setPhoneNumber(text)}
-          keyboardType={"phone-pad"}
-          textContentType={"telephoneNumber"}
         ></TextInput>
 
         <TouchableHighlight

@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const Sequelize = require("sequelize")
 
 const {
   models: { User },
@@ -94,22 +95,39 @@ router.post("/approveRequest", async (req, res, next) => {
 router.post("/addFriend/", async (req, res, next) => {
   const senderId = req.body.senderId;
   const phoneNumber = req.body.phoneNumber;
-
-
+  const number = Number(phoneNumber)
+  
 
   try {
-    const receiver = await User.findOne({
-      where: {
-        phoneNumber: phoneNumber,
-      },
-    });
+    let receiver;
+    if(isNaN(number)) {
+      receiver = await User.findOne({
+        where: {
+          [Sequelize.Op.or]: [
+            {username: phoneNumber}
+          ]
+        },
+      });
+
+    }else{
+      receiver = await User.findOne({
+        where: {
+          [Sequelize.Op.or]: [
+            {phoneNumber: phoneNumber},
+          ]
+        },
+      });
+
+    }
+   
     if (receiver) {
       receiver.addRequestee(senderId);
+      res.json(true)
     } else {
-      // res.sendStatus(500);
+      res.json("not found")
     }
   } catch (error) {
     next(error);
   }
-  res.sendStatus(200);
+
 });
