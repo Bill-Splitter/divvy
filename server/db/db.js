@@ -2,7 +2,8 @@ const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
 
 //my heroku db name couldnt be 'divvy', so I made it 'divvydb'. hence the logic below.
-const databaseName = pkg.name + (process.env.DATABASE_URL ? 'db' : '') + (process.env.NODE_ENV === 'test' ? '-test' : '')
+const databaseName = pkg.name + (process.env.DATABASE_URL ? 'db' : '') + (process.env.NODE_ENV === 'test' ? '-test' : '');
+console.log('databaseName: ', databaseName);
 
 const config = {
   logging: false
