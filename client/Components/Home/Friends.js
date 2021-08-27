@@ -50,7 +50,15 @@ const Friends = (props) => {
               display: "flex",
             }}
           >
-            <Text style={styles.card}>+</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 56,
+                paddingRight: 10,
+              }}
+            >
+              +
+            </Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -76,7 +84,15 @@ const Friends = (props) => {
                       source={{
                         uri: element.imageUrl,
                       }}
-                      style={styles.image}
+                      style={{
+                        width: 45,
+                        height: 45,
+                        borderRadius: 999,
+                        overflow: "hidden",
+                        borderWidth: 2,
+                        borderColor: "#ED3B5B",
+                        marginRight: 10,
+                      }}
                     />
                     <Text style={styles.listText}>{element.username}</Text>
                   </View>
@@ -131,13 +147,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   image: {
-    width: 45,
-    height: 45,
-    borderRadius: 999,
-    overflow: "hidden",
-    borderWidth: 2,
-    borderColor: "#ED3B5B",
-    marginRight: 10,
+
   },
   input: {
     height: 50,
@@ -172,10 +182,5 @@ const styles = StyleSheet.create({
   leftArrow: {
     zIndex: 99,
     padding: 10,
-  },
-  card: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
   },
 });
