@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import {
- 
-  Text,
-  View,
-  TouchableHighlight,
-  TextInput,
-
-} from "react-native";
+import { Text, View, TouchableHighlight, TextInput } from "react-native";
 
 import Banner2 from "./Banner2";
 import { sendFriendRequest } from "../../store/user";
@@ -18,8 +11,9 @@ const AddFriend = (props) => {
   const navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = React.useState();
 
-  const clickSubmit = () => {
+  const clickSubmit = async () => {
     props.sendRequest(props.user.id, phoneNumber.trim());
+
     navigation.navigate("Friends");
   };
 

@@ -139,10 +139,16 @@ export const updateUserThunk = (user) => {
 export const sendFriendRequest = (senderId, phoneNumber) => {
   return async (dispatch) => {
     try {
-      await instance.post("/api/users/addFriend/", {
+      let fren = await instance.post("/api/users/addFriend/", {
         senderId: senderId,
         phoneNumber: phoneNumber,
       });
+
+      if(fren.data === "not found"){
+        console.error("not found")
+
+        throw "error"
+      }
     } catch (error) {
       console.error(error);
     }
@@ -160,7 +166,7 @@ export default function (state = {}, action) {
       return action.signup;
     case GET_USER_INFO:
       return state;
-      
+
     case APPROVE_REQUEST:
       const user = state;
 
