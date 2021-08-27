@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
 
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
+//my heroku db name couldnt be 'divvy', so I made it 'divvydb'. hence the logic below.
+const databaseName = pkg.name + (process.env.DATABASE_URL ? 'db' : '') + (process.env.NODE_ENV === 'test' ? '-test' : '');
+console.log('databaseName: ', databaseName);
 
 const config = {
   logging: false
@@ -13,7 +15,6 @@ if(process.env.LOGGING === 'true'){
 
 //https://stackoverflow.com/questions/61254851/heroku-postgres-sequelize-no-pg-hba-conf-entry-for-host
 //decide if this is needed for our react native use-case
-/*
 if(process.env.DATABASE_URL){
   config.dialectOptions = {
     ssl: {
@@ -21,7 +22,6 @@ if(process.env.DATABASE_URL){
     }
   };
 }
-*/
 
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
