@@ -13,6 +13,7 @@ import {
   View,
   ScrollView,
   TouchableHighlight,
+  Image,
 } from "react-native";
 
 const FriendRequests = (props) => {
@@ -39,10 +40,24 @@ const FriendRequests = (props) => {
         <ScrollView>
           {requests.map((element, index) => (
             <View style={styles.listRow} key={index}>
-              <Text style={styles.listText}>{element.username}</Text>
-              <Text style={styles.listTextSmall}>
-                {element.email}, {element.phoneNumber}
-              </Text>
+              <View style={styles.top}>
+                <Image
+                  source={{
+                    uri: element.imageUrl,
+                  }}
+                  style={styles.image}
+                />
+                <View>
+                  <Text style={styles.listText}>{element.username} </Text>
+                  <Text style={styles.listTextSmall}>
+                    Email: {element.email}
+                  </Text>
+                  <Text style={styles.listTextSmall}>
+                    Phone: {element.phoneNumber}
+                  </Text>
+                </View>
+              </View>
+
               <View style={styles.buttonGroup}>
                 <TouchableHighlight
                   style={styles.delete}
@@ -69,8 +84,6 @@ const FriendRequests = (props) => {
 
 export default FriendRequests;
 
-
-
 const styles = StyleSheet.create({
   listRow: {
     width: "100%",
@@ -81,7 +94,7 @@ const styles = StyleSheet.create({
     borderColor: "#D7CBCB",
   },
   delete: {
-    width: "20%",
+    width: "25%",
     backgroundColor: "#ED3B5B",
     height: 50,
     justifyContent: "center",
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
   },
   approve: {
     backgroundColor: "#3bedac",
-    width: "20%",
+    width: "25%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -101,12 +114,30 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 28,
     color: "#ED3B5B",
-    padding: 5,
+    padding: 2,
     fontWeight: "bold",
   },
   listTextSmall: {
     fontSize: 16,
     color: "#ED3B5B",
+    marginLeft: 5,
+  },
+  top: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    // backgroundColor: "pink",
+    width: "90%"
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 999,
+    overflow: "hidden",
+    borderWidth: 2,
+    borderColor: "#ED3B5B",
+    marginRight: 10,
   },
 
   buttonGroup: {
