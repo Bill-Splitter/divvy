@@ -21,24 +21,23 @@ import { getUpdatedUserInfo } from "../store";
 const ProfilePage = (props) => {
   const navigation = useNavigation();
   let user = useSelector((state) => state.user);
-  const [notis, setNotis] = React.useState(user.requestee.length);
-
+  const [notis, setNotis] = React.useState(user.requestee);
   const dispatch = useDispatch();
 
-
-
   const logout = () => {
-
     navigation.navigate("Homescreen");
   };
 
   React.useEffect(() => {
-    setNotis(user.requestee.length)
+    if (user.requestee) setNotis(user.requestee.length);
     const unsubscribe = navigation.addListener("focus", () => {
+      console.log("unsubscribe");
       dispatch(getUpdatedUserInfo());
-      setNotis(user.requestee.length);
+      if (user.requestee) setNotis(user.requestee.length)
     });
   });
+
+  console.log("rendering");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,7 +47,6 @@ const ProfilePage = (props) => {
           <Text style={styles.littleText}>{user.email}</Text>
         </View>
       </View>
-
 
       <View style={styles.listContainer}>
         <TouchableHighlight
