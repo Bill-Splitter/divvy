@@ -3,13 +3,13 @@ import Signup from "./Components/login/Signup.js";
 import Login from "./Components/login/Login.js";
 import ProfilePage from "./Components/ProfilePage.js";
 import Settings from "./Components/Home/Settings.js";
-import Friends from "./Components/Home/Friends.js";
+import Friends from "./Components/Home/Friends/Friends.js";
 import Messages from "./Components/Home/Messages.js";
 import Transactions from "./Components/Home/Transactions/Transactions.js";
 import DivvyView from "./Components/Home/DivvyView.js";
 import SimpleSplitCreation from "./Components/Home/SimpleSplitCreation.js";
 import GroupList from "./Components/Home/GroupList.js";
-import FriendsList from "./Components/Home/FriendsList.js";
+import FriendsList from "./Components/Home/Friends/FriendsList.js";
 import Summary from "./Components/Home/Summary.js";
 import AddFriend from "./Components/Home/AddFriend.js";
 import FriendRequests from "./Components/Home/Friends/FriendRequests.js";
@@ -54,7 +54,6 @@ const Home = () => {
 };
 
 const BottomTabNav = () => {
-
   let requests = useSelector((state) => state.user.requestee || []);
 
   return (
@@ -68,7 +67,7 @@ const BottomTabNav = () => {
               return <AntDesign name="home" size={size} color={color} />;
             case "New Divvy":
               return <Entypo name="scissors" size={size + 15} color={color} />;
-            case "Friends":
+            case "Groups":
               return (
                 <Ionicons
                   name="ios-person-circle-outline"
@@ -88,7 +87,7 @@ const BottomTabNav = () => {
         options={{ tabBarBadge: requests.length > 0 ? requests.length : null }}
       />
       <Tab.Screen name="New Divvy" component={DivvyView} />
-      <Tab.Screen name="Friends" component={FriendsList} />
+      <Tab.Screen name="Groups" component={GroupList} />
     </Tab.Navigator>
   );
 };

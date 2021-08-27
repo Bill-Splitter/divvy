@@ -40,7 +40,7 @@ const GroupList = (props) => {
           {/* <View style={styles.header}>
             <Text style={styles.headerText}>Group List</Text>
           </View> */}
-          {/* 
+          {/*
           <View style={styles.borderBar}></View> */}
           <ScrollView style={{ minHeight: "85%" }}>
             <TouchableHighlight
@@ -76,7 +76,7 @@ const GroupList = (props) => {
           >
             <TouchableHighlight
               style={styles.loginButton}
-              onPress={() => navigation.navigate("Summary")}
+              onPress={() => navigation.navigate("FriendsList")}
             >
               <Text style={styles.loginButtonText}>Create New Group</Text>
             </TouchableHighlight>

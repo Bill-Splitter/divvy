@@ -6,64 +6,91 @@ import {
   StyleSheet,
   Text,
   View,
+  SafeAreaView,
   TouchableHighlight,
+  TextInput,
   ScrollView,
   Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 
-const Friends = (props) => {
+const allFriends = [
+  {
+    id: 1,
+    username: "Scott",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 2,
+    username: "Jake Paul",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 3,
+    username: "John Thomas",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 4,
+    username: "Von Haas",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 5,
+    username: "Ash ",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 6,
+    username: "Jake Paul",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 7,
+    username: "John Thomas",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 8,
+    username: "Von Haas",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 9,
+    username: "Ash ",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 10,
+    username: "Von Haas",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+  {
+    id: 11,
+    username: "Ash ",
+    image: "https://timesofindia.indiatimes.com/photo/67586673.cms",
+  },
+];
+
+export default FriendsList = () => {
   const navigation = useNavigation();
   const [friend, setFriend] = React.useState();
 
-  const allFriends = props.friends || [];
-
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      {/* <Banner2 name="Select Friends" /> */}
-      <View style={styles.container}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: 40,
-          }}
-        >
-          <TouchableHighlight
-            underlayColor={"#ED3B5B"}
-            style={styles.leftArrow}
-            onPress={() => navigation.goBack()}
-          >
-            <AntDesign name="left" size={35} color="#fff" />
-          </TouchableHighlight>
-
-          <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>
-            Friends
-          </Text>
-
-          <TouchableHighlight
-            onPress={() => navigation.navigate("AddFriend")}
-            style={{
-              display: "flex",
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 56,
-                paddingRight: 10,
-              }}
-            >
-              +
-            </Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+      <Banner2 name="Select Friends" />
       <View style={styles.view}>
+        {/* <Text style={styles.groupText}>Select Friends</Text> */}
+
         <ScrollView style={{ width: "100%" }}>
+          {/* <TextInput
+            placeholder="Search Friends"
+            style={styles.input}
+            value={friend}
+            maxLength={30}
+            onChangeText={(text) => setEvent(text)}
+          ></TextInput> */}
           <TouchableHighlight
             style={styles.listElementContainer}
             onPress={() => navigation.navigate("DivvyView")}
@@ -82,7 +109,7 @@ const Friends = (props) => {
                   >
                     <Image
                       source={{
-                        uri: element.imageUrl,
+                        uri: "https://i.guim.co.uk/img/media/8a13052d4db7dcd508af948e5db7b04598e03190/0_294_5616_3370/master/5616.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=bcaa4eed2c1e6dab61c41a61e41433d9",
                       }}
                       style={{
                         width: 45,
@@ -101,17 +128,16 @@ const Friends = (props) => {
             </View>
           </TouchableHighlight>
         </ScrollView>
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => navigation.navigate("GroupList")}
+        >
+          <Text style={styles.loginButtonText}>Next</Text>
+        </TouchableHighlight>
       </View>
     </View>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    friends: state.user.friend,
-  };
-};
-
-export default connect(mapStateToProps)(Friends);
 const styles = StyleSheet.create({
   listElementContainer: {
     backgroundColor: "#fff",
@@ -145,9 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 0,
-  },
-  image: {
-
+    // marginTop: 200
   },
   input: {
     height: 50,
@@ -165,22 +189,5 @@ const styles = StyleSheet.create({
     color: "white",
     padding: 16,
     textAlign: "center",
-  },
-
-  spacer: {
-    flex: 0,
-    flexDirection: "column",
-    alignContent: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  container: {
-    width: "100%",
-    height: "13%",
-    backgroundColor: "#ED3B5B",
-  },
-  leftArrow: {
-    zIndex: 99,
-    padding: 10,
   },
 });
