@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, View, TouchableHighlight, TextInput } from "react-native";
 
 import Banner2 from "../Banner2";
-import { sendFriendRequest } from "../../store/user";
+import { sendFriendRequest } from "../../../store/user";
 
 const AddFriend = (props) => {
   const navigation = useNavigation();

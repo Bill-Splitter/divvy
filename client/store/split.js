@@ -5,6 +5,8 @@ const initialState = {
   idArray: [],
 };
 
+import source from "../../source";
+
 //action types
 const SET_DATA = "SET_DATA";
 const SET_GROUP = "SET_GROUP";
