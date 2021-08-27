@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteFriendThunk } from "../../../store";
 import ItemBox from "./ItemBox";
 import {
   StyleSheet,
@@ -10,34 +9,26 @@ import {
   View,
   TouchableHighlight,
   FlatList,
-
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "../Banner2";
+
 
 const Friends = () => {
   const navigation = useNavigation();
-  const friends = useSelector((state) => state.user.friend)
-
+  const friends = useSelector((state) => state.user.friend);
+  const myId = useSelector((state) => state.user.id)
+  const dispatch = useDispatch();
 
   const allFriends = friends || [];
 
   const deleteItem = (id) => {
-    console.log(id, "User ID to be deleted")
-  }
+    dispatch(deleteFriendThunk(myId,id))
+  };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
       <View style={styles.container}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: 40,
-          }}
-        >
+        <View style={styles.holder}>
           <TouchableHighlight
             underlayColor={"#ED3B5B"}
             style={styles.leftArrow}
@@ -56,15 +47,7 @@ const Friends = () => {
               display: "flex",
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 56,
-                paddingRight: 10,
-              }}
-            >
-              +
-            </Text>
+            <Text style={styles.plusText}>+</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -77,7 +60,12 @@ const Friends = () => {
             <FlatList
               data={allFriends}
               renderItem={(item) => {
-                return <ItemBox data={item} handleDelete={() => deleteItem(item.item.id)}/>;
+                return (
+                  <ItemBox
+                    data={item}
+                    handleDelete={() => deleteItem(item.item.id)}
+                  />
+                );
               }}
               ItemSeparatorComponent={() => {
                 return <View style={styles.seperatorLine}></View>;
@@ -89,8 +77,6 @@ const Friends = () => {
     </View>
   );
 };
-
-
 
 export default Friends;
 
@@ -184,5 +170,18 @@ const styles = StyleSheet.create({
   leftArrow: {
     zIndex: 99,
     padding: 10,
+  },
+
+  holder: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 40,
+  },
+  plusText: {
+    color: "white",
+    fontSize: 56,
+    paddingRight: 10,
   },
 });

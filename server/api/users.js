@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Sequelize = require("sequelize")
+const Sequelize = require("sequelize");
 
 const {
   models: { User },
@@ -55,7 +55,6 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/denyRequest/", async (req, res, next) => {
-
   const sender = req.body.sender;
   const receiver = req.body.receiver;
 
@@ -68,10 +67,27 @@ router.delete("/denyRequest/", async (req, res, next) => {
   }
 });
 
+router.delete("/deleteFriend", async (req, res, next) => {
+  const u1 = req.body.user1;
+  const u2 = req.body.user2;
+
+  try {
+    const user1 = await User.findByPk(u1);
+    const user2 = await User.findByPk(u2);
+    if (user1 && user2) {
+      user1.removeFriend(user2);
+      user2.removeFriend(user1);
+
+      res.json(user2);
+    } else next(error);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/approveRequest", async (req, res, next) => {
   const senderId = req.body.sender;
   const receiverId = req.body.receiver;
-
 
   try {
     const user1 = await User.findByPk(senderId);
@@ -95,39 +111,31 @@ router.post("/approveRequest", async (req, res, next) => {
 router.post("/addFriend/", async (req, res, next) => {
   const senderId = req.body.senderId;
   const phoneNumber = req.body.phoneNumber;
-  const number = Number(phoneNumber)
-  
+  const number = Number(phoneNumber);
 
   try {
     let receiver;
-    if(isNaN(number)) {
+    if (isNaN(number)) {
       receiver = await User.findOne({
         where: {
-          [Sequelize.Op.or]: [
-            {username: phoneNumber}
-          ]
+          [Sequelize.Op.or]: [{ username: phoneNumber }],
         },
       });
-
-    }else{
+    } else {
       receiver = await User.findOne({
         where: {
-          [Sequelize.Op.or]: [
-            {phoneNumber: phoneNumber},
-          ]
+          [Sequelize.Op.or]: [{ phoneNumber: phoneNumber }],
         },
       });
-
     }
-   
+
     if (receiver) {
       receiver.addRequestee(senderId);
-      res.json(true)
+      res.json(true);
     } else {
-      res.json("not found")
+      res.json("not found");
     }
   } catch (error) {
     next(error);
   }
-
 });
