@@ -1,24 +1,27 @@
 import Homescreen from "./Components/Homescreen.js";
 import Signup from "./Components/login/Signup.js";
 import Login from "./Components/login/Login.js";
-import Banner from "./Components/login/Banner.js";
 import ProfilePage from "./Components/ProfilePage.js";
 import Settings from "./Components/Home/Settings.js";
 import Friends from "./Components/Home/Friends.js";
 import Messages from "./Components/Home/Messages.js";
-import Transactions from "./Components/Home/Transactions.js";
-// import Cameras from "./Components/Home/Camera";
+import Transactions from "./Components/Home/Transactions/Transactions.js";
 import DivvyView from "./Components/Home/DivvyView.js";
 import SimpleSplitCreation from "./Components/Home/SimpleSplitCreation.js";
 import GroupList from "./Components/Home/GroupList.js";
 import FriendsList from "./Components/Home/FriendsList.js";
 import Summary from "./Components/Home/Summary.js";
 import AddFriend from "./Components/Home/AddFriend.js";
-
+import FriendRequests from "./Components/Home/Friends/FriendRequests.js";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Entypo } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -45,14 +48,45 @@ const Home = () => {
       <HomeStack.Screen name="AddFriend" component={AddFriend} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
+      <HomeStack.Screen name="FriendRequests" component={FriendRequests} />
     </HomeStack.Navigator>
   );
 };
 
 const BottomTabNav = () => {
+
+  let requests = useSelector((state) => state.user.requestee || []);
+
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Home" component={Home} />
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+
+        tabBarIcon: ({ color, size }) => {
+          switch (route.name) {
+            case "Home":
+              return <AntDesign name="home" size={size} color={color} />;
+            case "New Divvy":
+              return <Entypo name="scissors" size={size + 15} color={color} />;
+            case "Friends":
+              return (
+                <Ionicons
+                  name="ios-person-circle-outline"
+                  size={size}
+                  color={color}
+                />
+              );
+          }
+        },
+        tabBarActiveTintColor: "#ED3B5B",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ tabBarBadge: requests.length > 0 ? requests.length : null }}
+      />
       <Tab.Screen name="New Divvy" component={DivvyView} />
       <Tab.Screen name="Friends" component={FriendsList} />
     </Tab.Navigator>
@@ -79,10 +113,6 @@ export default function NavigationCon() {
           options={{ title: "Sign Up" }}
         />
         <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
-
-        {/* issue arose here when the components were comented out */}
-        {/* <AuthStack.Screen name="Banner" component={Banner} /> */}
-        {/* <AuthStack.Screen name="Home" component={BottomTabNav} /> */}
       </AuthStack.Navigator>
     </NavigationContainer>
   );

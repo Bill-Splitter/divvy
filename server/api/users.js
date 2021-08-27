@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const Sequelize = require("sequelize")
+
 const {
   models: { User },
 } = require("../db");
@@ -52,26 +54,80 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/denyRequest/", async (req, res, next) => {
+
+  const sender = req.body.sender;
+  const receiver = req.body.receiver;
+
+  try {
+    const user = await User.findByPk(sender);
+    user.removeRequestee(receiver);
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/approveRequest", async (req, res, next) => {
+  const senderId = req.body.sender;
+  const receiverId = req.body.receiver;
+
+
+  try {
+    const user1 = await User.findByPk(senderId);
+    const user2 = await User.findByPk(receiverId);
+    if (user1 && user2) {
+      user1.addFriend(user2);
+      user2.addFriend(user1);
+
+      user2.removeRequestee(senderId);
+      user1.removeRequestee(senderId);
+      user2.removeRequestee(receiverId);
+      user1.removeRequestee(receiverId);
+
+      res.json(user2);
+    } else next(error);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/addFriend/", async (req, res, next) => {
   const senderId = req.body.senderId;
   const phoneNumber = req.body.phoneNumber;
-
-  console.log(req.body);
+  const number = Number(phoneNumber)
+  
 
   try {
-    const receiver = await User.findOne({
-      where: {
-        phoneNumber: phoneNumber,
-      },
-    });
+    let receiver;
+    if(isNaN(number)) {
+      receiver = await User.findOne({
+        where: {
+          [Sequelize.Op.or]: [
+            {username: phoneNumber}
+          ]
+        },
+      });
+
+    }else{
+      receiver = await User.findOne({
+        where: {
+          [Sequelize.Op.or]: [
+            {phoneNumber: phoneNumber},
+          ]
+        },
+      });
+
+    }
+   
     if (receiver) {
       receiver.addRequestee(senderId);
-      console.log("sent valid friend request");
+      res.json(true)
     } else {
-      // res.sendStatus(500);
+      res.json("not found")
     }
   } catch (error) {
     next(error);
   }
-  res.sendStatus(200);
+
 });

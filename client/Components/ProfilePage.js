@@ -1,34 +1,72 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
+  Image,
   TouchableHighlight,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { logout } from "../store";
+import { getUpdatedUserInfo } from "../store";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
+  let user = useSelector((state) => state.user);
+  const [notis, setNotis] = React.useState(user.requestee);
+  const dispatch = useDispatch();
 
   const logout = () => {
     navigation.navigate("Homescreen");
   };
 
+  React.useEffect(() => {
+    if (user.requestee) setNotis(user.requestee.length);
+    const unsubscribe = navigation.addListener("focus", () => {
+      dispatch(getUpdatedUserInfo());
+      if (user.requestee) setNotis(user.requestee.length);
+    });
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ textAlign: "center" }}>
-        <Text style={styles.bigText}>{props.user.username}</Text>
-        <Text style={styles.littleText}>{props.user.email}</Text>
+    <View style={styles.container}>
+      <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
+        <View
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={{
+              uri: user.imageUrl,
+            }}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: 999,
+              overflow: "hidden",
+              marginTop: 40,
+              marginLeft: 10,
+              borderWidth: 2,
+              borderColor: "white",
+              marginRight: 10,
+            }}
+          />
+          <View>
+            <Text numberOfLines={1} style={styles.bigText}>{user.fName} {user.lName}</Text>
+            <Text numberOfLines={1} style={styles.littleText}>{user.email}</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.borderBar}></View>
 
       <View style={styles.listContainer}>
         <TouchableHighlight
@@ -38,7 +76,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Entypo name="scissors" size={24} color="#ED3B5B" />
+              <View style={styles.icon}>
+                <Entypo name="scissors" size={39} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>New Divvy</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -52,7 +92,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="attach-money" size={24} color="#ED3B5B" />
+              <View style={styles.icon}>
+                <FontAwesome5 name="money-check" size={30} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Transactions</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -66,7 +108,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Ionicons name="person-outline" size={24} color="#ED3B5B" />
+              <View style={styles.icon}>
+                <FontAwesome5 name="user-friends" size={30} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Friends</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -80,7 +124,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Feather name="message-square" size={24} color="#ED3B5B" />
+              <View style={styles.icon}>
+                <Feather name="message-square" size={30} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Messages</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -88,13 +134,22 @@ const ProfilePage = (props) => {
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.listElementContainer}
-          onPress={() => navigation.navigate("Transactions")}
+          onPress={() => navigation.navigate("FriendRequests")}
           underlayColor={"white"}
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="attach-money" size={24} color="#ED3B5B" />
-              <Text style={styles.listText}>Friend Requests</Text>
+              <View style={styles.icon}>
+                <FontAwesome name="user-plus" size={30} color="#ED3B5B" />
+              </View>
+              <Text style={styles.listText}>
+                Friend Requests
+                {notis > 0 ? (
+                  <Text style={styles.listText}> ( {notis} )</Text>
+                ) : (
+                  <></>
+                )}
+              </Text>
             </View>
             <View style={styles.borderBar}></View>
           </View>
@@ -107,7 +162,9 @@ const ProfilePage = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Feather name="settings" size={24} color="#ED3B5B" />
+              <View style={styles.icon}>
+                <FontAwesome name="gear" size={35} color="#ED3B5B" />
+              </View>
               <Text style={styles.listText}>Settings</Text>
             </View>
             <View style={styles.borderBar}></View>
@@ -129,17 +186,11 @@ const ProfilePage = (props) => {
           <Text style={styles.submitText}>Logout</Text>
         </TouchableHighlight>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-});
 
-export default connect(mapStateToProps, null)(ProfilePage);
+export default ProfilePage;
 
 const styles = StyleSheet.create({
   container: {
@@ -178,16 +229,18 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontSize: 25,
-    color: "#ED3B5B",
-    padding: 10,
-    paddingLeft: 100,
+    color: "white",
+    padding: 2,
+    marginLeft: 5,
+
     fontWeight: "bold",
+    marginTop: 35,
   },
   littleText: {
     fontSize: 15,
-    color: "#ED3B5B",
-    paddingLeft: 100,
-    padding: 2,
+    color: "white",
+    marginLeft: 10,
+    padding: 0,
   },
   submitButton: {
     width: "50%",
@@ -200,5 +253,9 @@ const styles = StyleSheet.create({
     color: "white",
     padding: 16,
     textAlign: "center",
+  },
+  icon: {
+    width: 35,
+    alignItems: "center"
   },
 });

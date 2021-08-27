@@ -6,12 +6,21 @@ const LOGIN = "LOGIN";
 const SIGNUP = "SIGNUP";
 const LOGOUT = "LOGOUT";
 const UPDATE_USER = "UPDATE_USER";
+const APPROVE_REQUEST = "APPROVE_REQUEST";
+const DENY_REQUEST = "DENY_REQUEST";
+const GET_USER_INFO = "GET_USER_INFO";
 
 //action creators
 export const login = (user) => {
   return {
     type: LOGIN,
     user,
+  };
+};
+
+export const getUpdatedUserInfo = () => {
+  return {
+    type: GET_USER_INFO,
   };
 };
 
@@ -34,6 +43,19 @@ export const updateUser = (user) => {
     user,
   };
 };
+
+export const approveRequest = (user) => {
+  return {
+    type: APPROVE_REQUEST,
+    user: user,
+  };
+};
+export const denyRequest = (id) => {
+  return {
+    type: DENY_REQUEST,
+    id
+  }
+}
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -68,6 +90,38 @@ export const signupThunk = (formData) => {
   };
 };
 
+export const approveFriendRequest = (id, user) => {
+  return async (dispatch) => {
+    try {
+      const returnedUser = await instance.post("api/users/approveRequest/", {
+        sender: user,
+        receiver: id,
+      });
+      const data = returnedUser.data;
+      dispatch(approveRequest(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const denyFriendRequest = (id, user) => {
+  return async (dispatch) => {
+    try {
+       await instance.delete("api/users/denyRequest/", {
+        data: {
+          sender: user,
+          receiver: id,
+        },
+      });
+
+      dispatch(denyRequest(id))
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 export const updateUserThunk = (user) => {
   return async (dispatch) => {
     try {
@@ -83,13 +137,18 @@ export const updateUserThunk = (user) => {
 };
 
 export const sendFriendRequest = (senderId, phoneNumber) => {
-  console.log(senderId, phoneNumber, "is the input");
   return async (dispatch) => {
     try {
-      await instance.post("/api/users/addFriend/", {
+      let fren = await instance.post("/api/users/addFriend/", {
         senderId: senderId,
         phoneNumber: phoneNumber,
       });
+
+      if(fren.data === "not found"){
+        console.error("not found")
+
+        throw "error"
+      }
     } catch (error) {
       console.error(error);
     }
@@ -105,6 +164,23 @@ export default function (state = {}, action) {
       return {};
     case SIGNUP:
       return action.signup;
+    case GET_USER_INFO:
+      return state;
+
+    case APPROVE_REQUEST:
+      const user = state;
+
+      user.requestee = user.requestee.filter((element) => {
+        if (element.id !== action.user.id) return element;
+      });
+      user.friend.push(action.user);
+      return state;
+    case DENY_REQUEST:
+      const user2 = state;
+      user2.requestee = user2.requestee.filter((element) => {
+        if (element.id !== action.id) return element;
+      });
+      return state;
     default:
       return state;
   }

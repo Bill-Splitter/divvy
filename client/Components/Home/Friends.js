@@ -6,9 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableHighlight,
-  TextInput,
   ScrollView,
   Image,
 } from "react-native";
@@ -147,7 +145,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 0,
-    // marginTop: 200
+  },
+  image: {
+
   },
   input: {
     height: 50,

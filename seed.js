@@ -32,11 +32,13 @@ const userSeed = [
   {
     username: "Jack",
     email: "jack@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 1,
     password: "123",
     imageUrl:
       "https://th.bing.com/th/id/R.7bc747bc2278a33b20ca592f4c6773eb?rik=uWa5RA7F%2brc29w&riu=http%3a%2f%2fdanielsschleswigholstein.weebly.com%2fuploads%2f2%2f4%2f4%2f0%2f24400987%2f1394821057.jpg&ehk=J0QxdVW5cnjMgMrc9yR14LXUfOnuaOzkchaoASL%2b7Js%3d&risl=&pid=ImgRaw&r=0",
     groups: group,
+    fName: "Jack",
+    lName: "Smith",
   },
   {
     username: "Jim",
@@ -44,38 +46,48 @@ const userSeed = [
     phoneNumber: 2,
     password: "123",
     groups: group2,
+    fName: "Jim",
+    lName: "Jones",
     imageUrl:
       "https://travelslebanon.weebly.com/uploads/2/7/1/6/27166575/786855_orig.jpg",
   },
   {
     username: "Julian",
     email: "julian@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 3,
     password: "123",
+    fName: "Julian",
+    lName: "Peters",
     imageUrl:
       "https://th.bing.com/th/id/OIP.7pEKHF7s05ogjhzX6kUxzwAAAA?pid=ImgDet&rs=1",
   },
   {
     username: "James",
     email: "james@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 4,
     password: "123",
+    fName: "James",
+    lName: "Jackson",
     imageUrl:
       "https://th.bing.com/th/id/R.d086dca0688ecd76bc87477651bea788?rik=53VIR39yloJtYA&riu=http%3a%2f%2f3.bp.blogspot.com%2f-A8wwRNzRrwU%2fT5XToa5wK1I%2fAAAAAAAAAG0%2fQeO01dNSsOk%2fs1600%2fcatalburun.jpg&ehk=cZo8TB5ZaoxBrTMafubUHUrVTroRlNxEGwUxedUmQJk%3d&risl=&pid=ImgRaw&r=0",
   },
   {
     username: "Jermey",
     email: "jermey@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 5,
     password: "123",
+    fName: "Jeremy",
+    lName: "White",
     imageUrl:
       "https://th.bing.com/th/id/OIP.OVSB9k-OAK5BBj93v233sgAAAA?pid=ImgDet&rs=1",
   },
   {
     username: "Jacky",
     email: "jacky@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 6,
     password: "123",
+    fName: "Jacky",
+    lName: "Robinson",
     imageUrl:
       "https://th.bing.com/th/id/OIP.ht9AD3ZVrDz8z1PTuwYYjgC1Es?pid=ImgDet&rs=1",
   },

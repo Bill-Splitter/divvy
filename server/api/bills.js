@@ -1,16 +1,29 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
-  models: { Bill },
-} = require('../db');
+  models: { Bill, User },
+} = require("../db");
+
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
-  
+router.get("/", async (req, res, next) => {
   try {
-    const bills = await Bill.findAll({include: 'owes'});
+    const bills = await Bill.findAll({ include: "owes" });
     res.json(bills);
   } catch (err) {
     next(err);
+  }
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    const bill = await Bill.create(req.body.bill);
+    req.body.friendArray.forEach((element) => {
+      bill.addOwes(element.id);
+    });
+    res.sendStatus(201)
+
+  } catch (error) {
+    next(error);
   }
 });
 
