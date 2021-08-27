@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-    // backgroundColor: "pink",
     width: "90%"
   },
   image: {

@@ -1,7 +1,6 @@
 import Homescreen from "./Components/Homescreen.js";
 import Signup from "./Components/login/Signup.js";
 import Login from "./Components/login/Login.js";
-import Banner from "./Components/login/Banner.js";
 import ProfilePage from "./Components/ProfilePage.js";
 import Settings from "./Components/Home/Settings.js";
 import Friends from "./Components/Home/Friends.js";
@@ -16,13 +15,12 @@ import AddFriend from "./Components/Home/AddFriend.js";
 import FriendRequests from "./Components/Home/FriendRequests.js";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 const AuthStack = createNativeStackNavigator();
@@ -70,22 +68,19 @@ const BottomTabNav = () => {
         headerShown: false,
 
         tabBarIcon: ({ color, size }) => {
-          let iconName;
-
-          if (route.name === "Home") {
-            iconName = "gratipay";
-            return <AntDesign name="home" size={size} color={color} />;
-          } else if (route.name === "New Divvy") {
-            iconName = "gratipay";
-            return <Entypo name="scissors" size={size} color={color} />;
-          } else if (route.name === "Friends") {
-            return (
-              <Ionicons
-                name="ios-person-circle-outline"
-                size={size}
-                color={color}
-              />
-            );
+          switch (route.name) {
+            case "Home":
+              return <AntDesign name="home" size={size} color={color} />;
+            case "New Divvy":
+              return <Entypo name="scissors" size={size} color={color} />;
+            case "Friends":
+              return (
+                <Ionicons
+                  name="ios-person-circle-outline"
+                  size={size}
+                  color={color}
+                />
+              );
           }
         },
         tabBarActiveTintColor: "#ED3B5B",
@@ -95,7 +90,7 @@ const BottomTabNav = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{ tabBarBadge: requests.length > 0 ? requests.length : null}}
+        options={{ tabBarBadge: requests.length > 0 ? requests.length : null }}
       />
       <Tab.Screen name="New Divvy" component={DivvyView} />
       <Tab.Screen name="Friends" component={FriendsList} />
@@ -123,10 +118,6 @@ export default function NavigationCon() {
           options={{ title: "Sign Up" }}
         />
         <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
-
-        {/* issue arose here when the components were comented out */}
-        {/* <AuthStack.Screen name="Banner" component={Banner} /> */}
-        {/* <AuthStack.Screen name="Home" component={BottomTabNav} /> */}
       </AuthStack.Navigator>
     </NavigationContainer>
   );

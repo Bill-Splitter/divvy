@@ -6,9 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableHighlight,
-  TextInput,
   ScrollView,
   Image,
 } from "react-native";
@@ -52,15 +50,7 @@ const Friends = (props) => {
               display: "flex",
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontSize: 56,
-                paddingRight: 10,
-              }}
-            >
-              +
-            </Text>
+            <Text style={styles.card}>+</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -86,15 +76,7 @@ const Friends = (props) => {
                       source={{
                         uri: element.imageUrl,
                       }}
-                      style={{
-                        width: 45,
-                        height: 45,
-                        borderRadius: 999,
-                        overflow: "hidden",
-                        borderWidth: 2,
-                        borderColor: "#ED3B5B",
-                        marginRight: 10,
-                      }}
+                      style={styles.image}
                     />
                     <Text style={styles.listText}>{element.username}</Text>
                   </View>
@@ -147,7 +129,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 0,
-    // marginTop: 200
+  },
+  image: {
+    width: 45,
+    height: 45,
+    borderRadius: 999,
+    overflow: "hidden",
+    borderWidth: 2,
+    borderColor: "#ED3B5B",
+    marginRight: 10,
   },
   input: {
     height: 50,
@@ -182,5 +172,10 @@ const styles = StyleSheet.create({
   leftArrow: {
     zIndex: 99,
     padding: 10,
+  },
+  card: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
