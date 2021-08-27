@@ -14,14 +14,16 @@ import FriendsList from "./Components/Home/FriendsList.js";
 import Summary from "./Components/Home/Summary.js";
 import AddFriend from "./Components/Home/AddFriend.js";
 import FriendRequests from "./Components/Home/FriendRequests.js";
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -54,34 +56,47 @@ const Home = () => {
 };
 
 const BottomTabNav = () => {
+  const navigation = useNavigation();
+  let requests = useSelector((state) => state.user.requestee || []);
+  let user = useSelector((state) => state.user.id);
+
+  if (!user) {
+    navigation.navigate("Homescreen");
+  }
+
   return (
-     <Tab.Navigator 
-    screenOptions={({ route }) => ({
-      headerShown: false,
-  
-       
-     
-      tabBarIcon: ({ color, size }) => {
-        let iconName;
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
 
-        if (route.name === 'Home') {
-          iconName = "gratipay"
-          return <AntDesign name="home" size={size} color={color} />
-        } else if (route.name === 'New Divvy') {
-          iconName = "gratipay"
-          return <Entypo name="scissors" size={size} color={color} />
-        }
-        else if(route.name === "Friends"){
-          return <Ionicons name="ios-person-circle-outline" size={size} color={color} />
-        }
-       
-      },
-      tabBarActiveTintColor: '#ED3B5B',
-      tabBarInactiveTintColor: 'gray',
-    })}
-  >
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
 
-      <Tab.Screen name="Home" component={Home} />
+          if (route.name === "Home") {
+            iconName = "gratipay";
+            return <AntDesign name="home" size={size} color={color} />;
+          } else if (route.name === "New Divvy") {
+            iconName = "gratipay";
+            return <Entypo name="scissors" size={size} color={color} />;
+          } else if (route.name === "Friends") {
+            return (
+              <Ionicons
+                name="ios-person-circle-outline"
+                size={size}
+                color={color}
+              />
+            );
+          }
+        },
+        tabBarActiveTintColor: "#ED3B5B",
+        tabBarInactiveTintColor: "gray",
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ tabBarBadge: requests.length > 0 ? requests.length : null}}
+      />
       <Tab.Screen name="New Divvy" component={DivvyView} />
       <Tab.Screen name="Friends" component={FriendsList} />
     </Tab.Navigator>

@@ -26,7 +26,7 @@ const SimpleSplitCreation = (props) => {
   const [event, setEvent] = React.useState();
 
   const clickSubmit = () => {
-    console.log(total, tip, event);
+
     if (!tip) setTip(0);
     if (!total || !event) {
       alert("Must enter total");

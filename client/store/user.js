@@ -160,6 +160,7 @@ export default function (state = {}, action) {
       return action.signup;
     case GET_USER_INFO:
       return state;
+      
     case APPROVE_REQUEST:
       const user = state;
 
