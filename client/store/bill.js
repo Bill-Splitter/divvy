@@ -24,8 +24,8 @@ export const fetchBillsThunk = (userId) => {
   return async (dispatch) => {
     try {
       const billsArray = await instance.get(`api/bills/${userId}`);
-      billsArray = billsArray.data;
-      dispatch(setBills(billsArray));
+      const b = billsArray.data;
+      dispatch(setBills(b));
     } catch (error) {}
   };
 };
