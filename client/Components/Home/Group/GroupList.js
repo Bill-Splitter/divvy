@@ -64,19 +64,10 @@ const GroupList = (props) => {
               </View>
             </TouchableHighlight>
           </ScrollView>
-          <View
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              position: "absolute",
-              bottom: 0,
-            }}
-          >
+          <View style={styles.centerButton}>
             <TouchableHighlight
               style={styles.loginButton}
-              onPress={() => navigation.navigate("Summary")}
+              onPress={() => navigation.navigate("CreateGroup")}
             >
               <Text style={styles.loginButtonText}>Create New Group</Text>
             </TouchableHighlight>
@@ -162,5 +153,13 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
+  },
+  centerButton: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
   },
 });
