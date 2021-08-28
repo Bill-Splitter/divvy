@@ -76,7 +76,7 @@ const AllGroups = (props) => {
           >
             <TouchableHighlight
               style={styles.loginButton}
-              onPress={() => navigation.navigate("CreateGroup")}
+              onPress={() => navigation.navigate("CreateGroupName")}
             >
               <Text style={styles.loginButtonText}>Create New Group</Text>
             </TouchableHighlight>

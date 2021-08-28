@@ -48,7 +48,7 @@ const Home = () => {
       <HomeStack.Screen name="GroupList" component={GroupList} />
       <HomeStack.Screen name="AllGroups" component={AllGroups} />
       <HomeStack.Screen name="CreateGroup" component={CreateGroup} />
-      {/* <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} /> */}
+      <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} />
       <HomeStack.Screen name="FriendsList" component={FriendsList} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />

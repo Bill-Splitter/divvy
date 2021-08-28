@@ -61,8 +61,12 @@ const ProfilePage = (props) => {
             }}
           />
           <View>
-            <Text numberOfLines={1} style={styles.bigText}>{user.fName} {user.lName}</Text>
-            <Text numberOfLines={1} style={styles.littleText}>{user.email}</Text>
+            <Text numberOfLines={1} style={styles.bigText}>
+              {user.fName} {user.lName}
+            </Text>
+            <Text numberOfLines={1} style={styles.littleText}>
+              {user.email}
+            </Text>
           </View>
         </View>
       </View>
@@ -255,6 +259,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 35,
-    alignItems: "center"
+    alignItems: "center",
   },
 });

@@ -45,7 +45,7 @@ const CreateGroups = () => {
   const items = friends;
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Add friends to a new group"} />
+      <Banner2 name={"Add Friends to your New Group"} />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={items}
@@ -109,7 +109,10 @@ const ListItem = (props) => {
           </View>
         </TouchableHighlight>
       ) : (
-        <TouchableHighlight onPress={() => onPressed()}>
+        <TouchableHighlight
+          onPress={() => onPressed()}
+          underlayColor={"transparent"}
+        >
           <View style={styles.holder}>
             <Image
               style={styles.image}
