@@ -12,17 +12,16 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-
 const Friends = () => {
   const navigation = useNavigation();
   const friends = useSelector((state) => state.user.friend);
-  const myId = useSelector((state) => state.user.id)
+  const myId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
   const allFriends = friends || [];
 
   const deleteItem = (id) => {
-    dispatch(deleteFriendThunk(myId,id))
+    dispatch(deleteFriendThunk(myId, id));
   };
 
   return (
@@ -58,6 +57,7 @@ const Friends = () => {
             underlayColor={"white"}
           >
             <FlatList
+              keyExtractor={(item, index) => item.id}
               data={allFriends}
               renderItem={(item) => {
                 return (
