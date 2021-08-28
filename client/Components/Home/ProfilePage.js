@@ -120,7 +120,7 @@ const ProfilePage = (props) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight
+        {/* <TouchableHighlight
           style={styles.listElementContainer}
           onPress={() => navigation.navigate("Messages")}
           underlayColor={"white"}
@@ -134,7 +134,7 @@ const ProfilePage = (props) => {
             </View>
             <View style={styles.borderBar}></View>
           </View>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
         <TouchableHighlight
           style={styles.listElementContainer}
           onPress={() => navigation.navigate("FriendRequests")}
