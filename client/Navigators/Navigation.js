@@ -8,6 +8,8 @@ import Messages from "../Components/Home/Messages.js";
 import Transactions from "../Components/Home/Transactions/Transactions.js";
 import DivvyView from "../Components/Home/DivvyView.js";
 import SimpleSplitCreation from "../Components/Home/SingleSplit/SimpleSplitCreation.js";
+import ItemizedSplitCreation from "../Components/Home/ItemizedSplit/ItemizedSplitCreation.js";
+import Cameras from "../Components/Home/Camera/Camera.js";
 import GroupList from "../Components/Home/Group/GroupList.js";
 import AllGroups from "../Components/Home/Group/AllGroups";
 import CreateGroup from "../Components/Home/Group/CreateGroup.js";
@@ -52,6 +54,11 @@ const Home = () => {
         name="SimpleSplitCreation"
         component={SimpleSplitCreation}
       />
+      <HomeStack.Screen
+        name="ItemizedSplitCreation"
+        component={ItemizedSplitCreation}
+      />
+      <HomeStack.Screen name="Camera" component={Cameras} />
       <HomeStack.Screen name="GroupList" component={GroupList} />
       <HomeStack.Screen name="AllGroups" component={AllGroups} />
       <HomeStack.Screen name="CreateGroup" component={CreateGroup} />

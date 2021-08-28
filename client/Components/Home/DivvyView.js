@@ -24,7 +24,7 @@ export default DivvyView = (props) => {
       <View style={styles.listContainer}>
         <TouchableHighlight
           style={styles.listElementContainer}
-          onPress={() => navigation.navigate("DivvyView")}
+          onPress={() => navigation.navigate("Camera")}
           underlayColor={"white"}
         >
           <View>
