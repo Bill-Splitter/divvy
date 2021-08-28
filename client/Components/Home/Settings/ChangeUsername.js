@@ -12,6 +12,7 @@ import {
 
 const ChangeUsername = () => {
   const [username, setUsername] = React.useState();
+  const userId = useSelector((state) => state.user.id);
   const navigation = useNavigation();
 
   const updateUsername = () => {

@@ -12,6 +12,7 @@ const DENY_REQUEST = "DENY_REQUEST";
 const GET_USER_INFO = "GET_USER_INFO";
 const DELETE_FRIEND = "DELETE_FRIEND"
 
+
 //action creators
 export const login = (user) => {
   return {
@@ -151,19 +152,6 @@ export const denyFriendRequest = (id, user) => {
   };
 };
 
-export const updateUserThunk = (user) => {
-  return async (dispatch) => {
-    try {
-      const { data: updated } = await instance.put(
-        `/api/users/${user.id}`,
-        user
-      );
-      dispatch(updateUser(updated));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
 
 export const sendFriendRequest = (senderId, phoneNumber) => {
   return async (dispatch) => {
@@ -182,6 +170,20 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
     }
   };
 };
+
+
+export const updateUserThunk = (data, userId) => {
+  return async(dispatch) => {
+    try {
+
+      let user = await instance.put(`/api/users/${userId}/`, {data})
+      console.log(user.data.id, "id")
+
+    } catch(error) {
+      console.error(error)
+    }
+  }
+}
 
 //reducer
 export default function (state = {}, action) {

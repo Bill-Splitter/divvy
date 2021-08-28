@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
 router.get("/login", async (req, res, next) => {
   const userName = req.query.username;
   const password = req.query.password;
@@ -38,8 +39,15 @@ router.get("/login", async (req, res, next) => {
 });
 
 router.put("/:id", async (req, res, next) => {
+
+  console.log(req.body)
   try {
-    const userToUpdate = await User.findByPk(req.params.id);
+    const userToUpdate =  await User.findByOne({
+      where: {
+        userId: userId
+      },
+      include: ["friend", "requestee"],
+    })
     res.json(await userToUpdate.update(req.body));
   } catch (error) {
     next(error);

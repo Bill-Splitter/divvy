@@ -11,12 +11,8 @@ import {
   TouchableHighlight,
 } from "react-native";
 
-
-
-
 const DeleteAccount = () => {
   const navigation = useNavigation();
-
 
   const press = () => {
     Alert.alert(
@@ -24,22 +20,19 @@ const DeleteAccount = () => {
       "This cannot be undone, all of your associated account data will not be preserved",
       [
         {
-          text: "Cancel", onPress: ()=> navigation.goBack(),
-          style: "cancel", 
+          text: "Cancel",
+          onPress: () => navigation.goBack(),
+          style: "cancel",
         },
         { text: "Send", onPress: () => terminateAccount() },
       ]
     );
   };
-  
+
   const terminateAccount = () => {
     //delete account thunk
-    navigation.navigate("Homescreen")
-  
-  }
-
-
-
+    navigation.navigate("Homescreen");
+  };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
