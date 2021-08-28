@@ -25,7 +25,11 @@ const Bill = db.define("bill", {
       return this.setDataValue("parsedBill", JSON.stringify(val));
     },
   },
-
+  image: {
+    type: Sequelize.TEXT,
+    defaultValue:
+      "https://www.pngarea.com/pngm/534/7779866_ace-cash-express-receipt-png-download-check-free.png",
+  },
   total: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
