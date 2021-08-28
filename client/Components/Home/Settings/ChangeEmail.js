@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   TouchableHighlight,
 } from "react-native";
