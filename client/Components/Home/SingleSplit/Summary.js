@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";  
+import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
 
 import {
@@ -16,16 +16,12 @@ import {
 import Banner2 from "../Banner2";
 
 const Summary = () => {
-
-  const info = useSelector((state)=> state.split )
-  const friends = useSelector((state) => state.user)
-  const userId = useSelector((state => state.user.id))
+  const info = useSelector((state) => state.split);
+  const friends = useSelector((state) => state.user);
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-  const friendArray = friends.friend || []
+  const friendArray = friends.friend || [];
   const navigation = useNavigation();
-
-
-  console.log("-=====================================",info.idArray)
 
   const sendInvoices = () => {
     Alert.alert(
@@ -33,7 +29,7 @@ const Summary = () => {
       "Each user will be sent a request for their repsective amount.",
       [
         {
-          text: "Cancel", onPress: ()=> console.log("-=====================================",info.idArray),
+          text: "Cancel",
           style: "cancel",
         },
         { text: "Send", onPress: () => submit() },
@@ -42,13 +38,12 @@ const Summary = () => {
   };
 
   const submit = () => {
-    console.log("-=====================================",info.idArray)
     const billText = {
-      title:  info.name,
+      title: info.name,
       total: info.total,
       group: info.group,
-      userAmounts: (info.total / (friendArray.length + 1)).toFixed(2)
-    }
+      userAmounts: (info.total / (friendArray.length + 1)).toFixed(2),
+    };
 
     const newBill = {
       type: "simple",
@@ -57,16 +52,15 @@ const Summary = () => {
       parsedBill: billText,
       completed: true,
       userId: userId,
-      date: Date.now()
+      date: Date.now(),
     };
-    dispatch(createBillThunk(newBill,userId, groupFriends))
-    navigation.navigate("ProfilePage")
-
+    dispatch(createBillThunk(newBill, userId, groupFriends));
+    navigation.navigate("ProfilePage");
   };
 
   const groupFriends = friendArray.filter((element) => {
-    if(info.idArray.includes(element.id)) return element  
-  })
+    if (info.idArray.includes(element.id)) return element;
+  });
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
@@ -109,8 +103,7 @@ const Summary = () => {
                   {"%"}
                 </Text>
                 <Text numberOfLines={1} style={styles.listText}>
-                  {"$"}{" "}
-                  {(info.total / (friendArray.length + 1)).toFixed(2)}
+                  {"$"} {(info.total / (friendArray.length + 1)).toFixed(2)}
                 </Text>
               </View>
             );
@@ -133,7 +126,6 @@ const Summary = () => {
     </View>
   );
 };
-
 
 export default Summary;
 
