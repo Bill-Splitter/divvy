@@ -13,7 +13,7 @@ import {
   Alert,
 } from "react-native";
 
-import Banner2 from "../Banner2";
+import Banner3 from "../Banner3";
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -59,12 +59,14 @@ const Summary = () => {
   };
 
   const groupFriends = friendArray.filter((element) => {
-    if (info.idArray.includes(element.id)) return element;
+    if (info.idArray.includes(element.id)) {
+      return element;
+    }
   });
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner2 name={info.group} />
+      <Banner3 name={info.group} />
       <View
         style={{
           display: "flex",

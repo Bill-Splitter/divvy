@@ -13,7 +13,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "../Banner2";
+import Banner3 from "../Banner3";
 
 const AllGroups = (props) => {
   const navigation = useNavigation();
@@ -21,12 +21,11 @@ const AllGroups = (props) => {
 
   const selectGroup = (groupname, users) => {
     props.setGroup(groupname, users);
-    // navigation.navigate("Summary");
   };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Your Groups"} />
+      <Banner3 name={"Your Groups"} />
       <View
         style={{
           display: "flex",

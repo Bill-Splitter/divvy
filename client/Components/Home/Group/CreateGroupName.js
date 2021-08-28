@@ -22,7 +22,7 @@ const CreateGroupName = (props) => {
     if (!groupName) {
       alert("all fields must be filled");
     } else {
-      navigation.navigate("CreateGroup");
+      navigation.navigate("CreateGroup", { data: groupName });
     }
   };
 

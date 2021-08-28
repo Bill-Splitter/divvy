@@ -10,8 +10,7 @@ const UPDATE_USER = "UPDATE_USER";
 const APPROVE_REQUEST = "APPROVE_REQUEST";
 const DENY_REQUEST = "DENY_REQUEST";
 const GET_USER_INFO = "GET_USER_INFO";
-const DELETE_FRIEND = "DELETE_FRIEND"
-
+const DELETE_FRIEND = "DELETE_FRIEND";
 
 //action creators
 export const login = (user) => {
@@ -20,8 +19,6 @@ export const login = (user) => {
     user,
   };
 };
-
-
 
 export const getUpdatedUserInfo = () => {
   return {
@@ -58,15 +55,15 @@ export const approveRequest = (user) => {
 export const denyRequest = (id) => {
   return {
     type: DENY_REQUEST,
-    id
-  }
-}
+    id,
+  };
+};
 export const deleteFriend = (friendId) => {
   return {
     type: DELETE_FRIEND,
-    id: friendId
-  }
-}
+    id: friendId,
+  };
+};
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -102,9 +99,9 @@ export const signupThunk = (formData) => {
 };
 
 export const deleteFriendThunk = (myId, friendId) => {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
-      console.log("friend", friendId, myId)
+      console.log("friend", friendId, myId);
       await instance.delete("api/users/deleteFriend/", {
         data: {
           user1: myId,
@@ -112,13 +109,12 @@ export const deleteFriendThunk = (myId, friendId) => {
         },
       });
 
-      dispatch(deleteFriend(friendId))
-
-    } catch(error){
-      console.error(error)
+      dispatch(deleteFriend(friendId));
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
+  };
+};
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
@@ -138,20 +134,19 @@ export const approveFriendRequest = (id, user) => {
 export const denyFriendRequest = (id, user) => {
   return async (dispatch) => {
     try {
-       await instance.delete("api/users/denyRequest/", {
+      await instance.delete("api/users/denyRequest/", {
         data: {
           sender: user,
           receiver: id,
         },
       });
 
-      dispatch(denyRequest(id))
+      dispatch(denyRequest(id));
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 export const sendFriendRequest = (senderId, phoneNumber) => {
   return async (dispatch) => {
@@ -161,9 +156,9 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
         phoneNumber: phoneNumber,
       });
 
-      if(fren.data === "not found"){
-        console.error("not found")
-        throw "error"
+      if (fren.data === "not found") {
+        console.error("not found");
+        throw "error";
       }
     } catch (error) {
       console.error(error);
@@ -171,23 +166,25 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
   };
 };
 
-
-export const updateUserThunk = (data, userId) => {
-  return async(dispatch) => {
+export const updateUserThunk = (userId, data) => {
+  return async (dispatch) => {
     try {
+      let user = await instance.put(`/api/users/${userId}`, { data: data });
 
-      let user = await instance.put(`/api/users/${userId}/`, {data})
-      console.log(user.data.id, "id")
+      const updatedUser = user.data;
 
-    } catch(error) {
-      console.error(error)
+      dispatch(updateUser(updatedUser));
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
+  };
+};
 
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {
+    case UPDATE_USER:
+      return action.user;
     case LOGIN:
       return action.user;
     case LOGOUT:
@@ -197,11 +194,11 @@ export default function (state = {}, action) {
     case GET_USER_INFO:
       return state;
     case DELETE_FRIEND:
-      let temp = state
+      let temp = state;
       temp.friend = temp.friend.filter((element) => {
-        if(element.id != action.id) return element
-      })
-      return temp
+        if (element.id != action.id) return element;
+      });
+      return temp;
 
     case APPROVE_REQUEST:
       const user = state;

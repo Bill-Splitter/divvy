@@ -64,14 +64,14 @@ const GroupList = (props) => {
               </View>
             </TouchableHighlight>
           </ScrollView>
-          <View style={styles.centerButton}>
+          {/* <View style={styles.centerButton}>
             <TouchableHighlight
               style={styles.loginButton}
               onPress={() => navigation.navigate("CreateGroup")}
             >
               <Text style={styles.loginButtonText}>Create New Group</Text>
             </TouchableHighlight>
-          </View>
+          </View> */}
         </View>
       </View>
     </View>

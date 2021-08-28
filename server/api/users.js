@@ -15,6 +15,21 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const userToUpdate = await User.findOne({
+      where: {
+        id: userId,
+      },
+      include: ["friend", "requestee"],
+    });
+    res.json(await userToUpdate.update(req.body.data));
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/login", async (req, res, next) => {
   const userName = req.query.username;
@@ -35,22 +50,6 @@ router.get("/login", async (req, res, next) => {
     }
   } catch (err) {
     next(err);
-  }
-});
-
-router.put("/:id", async (req, res, next) => {
-
-  console.log(req.body)
-  try {
-    const userToUpdate =  await User.findByOne({
-      where: {
-        userId: userId
-      },
-      include: ["friend", "requestee"],
-    })
-    res.json(await userToUpdate.update(req.body));
-  } catch (error) {
-    next(error);
   }
 });
 
