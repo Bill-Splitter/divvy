@@ -85,12 +85,12 @@ const Summary = () => {
           <View style={styles.listRow}>
             <Text style={styles.listName}>You</Text>
             <Text style={styles.listPercent}>
-              {Math.floor(100 / (friendArray.length + 1))}%
+              {Math.floor(100 / (groupFriends.length + 1))}%
             </Text>
 
             <Text style={styles.listText}>
               {"$ "}
-              {(info.total / (friendArray.length + 1)).toFixed(2)}
+              {(info.total / (groupFriends.length + 1)).toFixed(2)}
             </Text>
           </View>
 
@@ -101,11 +101,11 @@ const Summary = () => {
                   {element.fName} {element.lName}
                 </Text>
                 <Text style={styles.listPercent}>
-                  {Math.floor(100 / (friendArray.length + 1))}
+                  {Math.floor(100 / (groupFriends.length + 1))}
                   {"%"}
                 </Text>
                 <Text numberOfLines={1} style={styles.listText}>
-                  {"$"} {(info.total / (friendArray.length + 1)).toFixed(2)}
+                  {"$"} {(info.total / (groupFriends.length + 1)).toFixed(2)}
                 </Text>
               </View>
             );
