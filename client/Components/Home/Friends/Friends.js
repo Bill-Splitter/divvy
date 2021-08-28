@@ -57,7 +57,7 @@ const Friends = () => {
             underlayColor={"white"}
           >
             <FlatList
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => item.id.toString()}
               data={allFriends}
               renderItem={(item) => {
                 return (

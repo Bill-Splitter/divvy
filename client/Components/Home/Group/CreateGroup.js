@@ -47,7 +47,7 @@ const CreateGroups = () => {
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
       <Banner2 name={"Add Friends to your New Group"} />
       <FlatList
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item, index) => item.id.toString()}
         data={items}
         renderItem={(item) => {
           return (

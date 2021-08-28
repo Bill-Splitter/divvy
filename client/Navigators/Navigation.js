@@ -28,6 +28,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import IndividualTrans from "../Components/Home/Transactions/IndividualTrans.js";
+import ChangePassword from "../Components/Home/Settings/ChangePassword.js";
+import ChangeUsername from "../Components/Home/Settings/ChangeUsername.js";
+import ChangePhoneNumber from "../Components/Home/Settings/ChangePhoneNumber.js";
+import ChangeIcon from "../Components/Home/Settings/ChangeIcon.js";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -59,6 +63,10 @@ const Home = () => {
       <HomeStack.Screen name="Messages" component={Messages} />
       <HomeStack.Screen name="FriendRequests" component={FriendRequests} />
       <HomeStack.Screen name="IndividualTrans" component={IndividualTrans} />
+      <HomeStack.Screen name="ChangeIcon" component={ChangeIcon} />
+      <HomeStack.Screen name="ChangePassword" component={ChangePassword} />
+      <HomeStack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
+      <HomeStack.Screen name="ChangeUsername" component={ChangeUsername} />
     </HomeStack.Navigator>
   );
 };

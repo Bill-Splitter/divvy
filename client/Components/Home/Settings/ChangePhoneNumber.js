@@ -9,13 +9,13 @@ import {
   TouchableHighlight,
 } from "react-native";
 
-const ChangePassword = () => {
+const ChangePhoneNumber = () => {
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Change Password"} />
-      <Text>To do</Text>
+      <Banner2 name={"Change Phone Number"} />
+      <Text>To do change phone</Text>
     </View>
   );
 };
 
-export default ChangePassword;
+export default ChangePhoneNumber;
