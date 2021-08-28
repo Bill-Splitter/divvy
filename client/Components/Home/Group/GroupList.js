@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setGroup } from "../../store/split";
+import { setGroup } from "../../../store/split";
 
 import {
   StyleSheet,
@@ -13,7 +13,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Banner2 from "./Banner2";
+import Banner2 from "../Banner2";
 
 const GroupList = (props) => {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const GroupList = (props) => {
           {/* <View style={styles.header}>
             <Text style={styles.headerText}>Group List</Text>
           </View> */}
-          {/* 
+          {/*
           <View style={styles.borderBar}></View> */}
           <ScrollView style={{ minHeight: "85%" }}>
             <TouchableHighlight

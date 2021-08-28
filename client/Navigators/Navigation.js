@@ -8,7 +8,10 @@ import Messages from "../Components/Home/Messages.js";
 import Transactions from "../Components/Home/Transactions/Transactions.js";
 import DivvyView from "../Components/Home/DivvyView.js";
 import SimpleSplitCreation from "../Components/Home/SingleSplit/SimpleSplitCreation.js";
-import GroupList from "../Components/Home/GroupList.js";
+import GroupList from "../Components/Home/Group/GroupList.js";
+import AllGroups from "../Components/Home/Group/AllGroups";
+import CreateGroup from "../Components/Home/Group/CreateGroup.js";
+import CreateGroupName from "../Components/Home/Group/CreateGroupName.js";
 import FriendsList from "../Components/Home/Friends/FriendsList.js";
 import Summary from "../Components/Home/SingleSplit/Summary.js";
 import AddFriend from "../Components/Home/Friends/AddFriend.js";
@@ -41,6 +44,9 @@ const Home = () => {
         component={SimpleSplitCreation}
       />
       <HomeStack.Screen name="GroupList" component={GroupList} />
+      <HomeStack.Screen name="AllGroups" component={AllGroups} />
+      <HomeStack.Screen name="CreateGroup" component={CreateGroup} />
+      {/* <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} /> */}
       <HomeStack.Screen name="FriendsList" component={FriendsList} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
@@ -54,7 +60,6 @@ const Home = () => {
 };
 
 const BottomTabNav = () => {
-
   let requests = useSelector((state) => state.user.requestee || []);
 
   return (
@@ -68,7 +73,7 @@ const BottomTabNav = () => {
               return <AntDesign name="home" size={size} color={color} />;
             case "New Divvy":
               return <Entypo name="scissors" size={size + 15} color={color} />;
-            case "Friends":
+            case "Groups":
               return (
                 <Ionicons
                   name="ios-person-circle-outline"
@@ -88,7 +93,7 @@ const BottomTabNav = () => {
         options={{ tabBarBadge: requests.length > 0 ? requests.length : null }}
       />
       <Tab.Screen name="New Divvy" component={DivvyView} />
-      <Tab.Screen name="Friends" component={FriendsList} />
+      <Tab.Screen name="Groups" component={AllGroups} />
     </Tab.Navigator>
   );
 };
