@@ -27,6 +27,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import IndividualTrans from "../Components/Home/Transactions/IndividualTrans.js";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -57,6 +58,7 @@ const Home = () => {
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
       <HomeStack.Screen name="FriendRequests" component={FriendRequests} />
+      <HomeStack.Screen name="IndividualTrans" component={IndividualTrans} />
     </HomeStack.Navigator>
   );
 };

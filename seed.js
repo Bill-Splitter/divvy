@@ -100,25 +100,40 @@ const billSeed = [
     name: "Dinner with friends",
     type: "simple",
     completed: true,
+    date: "2021-08-24T16:00:36.209Z",
     parsedBill: {
       title: "Fun",
       total: 60,
       group: "three amigos",
-      userAmounts: "20"
-      }
+      userAmounts: "20",
+    },
   },
-  { total: 100, type: "complex", completed: false, name: "date with bff",  parsedBill: {
-    title: "Fun",
+  {
     total: 100,
-    group: "three amigos",
-    userAmounts: "33"
-    } },
-  { total: 90, type: "complex", completed: true, name: "date with gf", parsedBill: {
-    title: "Fun",
+    type: "complex",
+    date: "2021-08-25T16:00:36.209Z",
+    completed: false,
+    name: "date with bff",
+    parsedBill: {
+      title: "Fun",
+      total: 100,
+      group: "three amigos",
+      userAmounts: "33",
+    },
+  },
+  {
     total: 90,
-    group: "three amigos",
-    userAmounts: "30"
-    } },
+    type: "complex",
+    date: "2021-08-27T16:00:36.209Z",
+    completed: true,
+    name: "date with gf",
+    parsedBill: {
+      title: "Fun",
+      total: 90,
+      group: "three amigos",
+      userAmounts: "30",
+    },
+  },
 ];
 
 /**
