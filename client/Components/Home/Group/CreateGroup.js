@@ -19,6 +19,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
 
 const CreateGroups = () => {
+  const navigation = useNavigation();
   const friends = useSelector((state) => state.user.friend);
 
   const [selectedArray, setSelected] = React.useState([]);
@@ -36,11 +37,15 @@ const CreateGroups = () => {
     setSelected(list);
   };
 
+  const createGroup = () => {
+    navigation.navigate("AllGroups");
+  };
+
   console.log("the list selected is", selectedArray);
   const items = friends;
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Create Group"} />
+      <Banner2 name={"Add Friends to your New Group"} />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={items}
@@ -57,6 +62,14 @@ const CreateGroups = () => {
           return <View style={styles.seperatorLine}></View>;
         }}
       />
+      <View style={styles.makeGroup}>
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => createGroup()}
+        >
+          <Text style={styles.loginButtonText}>Make Group</Text>
+        </TouchableHighlight>
+      </View>
     </View>
   );
 };
@@ -96,7 +109,10 @@ const ListItem = (props) => {
           </View>
         </TouchableHighlight>
       ) : (
-        <TouchableHighlight onPress={() => onPressed()}>
+        <TouchableHighlight
+          onPress={() => onPressed()}
+          underlayColor={"transparent"}
+        >
           <View style={styles.holder}>
             <Image
               style={styles.image}
@@ -160,5 +176,26 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     marginRight: 10,
     marginLeft: 10,
+  },
+  loginButton: {
+    width: "70%",
+    backgroundColor: "#ED3B5B",
+    borderRadius: 45,
+    marginTop: 20,
+    alignContent: "center",
+  },
+  loginButtonText: {
+    fontSize: 25,
+    color: "white",
+    padding: 16,
+    textAlign: "center",
+  },
+  makeGroup: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 10,
   },
 });

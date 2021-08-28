@@ -23,6 +23,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
@@ -46,7 +48,7 @@ const Home = () => {
       <HomeStack.Screen name="GroupList" component={GroupList} />
       <HomeStack.Screen name="AllGroups" component={AllGroups} />
       <HomeStack.Screen name="CreateGroup" component={CreateGroup} />
-      {/* <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} /> */}
+      <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} />
       <HomeStack.Screen name="FriendsList" component={FriendsList} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
@@ -70,14 +72,14 @@ const BottomTabNav = () => {
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case "Home":
-              return <AntDesign name="home" size={size} color={color} />;
+              return <FontAwesome name="home" size={28} color={color} />;
             case "New Divvy":
               return <Entypo name="scissors" size={size + 15} color={color} />;
             case "Groups":
               return (
-                <Ionicons
-                  name="ios-person-circle-outline"
-                  size={size}
+                <MaterialCommunityIcons
+                  name="account-group"
+                  size={28}
                   color={color}
                 />
               );
