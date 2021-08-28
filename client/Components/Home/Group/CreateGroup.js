@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 //import { setGroup } from "../../../store/split";
 import { useDispatch, useSelector } from "react-redux";
+import { updateUserThunk } from "../../../store";
 
 import {
   StyleSheet,
@@ -18,9 +19,14 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
 
-const CreateGroups = () => {
+const CreateGroups = ({ route }) => {
+  const groupName = route.params.data;
+
   const navigation = useNavigation();
   const friends = useSelector((state) => state.user.friend);
+  const currentGroups = useSelector((state) => state.user.groups);
+  const userId = useSelector((state) => state.user.id);
+  const dispatch = useDispatch();
 
   const [selectedArray, setSelected] = React.useState([]);
 
@@ -38,14 +44,25 @@ const CreateGroups = () => {
   };
 
   const createGroup = () => {
+    const newGroup = {
+      groupname: groupName,
+      users: selectedArray,
+    };
+    currentGroups.push(newGroup);
+
+    const final = {
+      groups: currentGroups,
+    };
+
+    dispatch(updateUserThunk(userId.toString(), final));
     navigation.navigate("AllGroups");
   };
 
-  console.log("the list selected is", selectedArray);
+  // console.log("the list selected is", selectedArray);
   const items = friends;
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Add Friends to your New Group"} />
+      <Banner2 name={`Add Friends to ${groupName}`} />
       <FlatList
         keyExtractor={(item, index) => item.id.toString()}
         data={items}

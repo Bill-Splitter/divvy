@@ -13,7 +13,7 @@ import {
   Alert,
 } from "react-native";
 
-import Banner2 from "../Banner2";
+import Banner3 from "../Banner3";
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -59,12 +59,14 @@ const Summary = () => {
   };
 
   const groupFriends = friendArray.filter((element) => {
-    if (info.idArray.includes(element.id)) return element;
+    if (info.idArray.includes(element.id)) {
+      return element;
+    }
   });
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner2 name={info.group} />
+      <Banner3 name={info.group} />
       <View
         style={{
           display: "flex",
@@ -83,12 +85,12 @@ const Summary = () => {
           <View style={styles.listRow}>
             <Text style={styles.listName}>You</Text>
             <Text style={styles.listPercent}>
-              {Math.floor(100 / (friendArray.length + 1))}%
+              {Math.floor(100 / (groupFriends.length + 1))}%
             </Text>
 
             <Text style={styles.listText}>
               {"$ "}
-              {(info.total / (friendArray.length + 1)).toFixed(2)}
+              {(info.total / (groupFriends.length + 1)).toFixed(2)}
             </Text>
           </View>
 
@@ -99,11 +101,11 @@ const Summary = () => {
                   {element.fName} {element.lName}
                 </Text>
                 <Text style={styles.listPercent}>
-                  {Math.floor(100 / (friendArray.length + 1))}
+                  {Math.floor(100 / (groupFriends.length + 1))}
                   {"%"}
                 </Text>
                 <Text numberOfLines={1} style={styles.listText}>
-                  {"$"} {(info.total / (friendArray.length + 1)).toFixed(2)}
+                  {"$"} {(info.total / (groupFriends.length + 1)).toFixed(2)}
                 </Text>
               </View>
             );
