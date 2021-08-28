@@ -32,6 +32,8 @@ import ChangePassword from "../Components/Home/Settings/ChangePassword.js";
 import ChangeUsername from "../Components/Home/Settings/ChangeUsername.js";
 import ChangePhoneNumber from "../Components/Home/Settings/ChangePhoneNumber.js";
 import ChangeIcon from "../Components/Home/Settings/ChangeIcon.js";
+import ChangeEmail from "../Components/Home/Settings/ChangeEmail.js";
+import DeleteAccount from "../Components/Home/Settings/DeleteAccount.js";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -67,6 +69,8 @@ const Home = () => {
       <HomeStack.Screen name="ChangePassword" component={ChangePassword} />
       <HomeStack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
       <HomeStack.Screen name="ChangeUsername" component={ChangeUsername} />
+      <HomeStack.Screen name="ChangeEmail" component={ChangeEmail} />
+      <HomeStack.Screen name="DeleteAccount" component={DeleteAccount} />
     </HomeStack.Navigator>
   );
 };

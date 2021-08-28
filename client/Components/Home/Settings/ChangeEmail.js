@@ -11,37 +11,38 @@ import {
   TouchableHighlight,
 } from "react-native";
 
-const ChangePhoneNumber = () => {
-  const [phoneNumber, setPhoneNumber] = React.useState();
+const ChangeEmail = () => {
+  const [email, setEmail] = React.useState();
   const navigation = useNavigation();
 
-  const updatePhone = () => {
-    if (!phoneNumber) {
-      alert("Phone Numbers Cannot Be Blank");
+  const updateEmail = () => {
+    if (!email) {
+      alert("Email Cannot Be Blank");
     } else {
       const update = {
-        phoneNumber: phoneNumber.trim(),
+        email: email.trim(),
       };
       //thunk to update password needed
-      alert("Phone Number was updated");
+      alert("Email Address was updated");
       navigation.goBack();
     }
   };
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={"Change Phone Number"} />
+      <Banner2 name={"Change Email Address"} />
       <View style={styles.container}>
-        <Text style={styles.header}>Enter A New Phone Number</Text>
+        <Text style={styles.header}>Enter A New Email Address</Text>
         <TextInput
-          placeholder="Phone Number"
+          placeholder="Email Address"
           style={styles.input}
-          value={phoneNumber}
-          maxLength={20}
-          onChangeText={(text) => setPhoneNumber(text)}
+          value={email}
+          textContentType={"emailAddress"}
+          maxLength={30}
+          onChangeText={(text) => setEmail(text)}
         ></TextInput>
 
-        <TouchableHighlight style={styles.button} onPress={() => updatePhone()}>
+        <TouchableHighlight style={styles.button} onPress={() => updateEmail()}>
           <Text style={styles.bText}>Update</Text>
         </TouchableHighlight>
       </View>
@@ -49,7 +50,8 @@ const ChangePhoneNumber = () => {
   );
 };
 
-export default ChangePhoneNumber;
+export default ChangeEmail;
+
 
 const styles = StyleSheet.create({
   input: {
