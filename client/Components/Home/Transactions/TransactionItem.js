@@ -50,9 +50,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dateText: {
-    fontSize: 35,
-    margin: 0,
+    fontSize: 38,
+    marginLeft: 10,
     color: "#ED3B5B",
+    marginRight: 10,
   },
   info: {
     marginLeft: 15,
