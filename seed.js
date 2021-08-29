@@ -240,27 +240,38 @@ async function seed() {
   await users[1].addFriend(
     users[0],
     users[2],
+    users[3],
+    users[4],
+    users[5],
     users[11],
     users[10],
     users[9],
     users[8],
     users[7],
-    users[6]
+    users[6],
   );
   await users[2].addFriend(
     users[1],
     users[0],
+    users[3],
+    users[4],
+    users[5],
     users[11],
     users[10],
     users[9],
     users[8],
     users[7],
-    users[6]
+    users[6],
   );
 
-  //james is friends w jeremy
-  await users[3].addFriend(users[4]);
-  await users[4].addFriend(users[3]);
+  await users[3].addFriend(users[4],users[2],users[1],users[0]);
+  await users[4].addFriend(users[3],users[2],users[1],users[0]);
+  await users[5].addFriend(users[2],users[1],users[0])
+  await users[7].addFriend(users[2],users[1],users[0])
+  await users[8].addFriend(users[2],users[1],users[0])
+  await users[9].addFriend(users[2],users[1],users[0])
+  await users[10].addFriend(users[2],users[1],users[0])
+  await users[11].addFriend(users[2],users[1],users[0])
   console.log(`set friends between users successfully`);
 
   //CREATING FRIEND GROUPS
