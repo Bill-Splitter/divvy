@@ -52,34 +52,29 @@ const Friends = () => {
         </View>
       </View>
       {allFriends.length > 0 ? (
-        <View style={styles.view}>
-          <View style={{ width: "100%" }}>
-            <TouchableHighlight
-              style={styles.listElementContainer}
-              underlayColor={"white"}
-            >
-              <FlatList
-                keyExtractor={(item, index) => item.id.toString()}
-                data={allFriends}
-                renderItem={(item) => {
-                  return (
-                    <ItemBox
-                      data={item}
-                      handleDelete={() => deleteItem(item.item.id)}
-                    />
-                  );
-                }}
-                ItemSeparatorComponent={() => {
-                  return <View style={styles.seperatorLine}></View>;
-                }}
-              />
-            </TouchableHighlight>
+        <View style={styles.listElementContainer} underlayColor={"white"}>
+          <View style={{ flex: 1, width: "100%" }}>
+            <FlatList
+              keyExtractor={(item, index) => item.id.toString()}
+              data={allFriends}
+              renderItem={(item) => {
+                return (
+                  <ItemBox
+                    data={item}
+                    handleDelete={() => deleteItem(item.item.id)}
+                  />
+                );
+              }}
+              ItemSeparatorComponent={() => {
+                return <View style={styles.seperatorLine}></View>;
+              }}
+            />
           </View>
         </View>
       ) : (
         <View style={styles.no}>
           <Text style={styles.noFriends}>No Friends Yet</Text>
-  
+
           <TouchableHighlight
             onPress={() => navigation.navigate("AddFriend")}
             style={styles.button}
@@ -116,7 +111,7 @@ const styles = StyleSheet.create({
   },
   noFriends: {
     fontSize: 30,
-     color: "#ED3B5B",
+    color: "#ED3B5B",
     marginBottom: 10,
     fontWeight: "700",
   },
@@ -135,13 +130,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   view: {
-    width: "100%",
-    flex: 1,
-    alignContent: "center",
-    textAlign: "left",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 0,
+    // width: "100%",
+    // alignContent: "center",
+    // textAlign: "left",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   seperatorLine: {
     height: 1,

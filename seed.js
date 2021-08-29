@@ -227,6 +227,9 @@ async function seed() {
   await users[0].addFriend([
     users[1],
     users[2],
+    users[3],
+    users[4],
+    users[5],
     users[11],
     users[10],
     users[9],
@@ -243,15 +246,17 @@ async function seed() {
     users[8],
     users[7],
     users[6]
-  ); 
-  await users[2].addFriend(    users[1],
+  );
+  await users[2].addFriend(
+    users[1],
     users[0],
     users[11],
     users[10],
     users[9],
     users[8],
     users[7],
-    users[6]);
+    users[6]
+  );
 
   //james is friends w jeremy
   await users[3].addFriend(users[4]);

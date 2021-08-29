@@ -37,7 +37,7 @@ const ItemBox = (props) => {
   };
 
   return (
-    <Swipeable renderRightActions={rightSwipe}>
+    <Swipeable renderRightActions={rightSwipe} style={{flex: 1}}>
       <View
         style={{
           display: "flex",
