@@ -1,6 +1,7 @@
 import React from "react";
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import {
   StyleSheet,
@@ -55,8 +56,8 @@ const ItemBox = (props) => {
             {props.data.item.fName} {props.data.item.lName}
           </Text>
           <Text numberOfLines={1} style={styles.smallText}>
-            Username: {props.data.item.username}, Phone:{" "}
-            {props.data.item.phoneNumber}
+            Username: {props.data.item.username}, {" "}
+           {formatPhoneNumber(props.data.item.phoneNumber)}
           </Text>
         </View>
       </View>

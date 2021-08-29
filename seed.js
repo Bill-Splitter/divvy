@@ -32,7 +32,7 @@ const userSeed = [
   {
     username: "Jack",
     email: "jack@gmail.com",
-    phoneNumber: 1,
+    phoneNumber: 1112223434,
     password: "123",
     imageUrl:
       "https://th.bing.com/th/id/R.7bc747bc2278a33b20ca592f4c6773eb?rik=uWa5RA7F%2brc29w&riu=http%3a%2f%2fdanielsschleswigholstein.weebly.com%2fuploads%2f2%2f4%2f4%2f0%2f24400987%2f1394821057.jpg&ehk=J0QxdVW5cnjMgMrc9yR14LXUfOnuaOzkchaoASL%2b7Js%3d&risl=&pid=ImgRaw&r=0",
@@ -43,7 +43,7 @@ const userSeed = [
   {
     username: "Jim",
     email: "jim@gmail.com",
-    phoneNumber: 2,
+    phoneNumber: 2149240432,
     password: "123",
     groups: group2,
     fName: "Jim",
@@ -54,7 +54,7 @@ const userSeed = [
   {
     username: "Julian",
     email: "julian@gmail.com",
-    phoneNumber: 3,
+    phoneNumber: 4939403893,
     password: "123",
     fName: "Julian",
     lName: "Peters",
@@ -64,7 +64,7 @@ const userSeed = [
   {
     username: "James",
     email: "james@gmail.com",
-    phoneNumber: 4,
+    phoneNumber: 5843943849,
     password: "123",
     fName: "James",
     lName: "Jackson",
@@ -74,7 +74,7 @@ const userSeed = [
   {
     username: "Jermey",
     email: "jermey@gmail.com",
-    phoneNumber: 5,
+    phoneNumber: 5890948944,
     password: "123",
     fName: "Jeremy",
     lName: "White",
@@ -84,7 +84,7 @@ const userSeed = [
   {
     username: "Jacky",
     email: "jacky@gmail.com",
-    phoneNumber: 6,
+    phoneNumber: 6904858434,
     password: "123",
     fName: "Jacky",
     lName: "Robinson",

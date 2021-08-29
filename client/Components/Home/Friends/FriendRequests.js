@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import Banner2 from "../Banner2";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -58,7 +59,7 @@ const FriendRequests = (props) => {
                     Email: {element.email}
                   </Text>
                   <Text numberOfLines={1} style={styles.listTextSmall}>
-                    Username: {element.username}, Phone: {element.phoneNumber}
+                    Username: {element.username}, {formatPhoneNumber(element.phoneNumber)}
                   </Text>
                 </View>
               </View>
