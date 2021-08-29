@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import items from "./menuItems";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import {
   StyleSheet,
@@ -34,7 +35,7 @@ const Settings = (props) => {
             Username: {user.username}
           </Text>
           <Text numberOfLines={1} style={styles.smallText}>
-            Phone Number: {user.phoneNumber}
+            Phone: {formatPhoneNumber(user.phoneNumber)}
           </Text>
           <Text numberOfLines={1} style={styles.smallText}>
             Email: {user.email}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import { deleteSelfThunk } from "../../../store";
 import Banner2 from "../Banner2";
 import {
   StyleSheet,
@@ -13,6 +14,8 @@ import {
 
 const DeleteAccount = () => {
   const navigation = useNavigation();
+  const userId = useSelector((state) => state.user.id);
+  const dispatch = useDispatch();
 
   const press = () => {
     Alert.alert(
@@ -24,13 +27,13 @@ const DeleteAccount = () => {
           onPress: () => navigation.goBack(),
           style: "cancel",
         },
-        { text: "Send", onPress: () => terminateAccount() },
+        { text: "Delete", onPress: () => terminateAccount() },
       ]
     );
   };
 
   const terminateAccount = () => {
-    //delete account thunk
+    dispatch(deleteSelfThunk(userId));
     navigation.navigate("Homescreen");
   };
 

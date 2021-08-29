@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
+import { updateUserThunk } from "../../../store";
 import {
   StyleSheet,
   Text,
@@ -13,7 +14,9 @@ import {
 
 const ChangePhoneNumber = () => {
   const [phoneNumber, setPhoneNumber] = React.useState();
+  const userId = useSelector((state) => state.user.id);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const updatePhone = () => {
     if (!phoneNumber) {
@@ -22,7 +25,8 @@ const ChangePhoneNumber = () => {
       const update = {
         phoneNumber: phoneNumber.trim(),
       };
-      //thunk to update password needed
+
+      dispatch(updateUserThunk(userId, update));
       alert("Phone Number was updated");
       navigation.goBack();
     }

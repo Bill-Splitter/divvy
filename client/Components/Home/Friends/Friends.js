@@ -21,6 +21,7 @@ const Friends = () => {
   const allFriends = friends || [];
 
   const deleteItem = (id) => {
+    console.log(id);
     dispatch(deleteFriendThunk(myId, id));
   };
 
@@ -50,12 +51,9 @@ const Friends = () => {
           </TouchableHighlight>
         </View>
       </View>
-      <View style={styles.view}>
-        <View style={{ width: "100%" }}>
-          <TouchableHighlight
-            style={styles.listElementContainer}
-            underlayColor={"white"}
-          >
+      {allFriends.length > 0 ? (
+        <View style={styles.listElementContainer} underlayColor={"white"}>
+          <View style={{ flex: 1, width: "100%",}}>
             <FlatList
               keyExtractor={(item, index) => item.id.toString()}
               data={allFriends}
@@ -71,9 +69,20 @@ const Friends = () => {
                 return <View style={styles.seperatorLine}></View>;
               }}
             />
+          </View>
+        </View>
+      ) : (
+        <View style={styles.no}>
+          <Text style={styles.noFriends}>No Friends Yet</Text>
+
+          <TouchableHighlight
+            onPress={() => navigation.navigate("AddFriend")}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Add A Friend</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginLeft: 0,
     display: "flex",
-    height: "100%",
+    height: "87%",
   },
   listText: {
     fontSize: 32,
@@ -99,6 +108,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
+  },
+  noFriends: {
+    fontSize: 30,
+    color: "#ED3B5B",
+    marginBottom: 10,
+    fontWeight: "700",
   },
   loginButton: {
     width: "70%",
@@ -115,13 +130,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   view: {
-    width: "100%",
-    flex: 1,
-    alignContent: "center",
-    textAlign: "left",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 0,
+    // width: "100%",
+    // alignContent: "center",
+    // textAlign: "left",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   seperatorLine: {
     height: 1,
@@ -146,6 +159,14 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 999,
     paddingLeft: 20,
+  },
+  no: {
+    alignItems: "center",
+    padding: 15,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
   },
 
   loginButtonText: {
@@ -183,5 +204,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 56,
     paddingRight: 10,
+  },
+  button: {
+    marginTop: 15,
+    backgroundColor: "#ED3B5B",
+    padding: 15,
+    paddingLeft: 35,
+    paddingRight: 35,
+    borderRadius: 9999999,
   },
 });

@@ -6,6 +6,7 @@ import source from "../../source";
 
 const SET_BILL = "SET_BILL";
 const SET_BILLS = "SET_BILLS";
+const DELETE_BILL = "DELETE_BILL"
 const instance = axios.create({ baseURL: source });
 
 const initialState = {
@@ -20,7 +21,16 @@ export const setBills = (bills) => {
   };
 };
 
+
 //is best way to create bill with userID, then fetch bill and attach photo?
+
+export const deleteBill = (id) => {
+  return {
+    type: DELETE_BILL,
+    id
+  }
+}
+
 
 export const fetchBillsThunk = (userId) => {
   return async (dispatch) => {
@@ -47,8 +57,26 @@ export const createBillThunk = (bill, userid, friends) => {
   };
 };
 
+export const deleteTransactionThunk = (id) => {
+  return async (dispatch) => {
+    try {
+      await instance.delete(`api/bills/${id}`)
+      dispatch(deleteBill(id))
+
+    } catch (error) {
+
+    }
+  }
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
+    case DELETE_BILL: 
+    let bil = state.bills
+    bil = bil.filter((element) => {
+      if(element.id !== action.id) return element
+    })
+    return { ...state, bills: bil };
     case SET_BILLS:
       return { ...state, bills: action.bills };
     default:
