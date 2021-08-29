@@ -47,6 +47,10 @@ const Cameras = (props) => {
 
   const __savePhoto = () => {
     console.log(capturedImage, "this is the image!");
+    
+    //this is where to convert image to base64
+    //then send that string/text to sendPhotoThunk
+    
     let image = capturedImage.uri;
     props.sendPhoto(image);
 
