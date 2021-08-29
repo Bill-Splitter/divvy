@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   noFriends: {
     fontSize: 30,
-    // color: "#ED3B5B",
+     color: "#ED3B5B",
     marginBottom: 10,
     fontWeight: "700",
   },
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
-    backgroundColor: "#31cc94",
+    backgroundColor: "#ED3B5B",
     padding: 15,
     paddingLeft: 35,
     paddingRight: 35,
