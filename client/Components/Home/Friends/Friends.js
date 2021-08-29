@@ -21,7 +21,7 @@ const Friends = () => {
   const allFriends = friends || [];
 
   const deleteItem = (id) => {
-    console.log(id)
+    console.log(id);
     dispatch(deleteFriendThunk(myId, id));
   };
 
@@ -51,30 +51,43 @@ const Friends = () => {
           </TouchableHighlight>
         </View>
       </View>
-      <View style={styles.view}>
-        <View style={{ width: "100%" }}>
+      {allFriends.length > 0 ? (
+        <View style={styles.view}>
+          <View style={{ width: "100%" }}>
+            <TouchableHighlight
+              style={styles.listElementContainer}
+              underlayColor={"white"}
+            >
+              <FlatList
+                keyExtractor={(item, index) => item.id.toString()}
+                data={allFriends}
+                renderItem={(item) => {
+                  return (
+                    <ItemBox
+                      data={item}
+                      handleDelete={() => deleteItem(item.item.id)}
+                    />
+                  );
+                }}
+                ItemSeparatorComponent={() => {
+                  return <View style={styles.seperatorLine}></View>;
+                }}
+              />
+            </TouchableHighlight>
+          </View>
+        </View>
+      ) : (
+        <View style={styles.no}>
+          <Text style={styles.noFriends}>No Friends Yet</Text>
+  
           <TouchableHighlight
-            style={styles.listElementContainer}
-            underlayColor={"white"}
+            onPress={() => navigation.navigate("AddFriend")}
+            style={styles.button}
           >
-            <FlatList
-              keyExtractor={(item, index) => item.id.toString()}
-              data={allFriends}
-              renderItem={(item) => {
-                return (
-                  <ItemBox
-                    data={item}
-                    handleDelete={() => deleteItem(item.item.id)}
-                  />
-                );
-              }}
-              ItemSeparatorComponent={() => {
-                return <View style={styles.seperatorLine}></View>;
-              }}
-            />
+            <Text style={styles.buttonText}>Add A Friend</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -100,6 +113,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
+  },
+  noFriends: {
+    fontSize: 30,
+    // color: "#ED3B5B",
+    marginBottom: 10,
+    fontWeight: "700",
   },
   loginButton: {
     width: "70%",
@@ -148,6 +167,14 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingLeft: 20,
   },
+  no: {
+    alignItems: "center",
+    padding: 15,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+  },
 
   loginButtonText: {
     fontSize: 25,
@@ -184,5 +211,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 56,
     paddingRight: 10,
+  },
+  button: {
+    marginTop: 15,
+    backgroundColor: "#31cc94",
+    padding: 15,
+    paddingLeft: 35,
+    paddingRight: 35,
+    borderRadius: 9999999,
   },
 });
