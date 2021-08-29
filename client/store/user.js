@@ -101,7 +101,6 @@ export const signupThunk = (formData) => {
 export const deleteFriendThunk = (myId, friendId) => {
   return async (dispatch) => {
     try {
-      console.log("friend", friendId, myId);
       await instance.delete("api/users/deleteFriend/", {
         data: {
           user1: myId,
@@ -115,6 +114,7 @@ export const deleteFriendThunk = (myId, friendId) => {
     }
   };
 };
+
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
