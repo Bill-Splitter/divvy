@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
+import { updateUserThunk } from "../../../store";
 import {
   StyleSheet,
   Text,
@@ -13,6 +14,8 @@ import {
 const ChangeEmail = () => {
   const [email, setEmail] = React.useState();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.id);
 
   const updateEmail = () => {
     if (!email) {
@@ -21,7 +24,7 @@ const ChangeEmail = () => {
       const update = {
         email: email.trim(),
       };
-      //thunk to update password needed
+      dispatch(updateUserThunk(userId, update));
       alert("Email Address was updated");
       navigation.goBack();
     }

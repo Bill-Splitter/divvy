@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
+import { updateUserThunk } from "../../../store";
 import {
   StyleSheet,
   Text,
@@ -13,7 +14,9 @@ import {
 const ChangePassword = () => {
   const [check, setCheck] = React.useState();
   const [password, setPassword] = React.useState();
+  const userId = useSelector((state) => state.user.id);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const updatePassword = () => {
     if (!password || !check) {
@@ -21,14 +24,15 @@ const ChangePassword = () => {
     } else if (password !== check) {
       alert("passwords must match");
     } else if (password.length < 4) {
-        alert("Password is too short")
+      alert("Password is too short");
     } else {
-        const update = {
-            password: password.trim()
-        }
-        //thunk to update password needed
-        alert("Password was updated")
-       navigation.goBack()
+      const update = {
+        password: password.trim(),
+      };
+      dispatch(updateUserThunk(userId, update));
+
+      alert("Password was updated");
+      navigation.goBack();
     }
   };
 
@@ -53,7 +57,10 @@ const ChangePassword = () => {
           maxLength={20}
           onChangeText={(text) => setCheck(text)}
         ></TextInput>
-        <TouchableHighlight style={styles.button} onPress={() => updatePassword()}>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => updatePassword()}
+        >
           <Text style={styles.bText}>Update</Text>
         </TouchableHighlight>
       </View>
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     padding: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   button: {
     marginTop: 15,

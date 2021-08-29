@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
+import { updateUserThunk } from "../../../store";
 import {
   StyleSheet,
   Text,
@@ -14,6 +15,7 @@ const ChangeUsername = () => {
   const [username, setUsername] = React.useState();
   const userId = useSelector((state) => state.user.id);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const updateUsername = () => {
     if (!username) {
@@ -22,7 +24,9 @@ const ChangeUsername = () => {
       const update = {
         username: username.trim(),
       };
-      //thunk to update password needed
+
+      dispatch(updateUserThunk(userId,update))
+
       alert("Username was updated");
       navigation.goBack();
     }
