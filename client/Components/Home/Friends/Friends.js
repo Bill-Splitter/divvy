@@ -21,6 +21,7 @@ const Friends = () => {
   const allFriends = friends || [];
 
   const deleteItem = (id) => {
+    console.log(id)
     dispatch(deleteFriendThunk(myId, id));
   };
 
