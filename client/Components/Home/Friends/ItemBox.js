@@ -51,9 +51,17 @@ const ItemBox = (props) => {
           }}
           style={styles.image}
         />
+        <View style={styles.textHolder}>
         <Text numberOfLines={1} style={styles.listText}>
           {props.data.item.fName} {props.data.item.lName}
         </Text>
+        <Text  numberOfLines={1} style={styles.smallText}>
+        Username: {props.data.item.username}, Phone: {props.data.item.phoneNumber}
+
+        </Text>
+
+        </View>
+
       </View>
     </Swipeable>
   );
@@ -66,7 +74,20 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: "#ED3B5B",
     padding: 15,
+    paddingBottom: 10,
     textAlign: "left",
+  },
+  smallText: {
+    paddingLeft: 15,
+    paddingBottom: 15,
+
+    textAlign: "left",
+    color: "#ED3B5B",
+
+  },
+  textHolder: {
+
+    
   },
 
   deleteBox: {
@@ -78,8 +99,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
