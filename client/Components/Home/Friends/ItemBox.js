@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-
 const ItemBox = (props) => {
   const rightSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
@@ -52,28 +51,27 @@ const ItemBox = (props) => {
           style={styles.image}
         />
         <View style={styles.textHolder}>
-        <Text numberOfLines={1} style={styles.listText}>
-          {props.data.item.fName} {props.data.item.lName}
-        </Text>
-        <Text  numberOfLines={1} style={styles.smallText}>
-        Username: {props.data.item.username}, Phone: {props.data.item.phoneNumber}
-
-        </Text>
-
+          <Text numberOfLines={1} style={styles.listText}>
+            {props.data.item.fName} {props.data.item.lName}
+          </Text>
+          <Text numberOfLines={1} style={styles.smallText}>
+            Username: {props.data.item.username}, Phone:{" "}
+            {props.data.item.phoneNumber}
+          </Text>
         </View>
-
       </View>
     </Swipeable>
   );
 };
 
-export default ItemBox
+export default ItemBox;
 
 const styles = StyleSheet.create({
   listText: {
     fontSize: 32,
     color: "#ED3B5B",
     padding: 15,
+    paddingLeft: 10,
     paddingBottom: 10,
     textAlign: "left",
   },
@@ -83,12 +81,8 @@ const styles = StyleSheet.create({
 
     textAlign: "left",
     color: "#ED3B5B",
-
   },
-  textHolder: {
-
-    
-  },
+  textHolder: {},
 
   deleteBox: {
     backgroundColor: "#ED3B5B",
@@ -99,13 +93,13 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
     borderColor: "#ED3B5B",
     marginRight: 10,
-    marginLeft: 10,
+    marginLeft: 20,
   },
 });
