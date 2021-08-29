@@ -91,6 +91,66 @@ const userSeed = [
     imageUrl:
       "https://th.bing.com/th/id/OIP.ht9AD3ZVrDz8z1PTuwYYjgC1Es?pid=ImgDet&rs=1",
   },
+  {
+    username: "Cameron",
+    email: "cam@yahoo.com",
+    phoneNumber: 6908958434,
+    password: "123",
+    fName: "Cameron",
+    lName: "Biggs",
+    imageUrl:
+      "https://ae01.alicdn.com/kf/HTB1amXSbyrxK1RkHFCcq6AQCVXae/REPTAR-ON-SLICE-enamel-pin.jpg_Q90.jpg_.webp",
+  },
+  {
+    username: "Josh",
+    email: "jhar@hotmail.com",
+    phoneNumber: 6904858904,
+    password: "123",
+    fName: "Josh",
+    lName: "Harp",
+    imageUrl:
+      "https://patriotswire.usatoday.com/wp-content/uploads/sites/71/2021/08/1234768747.jpg?w=1000&h=600&crop=1",
+  },
+  {
+    username: "Jordan",
+    email: "jmiller@gmail.com",
+    phoneNumber: 6904858434,
+    password: "123",
+    fName: "Jordan",
+    lName: "Miller",
+    imageUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/220px-Sushi_platter.jpg",
+  },
+  {
+    username: "Sarah",
+    email: "sact@harvard.edu",
+    phoneNumber: 6904858434,
+    password: "123",
+    fName: "Sarah",
+    lName: "Ash",
+    imageUrl:
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2lybCUyMGZhY2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+  },
+  {
+    username: "Doug",
+    email: "dput@googlemail.com",
+    phoneNumber: 1004858494,
+    password: "123",
+    fName: "Doug",
+    lName: "Putnam",
+    imageUrl:
+      "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZGFpcnklMjBjb3d8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+  },
+  {
+    username: "MarvelSucks",
+    email: "bigT@yahoo.com",
+    phoneNumber: 9004858434,
+    password: "123",
+    fName: "Thomas",
+    lName: "Norris",
+    imageUrl:
+      "https://cdn.vox-cdn.com/thumbor/tA1LUTjBih3StgEumRgpY5flSps=/0x0:1700x960/1400x933/filters:focal(714x344:986x616):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/57514059/mario.0.jpg",
+  },
 ];
 
 //declaring bill objects
@@ -164,9 +224,34 @@ async function seed() {
 
   //ADDING FRIENDS
   //jack is friends w jim & julian
-  await users[0].addFriend([users[1], users[2]]);
-  await users[1].addFriend(users[0]); //jim.friend(jack)
-  await users[2].addFriend(users[0]); //julian.friend(jack)
+  await users[0].addFriend([
+    users[1],
+    users[2],
+    users[11],
+    users[10],
+    users[9],
+    users[8],
+    users[7],
+    users[6],
+  ]);
+  await users[1].addFriend(
+    users[0],
+    users[2],
+    users[11],
+    users[10],
+    users[9],
+    users[8],
+    users[7],
+    users[6]
+  ); 
+  await users[2].addFriend(    users[1],
+    users[0],
+    users[11],
+    users[10],
+    users[9],
+    users[8],
+    users[7],
+    users[6]);
 
   //james is friends w jeremy
   await users[3].addFriend(users[4]);
@@ -181,6 +266,25 @@ async function seed() {
   //CREATING PENDING FRIEND REQUESTS
   //jacky has friend requests from Jeremy & James
   await users[5].addRequestee([
+    users[11],
+    users[10],
+    users[9],
+    users[8],
+    users[7],
+    users[6],
+    users[4],
+    users[3],
+    users[2],
+    users[1],
+    users[0],
+  ]);
+  await users[6].addRequestee([
+    users[11],
+    users[10],
+    users[9],
+    users[8],
+    users[7],
+    users[5],
     users[4],
     users[3],
     users[2],
