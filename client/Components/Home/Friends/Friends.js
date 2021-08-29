@@ -53,7 +53,7 @@ const Friends = () => {
       </View>
       {allFriends.length > 0 ? (
         <View style={styles.listElementContainer} underlayColor={"white"}>
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%",}}>
             <FlatList
               keyExtractor={(item, index) => item.id.toString()}
               data={allFriends}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginLeft: 0,
     display: "flex",
-    height: "100%",
+    height: "87%",
   },
   listText: {
     fontSize: 32,
