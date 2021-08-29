@@ -61,6 +61,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    await User.destroy({
+      where: {
+        id: userId,
+      },
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete("/denyRequest/", async (req, res, next) => {
   const sender = req.body.sender;
   const receiver = req.body.receiver;

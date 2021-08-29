@@ -180,6 +180,18 @@ export const updateUserThunk = (userId, data) => {
   };
 };
 
+export const deleteSelfThunk = (userId) => {
+  return async (dispatch) => {
+    try {
+      await instance.delete(`/api/users/${userId}`)
+      dispatch(logout())
+
+    } catch(error) {
+      console.error(error)
+    }
+  }
+}
+ 
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {
