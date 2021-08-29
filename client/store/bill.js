@@ -21,12 +21,16 @@ export const setBills = (bills) => {
   };
 };
 
+
+//is best way to create bill with userID, then fetch bill and attach photo?
+
 export const deleteBill = (id) => {
   return {
     type: DELETE_BILL,
     id
   }
 }
+
 
 export const fetchBillsThunk = (userId) => {
   return async (dispatch) => {
