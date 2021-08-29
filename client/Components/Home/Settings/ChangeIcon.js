@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { updateUserThunk } from "../../../store";
 import Banner2 from "../Banner2";
 import {
   StyleSheet,
@@ -13,6 +14,8 @@ import {
 const ChangeIcon = () => {
   const [icon, setIcon] = React.useState();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.id);
 
   const updateIcon = () => {
     if (!icon) {
@@ -21,7 +24,7 @@ const ChangeIcon = () => {
       const update = {
         imageUrl: icon.trim(),
       };
-      //thunk to update password needed
+      dispatch(updateUserThunk(userId, update));
       alert("Icon was updated");
       navigation.goBack();
     }

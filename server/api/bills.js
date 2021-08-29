@@ -40,6 +40,20 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  const billId = req.params.id;
+  try {
+    await Bill.destroy({
+      where: {
+        id: billId,
+      },
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 /*
 router.get('/:userId', async (req, res, next) => {
   try {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import Banner2 from "../Banner2";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -6,6 +7,7 @@ import { Foundation } from "@expo/vector-icons";
 import { denyFriendRequest } from "../../../store";
 import { approveFriendRequest, getUpdatedUserInfo } from "../../../store";
 import { useDispatch, useSelector } from "react-redux";
+
 
 import {
   StyleSheet,
@@ -33,8 +35,10 @@ const FriendRequests = (props) => {
       <Banner2 name="Pending Friend Requests" />
 
       {requests.length === 0 ? (
-        <View style={styles.listRow}>
-          <Text style={styles.listText}>No Requests</Text>
+        <View style={styles.no}>
+      
+          <Text style={styles.listText}>No Pending Requests</Text>
+          <FontAwesome5 name="inbox" size={50} color="#ED3B5B" />
         </View>
       ) : (
         <ScrollView>
@@ -55,7 +59,7 @@ const FriendRequests = (props) => {
                     Email: {element.email}
                   </Text>
                   <Text numberOfLines={1} style={styles.listTextSmall}>
-                    Username: {element.username}, Phone: {element.phoneNumber}
+                    Username: {element.username}, {formatPhoneNumber(element.phoneNumber)}
                   </Text>
                 </View>
               </View>
@@ -147,4 +151,8 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
   },
+  no: {
+    alignItems: "center",
+    padding: 15
+  }
 });

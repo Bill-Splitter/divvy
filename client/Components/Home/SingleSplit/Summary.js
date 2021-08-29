@@ -145,13 +145,13 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 20,
     width: "33.33%",
-    color: "#ED3B5B",
+    // color: "#ED3B5B",
     fontSize: 25,
     fontWeight: "bold",
   },
   listName: {
     textAlign: "left",
-    color: "#ED3B5B",
+    // color: "#ED3B5B",
     width: "45%",
     fontSize: 20,
     paddingLeft: 15,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   listPercent: {
     width: "20%",
     textAlign: "center",
-    color: "#ED3B5B",
+    // color: "#ED3B5B",
     fontSize: 25,
     fontWeight: "bold",
   },
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 10,
   },
   totalAmount: {

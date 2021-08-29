@@ -1,6 +1,7 @@
 import React from "react";
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import {
   StyleSheet,
@@ -10,7 +11,6 @@ import {
   Animated,
   TouchableOpacity,
 } from "react-native";
-
 
 const ItemBox = (props) => {
   const rightSwipe = (progress, dragX) => {
@@ -37,7 +37,7 @@ const ItemBox = (props) => {
   };
 
   return (
-    <Swipeable renderRightActions={rightSwipe}>
+    <Swipeable renderRightActions={rightSwipe} style={{flex: 1}}>
       <View
         style={{
           display: "flex",
@@ -51,23 +51,39 @@ const ItemBox = (props) => {
           }}
           style={styles.image}
         />
-        <Text numberOfLines={1} style={styles.listText}>
-          {props.data.item.fName} {props.data.item.lName}
-        </Text>
+        <View style={styles.textHolder}>
+          <Text numberOfLines={1} style={styles.listText}>
+            {props.data.item.fName} {props.data.item.lName}
+          </Text>
+          <Text numberOfLines={1} style={styles.smallText}>
+            Username: {props.data.item.username}, {" "}
+           {formatPhoneNumber(props.data.item.phoneNumber)}
+          </Text>
+        </View>
       </View>
     </Swipeable>
   );
 };
 
-export default ItemBox
+export default ItemBox;
 
 const styles = StyleSheet.create({
   listText: {
     fontSize: 32,
     color: "#ED3B5B",
     padding: 15,
+    paddingLeft: 10,
+    paddingBottom: 10,
     textAlign: "left",
   },
+  smallText: {
+    paddingLeft: 15,
+    paddingBottom: 15,
+
+    textAlign: "left",
+    color: "#ED3B5B",
+  },
+  textHolder: {},
 
   deleteBox: {
     backgroundColor: "#ED3B5B",
@@ -78,13 +94,13 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 50,
-    height: 50,
+    width: 65,
+    height: 65,
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
     borderColor: "#ED3B5B",
     marginRight: 10,
-    marginLeft: 10,
+    marginLeft: 20,
   },
 });
