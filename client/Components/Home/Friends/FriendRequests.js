@@ -7,6 +7,7 @@ import { denyFriendRequest } from "../../../store";
 import { approveFriendRequest, getUpdatedUserInfo } from "../../../store";
 import { useDispatch, useSelector } from "react-redux";
 
+
 import {
   StyleSheet,
   Text,
@@ -33,8 +34,10 @@ const FriendRequests = (props) => {
       <Banner2 name="Pending Friend Requests" />
 
       {requests.length === 0 ? (
-        <View style={styles.listRow}>
-          <Text style={styles.listText}>No Requests</Text>
+        <View style={styles.no}>
+      
+          <Text style={styles.listText}>No Pending Requests</Text>
+          <FontAwesome5 name="inbox" size={50} color="#ED3B5B" />
         </View>
       ) : (
         <ScrollView>
@@ -147,4 +150,8 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
   },
+  no: {
+    alignItems: "center",
+    padding: 15
+  }
 });
