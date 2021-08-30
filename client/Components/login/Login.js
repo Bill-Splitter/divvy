@@ -10,8 +10,8 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  Alert,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
 const Login = (props) => {
@@ -19,12 +19,18 @@ const Login = (props) => {
   const [username, setUsername] = React.useState();
   const [password, setPassword] = React.useState();
 
-  const clickSubmit = () => {
+  const clickSubmit = async () => {
     if (!username || !password) {
       alert("all fields must be filled");
     } else {
-      props.login(username, password);
-      navigation.navigate("BottomTabNav");
+      const status = await props.login(username, password);
+      if (status === "error") {
+        alert("Invalid Username or Password");
+        setUsername("");
+        setPassword("");
+      } else {
+        navigation.navigate("BottomTabNav");
+      }
     }
   };
 
@@ -90,7 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: -50,
-    // marginTop: 200
   },
   loginText: {
     fontSize: 40,

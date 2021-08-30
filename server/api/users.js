@@ -43,10 +43,11 @@ router.get("/login", async (req, res, next) => {
       },
       include: ["friend", "requestee"],
     });
+    console.log("this is happening")
     if (user) {
       res.json(user);
-    } else {
-      res.json("invalid login");
+    } else {    
+      res.json("error");
     }
   } catch (err) {
     next(err);

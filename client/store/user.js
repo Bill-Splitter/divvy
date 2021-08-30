@@ -75,8 +75,10 @@ export const loginThunk = (username, password) => {
 
       const user = x.data;
 
-      if (user !== "invalid login") {
+      if (user !== "error") {
         dispatch(login(user));
+      } else {
+        return "error";
       }
     } catch (error) {
       console.error(error);
@@ -114,7 +116,6 @@ export const deleteFriendThunk = (myId, friendId) => {
     }
   };
 };
-
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
@@ -183,15 +184,14 @@ export const updateUserThunk = (userId, data) => {
 export const deleteSelfThunk = (userId) => {
   return async (dispatch) => {
     try {
-      await instance.delete(`/api/users/${userId}`)
-      dispatch(logout())
-
-    } catch(error) {
-      console.error(error)
+      await instance.delete(`/api/users/${userId}`);
+      dispatch(logout());
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
- 
+  };
+};
+
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {
