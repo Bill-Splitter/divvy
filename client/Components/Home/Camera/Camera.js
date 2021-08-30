@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import Expo from "expo";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -17,8 +16,6 @@ import { Camera } from "expo-camera";
 import { SafeAreaView } from "react-native";
 import ImagePicker from "./ImagePicker";
 import Banner2 from "../Banner2";
-import { sendPhotoThunk } from "../../../store/bill"; //not used
-import * as FileSystem from 'expo-file-system';
 
 let camera: Camera;
 const Cameras = (props) => {
@@ -44,28 +41,18 @@ const Cameras = (props) => {
 
   const __takePicture = async () => {
     const photo: any = await camera.takePictureAsync({base64: true});
-    //console.log(photo);
     setPreviewVisible(true);
     setCapturedImage(photo);
   };
 
   const __savePhoto = () => {
     console.log(capturedImage, "this is the image!");
-    
-    //let image = capturedImage.uri;
-    //console.log('this is image: ', image)
-      
-    //console.log('this is base64 image: ', base64Image)
-    
+    const Image_Http_URL = {uri: 'data:image/png;base64,' + capturedImage.base64};
     //then send that string/text to ItemizedSplitCreation as props
-    navigation.navigate("ItemizedSplitCreation", {image: capturedImage.base64});
+    navigation.navigate("ItemizedSplitCreation", {image: Image_Http_URL});
     
-    //old
+    //old (not mapped to props anymore)
     //props.sendPhoto(image);
-
-    //thunkcreater (image)
-    //axios. get ////api key image
-    //navigate - bill view
   };
 
   const __retakePicture = () => {
@@ -210,11 +197,7 @@ const mapStateToProps = (state) => ({
   bill: state.bill,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  sendPhoto: (photo) => dispatch(sendPhotoThunk(photo)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cameras);
+export default connect(mapStateToProps)(Cameras);
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
   console.log("sdsfds", photo);

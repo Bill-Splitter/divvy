@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { setData } from "../../../store/split";
+import { setDataComplex } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
@@ -25,33 +25,33 @@ const ItemizedSplitCreation = (props) => {
   const [total, setTotal] = React.useState();
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
-  //const { image } = route.params;
-
+  const { image } = route.params;
+  //const Image_Http_URL = {uri: 'data:image/png;base64,' + image};
+  
   const clickSubmit = () => {
-
     if (!tip) setTip(0);
+    
     if (!total || !event) {
       alert("Must enter total");
     } else {
       const totalDollars = Number(total) + Number(tip);
-      props.submit(event, totalDollars);
-      navigation.navigate("GroupList");
+      props.submit(event, totalDollars, image);
+      navigation.navigate("GroupList", {image: image});
     }
   };
   
-  let Image_Http_URL ={ uri: 'data:image/png;base64,' + route.params.image};
   console.log('route: ', route);
   console.log('navigation: ', navigation);
   
   return (
-    <View style={{ backgroundColor: "white", height: "100%"}}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2 name='Create Divvy Event'/>
       <View style={styles.view}>
-        <Image source={Image_Http_URL} style={{
+        <Image source={image} style={{
           flex: 10, 
           width: "100%", 
           height: "100%", 
-          resizeMode : 'scale',
+          resizeMode : 'contain',
           }} 
         />
         <View style={styles.inputFields}>
@@ -104,10 +104,11 @@ const ItemizedSplitCreation = (props) => {
 const mapStateToProps = (state) => ({
   name: state.split.name,
   total: state.split.total,
+  image: state.split.image,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submit: (name, total) => dispatch(setData(name, total)),
+  submit: (name, total, image) => dispatch(setDataComplex(name, total, image)),
 });
 
 export default connect(

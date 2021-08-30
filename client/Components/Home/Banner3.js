@@ -19,7 +19,7 @@ export default function Banner2(props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          marginTop: -20,
+          marginTop: -40,
           justifyContent: "center",
         }}
       >

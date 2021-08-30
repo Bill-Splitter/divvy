@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { setGroup } from "../../../store/split";
 
 import {
@@ -17,11 +17,17 @@ import Banner2 from "../Banner2";
 
 const GroupList = (props) => {
   const navigation = useNavigation();
+  const route = useRoute();
   const allGroups = props.groups || [];
 
   const selectGroup = (groupname, users) => {
+    console.log('group stuff: ', groupname, users);
     props.setGroup(groupname, users);
-    navigation.navigate("Summary");
+    if(route.params){
+      navigation.navigate("Summary", route.params);
+    } else {
+      navigation.navigate("Summary");
+    }
   };
 
   return (

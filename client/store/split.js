@@ -1,6 +1,7 @@
 const initialState = {
   name: "",
   total: "",
+  image: "",
   group: "",
   idArray: [],
 };
@@ -9,6 +10,7 @@ import source from "../../source";
 
 //action types
 const SET_DATA = "SET_DATA";
+const SET_DATA_COMPLEX = "SET_DATA_COMPLEX";
 const SET_GROUP = "SET_GROUP";
 
 //action creator
@@ -17,6 +19,14 @@ export const setData = (name, total) => {
     type: SET_DATA,
     name,
     total,
+  };
+};
+export const setDataComplex = (name, total, image) => {
+  return {
+    type: SET_DATA,
+    name,
+    total,
+    image,
   };
 };
 export const setGroup = (group, idArray) => {
@@ -32,6 +42,8 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_DATA:
       return { ...state, name: action.name, total: action.total };
+    case SET_DATA:
+      return { ...state, name: action.name, total: action.total, image: action.image };
     case SET_GROUP:
       return { ...state, group: action.group, idArray: action.idArray };
     default:
