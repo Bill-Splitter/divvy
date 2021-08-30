@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
 
+
 import {
   StyleSheet,
   Text,
@@ -14,6 +15,16 @@ import {
 } from "react-native";
 
 import Banner3 from "../Banner3";
+
+
+onPress = async (users, total) => {
+  const numbers = users.map((element) => {
+    return element.phoneNumber;
+  });
+
+
+  console.log(status);
+};
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -38,11 +49,13 @@ const Summary = () => {
   };
 
   const submit = () => {
+   
+
     const billText = {
       title: info.name,
       total: info.total,
       group: info.group,
-      userAmounts: (info.total / (friendArray.length + 1)).toFixed(2),
+      userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
     };
 
     const newBill = {
