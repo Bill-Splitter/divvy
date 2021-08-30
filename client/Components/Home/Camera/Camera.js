@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import Expo from "expo";
 import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -15,7 +17,8 @@ import { Camera } from "expo-camera";
 import { SafeAreaView } from "react-native";
 import ImagePicker from "./ImagePicker";
 import Banner2 from "../Banner2";
-import { sendPhotoThunk } from "../../../store/bill";
+import { sendPhotoThunk } from "../../../store/bill"; //not used
+import * as FileSystem from 'expo-file-system';
 
 let camera: Camera;
 const Cameras = (props) => {
@@ -27,6 +30,7 @@ const Cameras = (props) => {
     Camera.Constants.Type.back
   );
   const [flashMode, setFlashMode] = React.useState("off");
+  const navigation = useNavigation();
 
   const __startCamera = async () => {
     const { status } = await Camera.requestPermissionsAsync();
@@ -39,8 +43,8 @@ const Cameras = (props) => {
   };
 
   const __takePicture = async () => {
-    const photo: any = await camera.takePictureAsync();
-    console.log(photo);
+    const photo: any = await camera.takePictureAsync({base64: true});
+    //console.log(photo);
     setPreviewVisible(true);
     setCapturedImage(photo);
   };
@@ -48,11 +52,16 @@ const Cameras = (props) => {
   const __savePhoto = () => {
     console.log(capturedImage, "this is the image!");
     
-    //this is where to convert image to base64
-    //then send that string/text to sendPhotoThunk
+    //let image = capturedImage.uri;
+    //console.log('this is image: ', image)
+      
+    //console.log('this is base64 image: ', base64Image)
     
-    let image = capturedImage.uri;
-    props.sendPhoto(image);
+    //then send that string/text to ItemizedSplitCreation as props
+    navigation.navigate("ItemizedSplitCreation", {image: capturedImage.base64});
+    
+    //old
+    //props.sendPhoto(image);
 
     //thunkcreater (image)
     //axios. get ////api key image

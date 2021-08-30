@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { setData } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,15 +14,18 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
 
 const ItemizedSplitCreation = (props) => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [total, setTotal] = React.useState();
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
+  //const { image } = route.params;
 
   const clickSubmit = () => {
 
@@ -35,10 +38,17 @@ const ItemizedSplitCreation = (props) => {
       navigation.navigate("GroupList");
     }
   };
-
+  
+  let Image_Http_URL ={ uri: 'data:image/png;base64,' + route.params.image};
+  console.log('route: ', route);
+  console.log('navigation: ', navigation);
+  
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2 />
+      <Image source={Image_Http_URL} style = {{height: "100%", resizeMode : 'center'}} />
+      
+      {/*
       <View style={styles.view}>
         <Text style={styles.loginText}>Create Divvy Event</Text>
 
@@ -47,7 +57,7 @@ const ItemizedSplitCreation = (props) => {
             <MaterialIcons name="event" size={40} color="black" />
           </Text>
           <TextInput
-            placeholder="Complex shit n shit"
+            placeholder="Event Name Here"
             style={styles.input}
             value={event}
             maxLength={28}
@@ -84,6 +94,7 @@ const ItemizedSplitCreation = (props) => {
           <Text style={styles.loginButtonText}>Select Group</Text>
         </TouchableHighlight>
       </View>
+      */}
     </View>
   );
 };
