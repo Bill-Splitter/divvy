@@ -53,7 +53,7 @@ const Friends = () => {
       </View>
       {allFriends.length > 0 ? (
         <View style={styles.listElementContainer} underlayColor={"white"}>
-          <View style={{ flex: 1, width: "100%",}}>
+          <View style={{ flex: 1, width: "100%" }}>
             <FlatList
               keyExtractor={(item, index) => item.id.toString()}
               data={allFriends}
@@ -129,13 +129,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: "100%",
   },
-  view: {
-    // width: "100%",
-    // alignContent: "center",
-    // textAlign: "left",
-    // justifyContent: "center",
-    // alignItems: "center",
-  },
+
   seperatorLine: {
     height: 1,
     backgroundColor: "pink",

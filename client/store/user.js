@@ -11,6 +11,7 @@ const APPROVE_REQUEST = "APPROVE_REQUEST";
 const DENY_REQUEST = "DENY_REQUEST";
 const GET_USER_INFO = "GET_USER_INFO";
 const DELETE_FRIEND = "DELETE_FRIEND";
+const DELETE_GROUP = "DELETE_GROUP";
 
 //action creators
 export const login = (user) => {
@@ -64,6 +65,12 @@ export const deleteFriend = (friendId) => {
     id: friendId,
   };
 };
+export const deleteGroup = (index) => {
+  return {
+    type: DELETE_GROUP,
+    index,
+  };
+};
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -115,6 +122,21 @@ export const deleteFriendThunk = (myId, friendId) => {
   };
 };
 
+export const deleteGroupThunk = (myId, index) => {
+  return async (dispatch) => {
+    try {
+      await instance.delete("api/users/deleteGroup/", {
+        data: {
+          user1: myId,
+          group: index,
+        },
+      });
+      dispatch(deleteGroups(index));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
@@ -183,15 +205,14 @@ export const updateUserThunk = (userId, data) => {
 export const deleteSelfThunk = (userId) => {
   return async (dispatch) => {
     try {
-      await instance.delete(`/api/users/${userId}`)
-      dispatch(logout())
-
-    } catch(error) {
-      console.error(error)
+      await instance.delete(`/api/users/${userId}`);
+      dispatch(logout());
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
- 
+  };
+};
+
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {
@@ -211,6 +232,8 @@ export default function (state = {}, action) {
         if (element.id != action.id) return element;
       });
       return temp;
+    case DELETE_GROUP:
+      return;
 
     case APPROVE_REQUEST:
       const user = state;
