@@ -43,7 +43,6 @@ router.get("/login", async (req, res, next) => {
       },
       include: ["friend", "requestee"],
     });
-    console.log("this is happening")
     if (user) {
       res.json(user);
     } else {    
