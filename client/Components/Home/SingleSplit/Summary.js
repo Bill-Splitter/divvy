@@ -17,15 +17,6 @@ import {
 import Banner3 from "../Banner3";
 
 
-onPress = async (users, total) => {
-  const numbers = users.map((element) => {
-    return element.phoneNumber;
-  });
-
-
-  console.log(status);
-};
-
 const Summary = () => {
   const info = useSelector((state) => state.split);
   const friends = useSelector((state) => state.user);
