@@ -75,8 +75,10 @@ export const loginThunk = (username, password) => {
 
       const user = x.data;
 
-      if (user !== "invalid login") {
+      if (user !== "error") {
         dispatch(login(user));
+      } else {
+        return "error";
       }
     } catch (error) {
       console.error(error);
@@ -89,9 +91,13 @@ export const signupThunk = (formData) => {
     try {
       const x = await instance.post("/api/users/", { formData });
       const user = x.data;
-      dispatch(login(user));
+      console.log(user)
 
-      //axious post request
+      if (user.error) {
+        return user.error;
+      } else {
+        dispatch(login(user));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -114,7 +120,6 @@ export const deleteFriendThunk = (myId, friendId) => {
     }
   };
 };
-
 
 export const approveFriendRequest = (id, user) => {
   return async (dispatch) => {
@@ -155,10 +160,13 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
         senderId: senderId,
         phoneNumber: phoneNumber,
       });
+      console.log("dasta", fren.data)
 
-      if (fren.data === "not found") {
-        console.error("not found");
-        throw "error";
+      if (fren.data === "user not found") {
+        console.log("THIS IS NOT HERE")
+        return "not found";
+      } else {
+        return fren.data.id
       }
     } catch (error) {
       console.error(error);
@@ -172,8 +180,9 @@ export const updateUserThunk = (userId, data) => {
       let user = await instance.put(`/api/users/${userId}`, { data: data });
 
       const updatedUser = user.data;
-
-      dispatch(updateUser(updatedUser));
+      if(updatedUser === "error"){
+        return "error"
+      }else dispatch(updateUser(updatedUser));
     } catch (error) {
       console.error(error);
     }
@@ -183,15 +192,14 @@ export const updateUserThunk = (userId, data) => {
 export const deleteSelfThunk = (userId) => {
   return async (dispatch) => {
     try {
-      await instance.delete(`/api/users/${userId}`)
-      dispatch(logout())
-
-    } catch(error) {
-      console.error(error)
+      await instance.delete(`/api/users/${userId}`);
+      dispatch(logout());
+    } catch (error) {
+      console.error(error);
     }
-  }
-}
- 
+  };
+};
+
 //reducer
 export default function (state = {}, action) {
   switch (action.type) {

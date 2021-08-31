@@ -27,7 +27,7 @@ router.put("/:id", async (req, res, next) => {
     });
     res.json(await userToUpdate.update(req.body.data));
   } catch (error) {
-    next(error);
+    res.json("error")
   }
 });
 
@@ -46,7 +46,7 @@ router.get("/login", async (req, res, next) => {
     if (user) {
       res.json(user);
     } else {
-      res.json("invalid login");
+      res.json("error");
     }
   } catch (err) {
     next(err);
@@ -57,10 +57,18 @@ router.post("/", async (req, res, next) => {
   try {
     res.status(201).send(await User.create(req.body.formData));
   } catch (error) {
-    next(error);
+    const message = "";
+    if (error.errors) message = error.errors[0].message;
+
+    if (message === "Validation isEmail on email failed")
+      res.json({ error: "Improper Email Address" });
+    else if (message === "username must be unique")
+      res.json({ error: "Username already taken" });
+    else if (message === "email must be unique")
+      res.json({ error: "Email already in use" });
+    else res.json({ error: "Invalid Field Entry" });
   }
 });
-
 
 router.delete("/denyRequest/", async (req, res, next) => {
   const sender = req.body.sender;
@@ -79,7 +87,7 @@ router.delete("/deleteFriend/", async (req, res, next) => {
   const u1 = req.body.user1;
   const u2 = req.body.user2;
 
-  console.log("============", u1,u2)
+  console.log("============", u1, u2);
 
   try {
     const user1 = await User.findByPk(u1);
@@ -155,9 +163,9 @@ router.post("/addFriend/", async (req, res, next) => {
 
     if (receiver) {
       receiver.addRequestee(senderId);
-      res.json(true);
+      res.json(receiver);
     } else {
-      res.json("not found");
+      res.json("user not found");
     }
   } catch (error) {
     next(error);

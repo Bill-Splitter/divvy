@@ -9,6 +9,7 @@ import {
   View,
   TouchableHighlight,
   TextInput,
+  Alert,
 } from "react-native";
 
 const ChangePassword = () => {
@@ -18,21 +19,34 @@ const ChangePassword = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const updatePassword = () => {
+  const clear = () => {
+    setCheck("");
+    setPassword("");
+  };
+
+  const updatePassword = async () => {
     if (!password || !check) {
-      alert("passwords cannot be blank");
+      Alert.alert("passwords cannot be blank");
+      clear();
     } else if (password !== check) {
-      alert("passwords must match");
+      Alert.alert("passwords must match");
+      clear();
     } else if (password.length < 4) {
-      alert("Password is too short");
+      Alert.alert("Sorry", "Password is too short");
+      clear();
     } else {
       const update = {
         password: password.trim(),
       };
-      dispatch(updateUserThunk(userId, update));
 
-      alert("Password was updated");
-      navigation.goBack();
+      const status = await dispatch(updateUserThunk(userId, update));
+      if (status) {
+        Alert.alert("Error", "Invalid Password");
+        clear();
+      } else {
+        alert("Password was updated");
+        navigation.goBack();
+      }
     }
   };
 

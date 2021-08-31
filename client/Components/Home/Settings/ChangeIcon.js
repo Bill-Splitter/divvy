@@ -8,6 +8,7 @@ import {
   Text,
   View,
   TextInput,
+  Alert,
   TouchableHighlight,
 } from "react-native";
 
@@ -17,16 +18,21 @@ const ChangeIcon = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.id);
 
-  const updateIcon = () => {
+  const updateIcon = async () => {
     if (!icon) {
-      alert("Icon Url Cannot be blank");
+      Alert.alert("Icon Url Cannot be blank");
     } else {
       const update = {
         imageUrl: icon.trim(),
       };
-      dispatch(updateUserThunk(userId, update));
-      alert("Icon was updated");
-      navigation.goBack();
+      const status = await dispatch(updateUserThunk(userId, update));
+      if (status) {
+        Alert.alert("Error", "Something Went Wrong");
+        setIcon("");
+      } else {
+        Alert.alert("Icon was updated");
+        navigation.goBack();
+      }
     }
   };
 
@@ -42,10 +48,7 @@ const ChangeIcon = () => {
           onChangeText={(text) => setIcon(text)}
         ></TextInput>
 
-        <TouchableHighlight
-          style={styles.button}
-          onPress={() => updateIcon()}
-        >
+        <TouchableHighlight style={styles.button} onPress={() => updateIcon()}>
           <Text style={styles.bText}>Update</Text>
         </TouchableHighlight>
       </View>
