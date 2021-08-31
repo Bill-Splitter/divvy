@@ -18,6 +18,9 @@ export const setData = (name, total) => {
     type: SET_DATA,
     name,
     total,
+
+
+
   };
 };
 export const setGroup = (group, idArray) => {

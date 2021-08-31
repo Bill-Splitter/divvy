@@ -19,8 +19,6 @@ import FriendsList from "../Components/Home/Friends/FriendsList.js";
 import Summary from "../Components/Home/SingleSplit/Summary.js";
 import AddFriend from "../Components/Home/Friends/AddFriend.js";
 import FriendRequests from "../Components/Home/Friends/FriendRequests.js";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -79,7 +77,10 @@ const Home = () => {
       <HomeStack.Screen name="IndividualTrans" component={IndividualTrans} />
       <HomeStack.Screen name="ChangeIcon" component={ChangeIcon} />
       <HomeStack.Screen name="ChangePassword" component={ChangePassword} />
-      <HomeStack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
+      <HomeStack.Screen
+        name="ChangePhoneNumber"
+        component={ChangePhoneNumber}
+      />
       <HomeStack.Screen name="ChangeUsername" component={ChangeUsername} />
       <HomeStack.Screen name="ChangeEmail" component={ChangeEmail} />
       <HomeStack.Screen name="DeleteAccount" component={DeleteAccount} />
@@ -118,35 +119,64 @@ const BottomTabNav = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{ tabBarBadge: requests.length > 0 ? requests.length : null }}
+        options={{
+          tabBarBadge: requests.length > 0 ? requests.length : null,
+        }}
       />
       <Tab.Screen name="New Divvy" component={DivvyView} />
       <Tab.Screen name="Groups" component={AllGroups} />
     </Tab.Navigator>
   );
+  // }
 };
 
 export default function NavigationCon() {
-  return (
-    <NavigationContainer>
-      <AuthStack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <AuthStack.Screen name="Homescreen" component={Homescreen} />
-        <AuthStack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: "Login" }}
-        />
-        <AuthStack.Screen
-          name="Signup"
-          component={Signup}
-          options={{ title: "Sign Up" }}
-        />
-        <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
-      </AuthStack.Navigator>
-    </NavigationContainer>
-  );
+  const myId = useSelector((state) => state.user.id);
+
+  if (!myId) {
+    return (
+      <NavigationContainer>
+        <AuthStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <AuthStack.Screen name="Homescreen" component={Homescreen} />
+          <AuthStack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: "Login" }}
+          />
+          <AuthStack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ title: "Sign Up" }}
+          />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        <AuthStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <AuthStack.Screen name="Homescreen" component={Homescreen} />
+          <AuthStack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: "Login" }}
+          />
+          <AuthStack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ title: "Sign Up" }}
+          />
+          <AuthStack.Screen name="BottomTabNav" component={BottomTabNav} />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
