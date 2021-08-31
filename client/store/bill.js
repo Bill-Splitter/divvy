@@ -51,6 +51,9 @@ export const createBillThunk = (bill, userid, friends) => {
         friendArray: friends,
       });
       const data = newBill.data;
+      
+      //need to change this below
+      //dispatch(data);
     } catch (error) {
       console.error(error);
     }
@@ -72,10 +75,10 @@ export const deleteTransactionThunk = (id) => {
 export default function (state = initialState, action) {
   switch (action.type) {
     case DELETE_BILL: 
-    let bil = state.bills
-    bil = bil.filter((element) => {
-      if(element.id !== action.id) return element
-    })
+      let bil = state.bills
+      bil = bil.filter((element) => {
+        if(element.id !== action.id) return element
+      })
     return { ...state, bills: bil };
     case SET_BILLS:
       return { ...state, bills: action.bills };

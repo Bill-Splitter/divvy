@@ -1,6 +1,7 @@
 const initialState = {
   name: "",
   total: "",
+  image: "",
   group: "",
   idArray: [],
 };

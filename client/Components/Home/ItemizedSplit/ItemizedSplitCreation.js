@@ -25,33 +25,33 @@ const ItemizedSplitCreation = (props) => {
   const [total, setTotal] = React.useState();
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
-  //const { image } = route.params;
-
+  const { image } = route.params;
+  //const Image_Http_URL = {uri: 'data:image/png;base64,' + image};
+  
   const clickSubmit = () => {
-
     if (!tip) setTip(0);
+    
     if (!total || !event) {
       alert("Must enter total");
     } else {
       const totalDollars = Number(total) + Number(tip);
       props.submit(event, totalDollars);
-      navigation.navigate("GroupList");
+      navigation.navigate("GroupList", {image: image});
     }
   };
   
-  let Image_Http_URL ={ uri: 'data:image/png;base64,' + route.params.image};
-  console.log('route: ', route);
-  console.log('navigation: ', navigation);
+  //console.log('route: ', route);
+  //console.log('navigation: ', navigation);
   
   return (
-    <View style={{ backgroundColor: "white", height: "100%"}}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2 name='Create Divvy Event'/>
       <View style={styles.view}>
-        <Image source={Image_Http_URL} style={{
+        <Image source={image} style={{
           flex: 10, 
           width: "100%", 
           height: "100%", 
-          resizeMode : 'scale',
+          resizeMode : 'contain',
           }} 
         />
         <View style={styles.inputFields}>
@@ -110,10 +110,7 @@ const mapDispatchToProps = (dispatch) => ({
   submit: (name, total) => dispatch(setData(name, total)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ItemizedSplitCreation);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemizedSplitCreation);
 
 const styles = StyleSheet.create({
   view: {

@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Banner2(props) {
+export default function Banner3(props) {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,7 @@ export default function Banner2(props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          marginTop: -20,
+          marginTop: -40,
           justifyContent: "center",
         }}
       >
