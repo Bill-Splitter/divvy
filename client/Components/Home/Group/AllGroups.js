@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setGroup } from "../../../store/split";
 import GroupItemBox from "./GroupItemBox";
-import { deleteGroupThunk } from "../../../store";
+import { updateUserThunk } from "../../../store";
 
 import {
   StyleSheet,
@@ -22,14 +21,16 @@ const AllGroups = () => {
   const myId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
 
-  const allGroups = groups || [];
-
-  // const selectGroup = (groupname, users) => {
-  //   props.setGroup(groupname, users);
-  // };
+  let allGroups = groups || [];
 
   const deleteItem = (index) => {
-    dispatch(deleteGroupThunk(myId, index));
+    allGroups = allGroups.filter((element, groupIndex) => {
+      if (groupIndex !== index) {
+        return element;
+      }
+    });
+    let update = { groups: allGroups };
+    dispatch(updateUserThunk(myId, update));
   };
 
   return (
@@ -53,6 +54,7 @@ const AllGroups = () => {
             style={{
               display: "flex",
             }}
+            underlayColor={"transparent"}
           >
             <Text style={styles.plusText}>+</Text>
           </TouchableHighlight>
@@ -65,10 +67,15 @@ const AllGroups = () => {
             data={allGroups}
             renderItem={(item) => {
               return (
-                <GroupItemBox
-                  data={item}
-                  handleDelete={() => deleteItem(item.index)}
-                />
+                <TouchableHighlight
+                  onPress={() => console.log("group has been pressed")}
+                  underlayColor={"transparent"}
+                >
+                  <GroupItemBox
+                    data={item}
+                    handleDelete={() => deleteItem(item.index)}
+                  />
+                </TouchableHighlight>
               );
             }}
             ItemSeparatorComponent={() => {

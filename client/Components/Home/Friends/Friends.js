@@ -46,6 +46,7 @@ const Friends = () => {
             style={{
               display: "flex",
             }}
+            underlayColor={"transparent"}
           >
             <Text style={styles.plusText}>+</Text>
           </TouchableHighlight>

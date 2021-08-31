@@ -11,7 +11,6 @@ const APPROVE_REQUEST = "APPROVE_REQUEST";
 const DENY_REQUEST = "DENY_REQUEST";
 const GET_USER_INFO = "GET_USER_INFO";
 const DELETE_FRIEND = "DELETE_FRIEND";
-const DELETE_GROUP = "DELETE_GROUP";
 
 //action creators
 export const login = (user) => {
@@ -65,12 +64,6 @@ export const deleteFriend = (friendId) => {
     id: friendId,
   };
 };
-export const deleteGroup = (index) => {
-  return {
-    type: DELETE_GROUP,
-    index,
-  };
-};
 
 //thunk creators
 export const loginThunk = (username, password) => {
@@ -116,22 +109,6 @@ export const deleteFriendThunk = (myId, friendId) => {
       });
 
       dispatch(deleteFriend(friendId));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
-
-export const deleteGroupThunk = (myId, index) => {
-  return async (dispatch) => {
-    try {
-      await instance.delete("api/users/deleteGroup/", {
-        data: {
-          user1: myId,
-          group: index,
-        },
-      });
-      dispatch(deleteGroups(index));
     } catch (error) {
       console.error(error);
     }
@@ -232,8 +209,6 @@ export default function (state = {}, action) {
         if (element.id != action.id) return element;
       });
       return temp;
-    case DELETE_GROUP:
-      return;
 
     case APPROVE_REQUEST:
       const user = state;

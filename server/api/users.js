@@ -61,7 +61,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-
 router.delete("/denyRequest/", async (req, res, next) => {
   const sender = req.body.sender;
   const receiver = req.body.receiver;
@@ -79,8 +78,6 @@ router.delete("/deleteFriend/", async (req, res, next) => {
   const u1 = req.body.user1;
   const u2 = req.body.user2;
 
-  console.log("============", u1,u2)
-
   try {
     const user1 = await User.findByPk(u1);
     const user2 = await User.findByPk(u2);
@@ -94,6 +91,7 @@ router.delete("/deleteFriend/", async (req, res, next) => {
     next(error);
   }
 });
+
 router.delete("/:id", async (req, res, next) => {
   const userId = req.params.id;
   try {
