@@ -83,49 +83,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  headerText: {
-    fontSize: 40,
-    // color: "#ED3B5B",
-    textAlign: "left",
-    fontWeight: "bold",
-    paddingLeft: 20,
-    marginBottom: 5,
-    marginTop: 10,
-  },
-  totalAmount: {
-    textAlign: "center",
-    color: "black",
-    fontSize: 32,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  eventName: {
-    textAlign: "center",
-    color: "black",
-    fontSize: 23,
-    paddingTop: 20,
-  },
-  info: {
-    backgroundColor: "white",
-  },
-  footer: {
-    position: "relative",
-    bottom: 0,
-    alignItems: "center",
-  },
-  sendInvoice: {
-    width: "50%",
-    backgroundColor: "#3bedac",
-    borderRadius: 45,
-    marginTop: 20,
-    marginBottom: 5,
-  },
-  sendInvoiceText: {
-    fontSize: 25,
-    color: "white",
-    padding: 16,
-    textAlign: "center",
-  },
   borderBar: {
     width: "100%",
     borderBottomWidth: 1,

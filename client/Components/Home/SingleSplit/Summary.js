@@ -6,6 +6,7 @@ import { createBillThunk } from "../../../store/bill";
 import items from "./options";
 import Item from "./Item";
 import SplitEvenly from "./SplitEvenly";
+import SplitCustom from "./SplitCustom";
 
 import {
   StyleSheet,
@@ -94,8 +95,10 @@ const Summary = () => {
             }}
           />
         </View>
-
-        <SplitEvenly groupFriends={groupFriends} info={info}  />
+        {selected === "simple" ? 
+        <SplitEvenly groupFriends={groupFriends} info={info}  /> :
+        <SplitCustom groupFriends={groupFriends} info={info}/> 
+        }
 
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
