@@ -210,6 +210,13 @@ export default function (state = {}, action) {
       temp.friend = temp.friend.filter((element) => {
         if (element.id != action.id) return element;
       });
+      temp.groups = temp.groups.map((element) => {
+        element.users = element.users.filter((id) => {
+          if(id !== action.id) return id
+        })
+        return element
+      })
+
       return temp;
 
     case APPROVE_REQUEST:
