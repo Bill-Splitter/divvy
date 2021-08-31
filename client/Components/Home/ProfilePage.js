@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   StyleSheet,
   Text,
@@ -8,12 +7,13 @@ import {
   Image,
   TouchableHighlight,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, StackActions } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { getUpdatedUserInfo } from "../../store";
+import { logout }from '../../store/user';
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
@@ -21,9 +21,11 @@ const ProfilePage = (props) => {
   const [notis, setNotis] = React.useState(user.requestee);
   const dispatch = useDispatch();
 
-  const logout = () => {
+  const logOut = () => {
+    dispatch(logout());
     navigation.navigate("Homescreen");
-  };
+  }
+
 
   React.useEffect(() => {
     if (user.requestee) setNotis(user.requestee.length);
@@ -184,8 +186,9 @@ const ProfilePage = (props) => {
       >
         <TouchableHighlight
           style={styles.submitButton}
-          onPress={() => logout()}
+          onPress={() => logOut()}
         >
+          
           <Text style={styles.submitText}>Logout</Text>
         </TouchableHighlight>
       </View>
