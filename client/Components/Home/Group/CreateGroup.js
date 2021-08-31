@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-//import { setGroup } from "../../../store/split";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserThunk } from "../../../store";
 
@@ -58,7 +57,6 @@ const CreateGroups = ({ route }) => {
     navigation.navigate("AllGroups");
   };
 
-  // console.log("the list selected is", selectedArray);
   const items = friends;
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>

@@ -161,9 +161,7 @@ const styles = StyleSheet.create({
   
   loginButton: {
     width: "50%",
-    // backgroundColor: "#3bedac",
     backgroundColor: "#ED3B5B",
-    // backgroundColor: "#32d197",
     borderRadius: 45,
     marginTop: 20,
   },

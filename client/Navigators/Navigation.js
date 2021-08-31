@@ -127,7 +127,6 @@ const BottomTabNav = () => {
       <Tab.Screen name="Groups" component={AllGroups} />
     </Tab.Navigator>
   );
-  // }
 };
 
 export default function NavigationCon() {

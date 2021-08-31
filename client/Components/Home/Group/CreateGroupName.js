@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-// import { loginThunk } from "../../store";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
 
