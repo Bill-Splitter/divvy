@@ -1,20 +1,20 @@
 const items = [
     {
-      name: "SplitEvenly",
+      name: "simple",
       title: "Split Evenly",
     },
     {
-      name: "ChangeIcon",
+      name: "different",
       title: "One Pays Different",
     },
     {
-      name: "ChangePassword",
+      name: "custom",
       title: "Custom Dollar Amounts",
     },
-    {
-      name: "ChangePhoneNumber",
-      title: "One Pays Less",
-    },
+    // {
+    //   name: "ChangePhoneNumber",
+    //   title: "One Pays Less",
+    // },
   ];
 
   

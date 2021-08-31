@@ -26,6 +26,7 @@ const Summary = () => {
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
+  const [selected, setSelected] = React.useState('simple')
 
   const sendInvoices = () => {
     Alert.alert(
@@ -62,6 +63,8 @@ const Summary = () => {
     navigation.navigate("ProfilePage");
   };
 
+ 
+
   const groupFriends = friendArray.filter((element) => {
     if (info.idArray.includes(element.id)) {
       return element;
@@ -87,12 +90,12 @@ const Summary = () => {
             data={items}
             keyExtractor={(item, index) => index.toString()}
             renderItem={(item) => {
-              return <Item data={item} />;
+              return <Item data={item} selected={selected} setSelected={setSelected}/>;
             }}
           />
         </View>
 
-        <SplitEvenly groupFriends={groupFriends} info={info} />
+        <SplitEvenly groupFriends={groupFriends} info={info}  />
 
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
