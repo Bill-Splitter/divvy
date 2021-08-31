@@ -57,7 +57,7 @@ const ItemizedSplitCreation = (props) => {
         <View style={styles.inputFields}>
           <View style={styles.inputRow}>
             <Text style={styles.iconHolder}>
-              <MaterialIcons name="event" size={40} color="black" />
+              <MaterialIcons name="event" size={32} color="black" />
             </Text>
             <TextInput
               placeholder="Event Name Here"
@@ -69,7 +69,7 @@ const ItemizedSplitCreation = (props) => {
           </View>
   
           <View style={styles.inputRow}>
-            <Text style={styles.iconHolder}><Foundation name="dollar" size={55} color="black" /></Text>
+            <Text style={styles.iconHolder}><Foundation name="dollar" size={44} color="black" /></Text>
             <TextInput
               placeholder="Enter Total w/ Tax"
               style={styles.input2}
@@ -80,23 +80,22 @@ const ItemizedSplitCreation = (props) => {
           </View>
   
           <View style={styles.inputRow}>
-            <Text style={styles.iconHolder}><FontAwesome name="gratipay" size={35} color="black" /></Text>
+            <Text style={styles.iconHolder}><FontAwesome name="gratipay" size={28} color="black" /></Text>
             <TextInput
               placeholder="Tip (optional)"
-              style={styles.input2}
+              style={styles.input3}
               value={tip}
               maxLength={6}
               onChangeText={(text) => setTip(text)}
             ></TextInput>
           </View>
-  
-          <TouchableHighlight
-            style={styles.loginButton}
-            onPress={() => clickSubmit()}
-          >
-            <Text style={styles.loginButtonText}>Select Group</Text>
-          </TouchableHighlight>
         </View>
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => clickSubmit()}
+        >
+          <Text style={styles.loginButtonText}>Select Group</Text>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -143,25 +142,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    height: 50,
-    margin: 12,
-    padding: 10,
+    height: 35,
+    margin: 6,
+    padding: -5,
     marginLeft: 10,
     borderBottomWidth: 3,
     borderColor: "#313359",
     fontWeight: "bold",
-    width: "55%",
+    width: "65%",
     paddingLeft: 20,
     fontSize: 20,
   },
   input2: {
-    height: 50,
-    margin: 12,
-    padding: 10,
+    height: 35,
+    margin: 6,
+    padding: -5,
     marginLeft: 10,
     borderBottomWidth: 3,
     borderColor: "#313359",
-    width: "55%",
+    width: "65%",
+    paddingLeft: 20,
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  input3: {
+    height: 35,
+    margin: 6,
+    padding: -5,
+    marginLeft: 10,
+    borderBottomWidth: 3,
+    borderColor: "#313359",
+    width: "65%",
     paddingLeft: 20,
     fontSize: 23,
     fontWeight: "bold"
@@ -172,13 +183,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#ED3B5B",
     // backgroundColor: "#32d197",
     borderRadius: 45,
-    marginTop: 20,
+    marginTop: 10,
   },
 
   loginButtonText: {
-    fontSize: 25,
+    fontSize: 20,
     color: "white",
-    padding: 16,
+    padding: 10,
     textAlign: "center",
   },
 });
