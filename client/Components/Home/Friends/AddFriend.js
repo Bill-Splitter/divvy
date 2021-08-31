@@ -12,9 +12,21 @@ const AddFriend = (props) => {
   const [phoneNumber, setPhoneNumber] = React.useState();
 
   const clickSubmit = async () => {
-    props.sendRequest(props.user.id, phoneNumber.trim());
+    const status = await props.sendRequest(props.user.id, phoneNumber.trim());
+    console.log(status);
+    if (status === "not found") {
+      alert("No User Found");
+    } else if (status === props.user.id) {
+      alert("Cannot Friend Yourself");
+    } else {
+      let repeat = false;
 
-    navigation.navigate("Friends");
+      props.user.friend.forEach((element) => {
+        if (element.id === status) repeat = true;
+      });
+      if (repeat) alert("You are already friends");
+      else navigation.navigate("Friends");
+    }
   };
 
   return (

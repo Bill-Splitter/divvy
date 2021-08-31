@@ -163,9 +163,9 @@ router.post("/addFriend/", async (req, res, next) => {
 
     if (receiver) {
       receiver.addRequestee(senderId);
-      res.json(true);
+      res.json(receiver);
     } else {
-      res.json("not found");
+      res.json("user not found");
     }
   } catch (error) {
     next(error);

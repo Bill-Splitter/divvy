@@ -160,10 +160,13 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
         senderId: senderId,
         phoneNumber: phoneNumber,
       });
+      console.log("dasta", fren.data)
 
-      if (fren.data === "not found") {
-        console.error("not found");
-        throw "error";
+      if (fren.data === "user not found") {
+        console.log("THIS IS NOT HERE")
+        return "not found";
+      } else {
+        return fren.data.id
       }
     } catch (error) {
       console.error(error);
