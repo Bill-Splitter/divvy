@@ -51,6 +51,9 @@ export const createBillThunk = (bill, userid, friends) => {
         friendArray: friends,
       });
       const data = newBill.data;
+      
+      //need to change this below
+      //dispatch(data);
     } catch (error) {
       console.error(error);
     }

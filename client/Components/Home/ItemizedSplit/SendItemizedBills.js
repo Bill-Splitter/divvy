@@ -40,7 +40,7 @@ const SendItemizedBills = () => {
   };
   
   const submit = () => {
-    console.log(route.params);
+    //console.log(route.params);
     const billText = {
       title: info.name,
       total: info.total,

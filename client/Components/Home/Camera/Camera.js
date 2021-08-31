@@ -46,13 +46,9 @@ const Cameras = (props) => {
   };
 
   const __savePhoto = () => {
-    console.log(capturedImage, "this is the image!");
     const Image_Http_URL = {uri: 'data:image/png;base64,' + capturedImage.base64};
     //then send that string/text to ItemizedSplitCreation as props
     navigation.navigate("ItemizedSplitCreation", {image: Image_Http_URL});
-    
-    //old (not mapped to props anymore)
-    //props.sendPhoto(image);
   };
 
   const __retakePicture = () => {
