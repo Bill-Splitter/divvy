@@ -75,8 +75,10 @@ export const loginThunk = (username, password) => {
 
       const user = x.data;
 
-      if (user !== "invalid login") {
+      if (user !== "error") {
         dispatch(login(user));
+      } else {
+        return "error";
       }
     } catch (error) {
       console.error(error);
@@ -89,9 +91,13 @@ export const signupThunk = (formData) => {
     try {
       const x = await instance.post("/api/users/", { formData });
       const user = x.data;
-      dispatch(login(user));
+      console.log(user)
 
-      //axious post request
+      if (user.error) {
+        return user.error;
+      } else {
+        dispatch(login(user));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -154,10 +160,13 @@ export const sendFriendRequest = (senderId, phoneNumber) => {
         senderId: senderId,
         phoneNumber: phoneNumber,
       });
+      console.log("dasta", fren.data)
 
-      if (fren.data === "not found") {
-        console.error("not found");
-        throw "error";
+      if (fren.data === "user not found") {
+        console.log("THIS IS NOT HERE")
+        return "not found";
+      } else {
+        return fren.data.id
       }
     } catch (error) {
       console.error(error);
@@ -171,8 +180,9 @@ export const updateUserThunk = (userId, data) => {
       let user = await instance.put(`/api/users/${userId}`, { data: data });
 
       const updatedUser = user.data;
-
-      dispatch(updateUser(updatedUser));
+      if(updatedUser === "error"){
+        return "error"
+      }else dispatch(updateUser(updatedUser));
     } catch (error) {
       console.error(error);
     }
@@ -208,6 +218,13 @@ export default function (state = {}, action) {
       temp.friend = temp.friend.filter((element) => {
         if (element.id != action.id) return element;
       });
+      temp.groups = temp.groups.map((element) => {
+        element.users = element.users.filter((id) => {
+          if(id !== action.id) return id
+        })
+        return element
+      })
+
       return temp;
 
     case APPROVE_REQUEST:

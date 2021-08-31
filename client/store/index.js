@@ -8,7 +8,7 @@ import split from "./split";
 
 const reducer = combineReducers({ user, split, bill });
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  applyMiddleware(thunkMiddleware)
 );
 const store = createStore(reducer, middleware);
 

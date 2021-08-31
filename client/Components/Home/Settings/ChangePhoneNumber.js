@@ -10,6 +10,7 @@ import {
   Image,
   TextInput,
   TouchableHighlight,
+  Alert,
 } from "react-native";
 
 const ChangePhoneNumber = () => {
@@ -18,17 +19,27 @@ const ChangePhoneNumber = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const updatePhone = () => {
+  const updatePhone = async () => {
     if (!phoneNumber) {
-      alert("Phone Numbers Cannot Be Blank");
+      Alert.alert("Phone Numbers Cannot Be Blank");
     } else {
       const update = {
         phoneNumber: phoneNumber.trim(),
       };
 
-      dispatch(updateUserThunk(userId, update));
-      alert("Phone Number was updated");
-      navigation.goBack();
+      const status = await dispatch(updateUserThunk(userId, update));
+      console.log(status)
+
+      if (status) {
+        Alert.alert(
+          "Error",
+          "Invalid Phone Number, must be 10-11 characters long using only numbers to represent it"
+        );
+        setPhoneNumber("");
+      } else {
+        Alert.alert("Phone Number was updated");
+        navigation.goBack();
+      }
     }
   };
 

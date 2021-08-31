@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { Text, View, TouchableHighlight, TextInput } from "react-native";
+import { Text, View, TouchableHighlight, TextInput, Alert } from "react-native";
 
 import Banner2 from "../Banner2";
 import { sendFriendRequest } from "../../../store/user";
@@ -12,9 +12,21 @@ const AddFriend = (props) => {
   const [phoneNumber, setPhoneNumber] = React.useState();
 
   const clickSubmit = async () => {
-    props.sendRequest(props.user.id, phoneNumber.trim());
+    const status = await props.sendRequest(props.user.id, phoneNumber.trim());
+    console.log(status);
+    if (status === "not found") {
+      Alert.alert("Error", "No User Found");
+    } else if (status === props.user.id) {
+      Alert.alert("Error", "Cannot Friend Yourself");
+    } else {
+      let repeat = false;
 
-    navigation.navigate("Friends");
+      props.user.friend.forEach((element) => {
+        if (element.id === status) repeat = true;
+      });
+      if (repeat) Alert.alert("Error", "You are already friends");
+      else navigation.navigate("Friends");
+    }
   };
 
   return (

@@ -9,6 +9,7 @@ import {
   View,
   TextInput,
   TouchableHighlight,
+  Alert,
 } from "react-native";
 
 const ChangeUsername = () => {
@@ -17,18 +18,22 @@ const ChangeUsername = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const updateUsername = () => {
+  const updateUsername = async () => {
     if (!username) {
-      alert("Username Cannot Be Blank");
+      Alert.alert("Username Cannot Be Blank");
     } else {
       const update = {
         username: username.trim(),
       };
 
-      dispatch(updateUserThunk(userId,update))
-
-      alert("Username was updated");
-      navigation.goBack();
+      const status = await dispatch(updateUserThunk(userId, update));
+      if (status) {
+        Alert.alert("Error", "Username Already Taken");
+        setUsername("");
+      } else {
+        Alert.alert("Username was updated");
+        navigation.goBack();
+      }
     }
   };
 
@@ -45,7 +50,10 @@ const ChangeUsername = () => {
           onChangeText={(text) => setUsername(text)}
         ></TextInput>
 
-        <TouchableHighlight style={styles.button} onPress={() => updateUsername()}>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => updateUsername()}
+        >
           <Text style={styles.bText}>Update</Text>
         </TouchableHighlight>
       </View>

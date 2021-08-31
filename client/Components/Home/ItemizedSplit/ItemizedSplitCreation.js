@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { setData } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,15 +14,18 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
 
 const ItemizedSplitCreation = (props) => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [total, setTotal] = React.useState();
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
+  //const { image } = route.params;
 
   const clickSubmit = () => {
 
@@ -35,54 +38,65 @@ const ItemizedSplitCreation = (props) => {
       navigation.navigate("GroupList");
     }
   };
-
+  
+  let Image_Http_URL ={ uri: 'data:image/png;base64,' + route.params.image};
+  console.log('route: ', route);
+  console.log('navigation: ', navigation);
+  
   return (
-    <View style={{ backgroundColor: "white", height: "100%" }}>
-      <Banner2 />
+    <View style={{ backgroundColor: "white", height: "100%"}}>
+      <Banner2 name='Create Divvy Event'/>
       <View style={styles.view}>
-        <Text style={styles.loginText}>Create Divvy Event</Text>
-
-        <View style={styles.inputRow}>
-          <Text style={styles.iconHolder}>
-            <MaterialIcons name="event" size={40} color="black" />
-          </Text>
-          <TextInput
-            placeholder="Complex shit n shit"
-            style={styles.input}
-            value={event}
-            maxLength={28}
-            onChangeText={(text) => setEvent(text)}
-          ></TextInput>
+        <Image source={Image_Http_URL} style={{
+          flex: 10, 
+          width: "100%", 
+          height: "100%", 
+          resizeMode : 'scale',
+          }} 
+        />
+        <View style={styles.inputFields}>
+          <View style={styles.inputRow}>
+            <Text style={styles.iconHolder}>
+              <MaterialIcons name="event" size={40} color="black" />
+            </Text>
+            <TextInput
+              placeholder="Event Name Here"
+              style={styles.input}
+              value={event}
+              maxLength={28}
+              onChangeText={(text) => setEvent(text)}
+            ></TextInput>
+          </View>
+  
+          <View style={styles.inputRow}>
+            <Text style={styles.iconHolder}><Foundation name="dollar" size={55} color="black" /></Text>
+            <TextInput
+              placeholder="Enter Total w/ Tax"
+              style={styles.input2}
+              value={total}
+              maxLength={6}
+              onChangeText={(text) => setTotal(text)}
+            ></TextInput>
+          </View>
+  
+          <View style={styles.inputRow}>
+            <Text style={styles.iconHolder}><FontAwesome name="gratipay" size={35} color="black" /></Text>
+            <TextInput
+              placeholder="Tip (optional)"
+              style={styles.input2}
+              value={tip}
+              maxLength={6}
+              onChangeText={(text) => setTip(text)}
+            ></TextInput>
+          </View>
+  
+          <TouchableHighlight
+            style={styles.loginButton}
+            onPress={() => clickSubmit()}
+          >
+            <Text style={styles.loginButtonText}>Select Group</Text>
+          </TouchableHighlight>
         </View>
-
-        <View style={styles.inputRow}>
-          <Text style={styles.iconHolder}><Foundation name="dollar" size={55} color="black" /></Text>
-          <TextInput
-            placeholder="Enter Total w/ Tax"
-            style={styles.input2}
-            value={total}
-            maxLength={6}
-            onChangeText={(text) => setTotal(text)}
-          ></TextInput>
-        </View>
-
-        <View style={styles.inputRow}>
-        <Text style={styles.iconHolder}><FontAwesome name="gratipay" size={35} color="black" /></Text>
-        <TextInput
-          placeholder="Tip (optional)"
-          style={styles.input2}
-          value={tip}
-          maxLength={6}
-          onChangeText={(text) => setTip(text)}
-        ></TextInput>
-        </View>
-
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => clickSubmit()}
-        >
-          <Text style={styles.loginButtonText}>Select Group</Text>
-        </TouchableHighlight>
       </View>
     </View>
   );
@@ -102,12 +116,29 @@ export default connect(
 )(ItemizedSplitCreation);
 
 const styles = StyleSheet.create({
+  view: {
+    width: "100%",
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignContent: "center",
+    textAlign: "left",
+    alignItems: "center",
+    marginTop: 0,
+  },
   iconHolder: {
     textAlign: "center",
     width: 39,
     margin: 0,
     padding: 0,
 
+  },
+  inputField: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    flex: 1,
   },
   inputRow: {
     display: "flex",
@@ -138,25 +169,6 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: "bold"
   },
-  view: {
-    width: "100%",
-    flex: 1,
-    alignContent: "center",
-    textAlign: "left",
-
-    alignItems: "center",
-    marginTop: 25,
-  },
-  loginText: {
-    fontSize: 30,
-    color: "#ED3B5B",
-    textAlign: "left",
-    marginBottom: 20,
-    width: "80%",
-    fontWeight: "bold"
-  },
-
-  
   loginButton: {
     width: "50%",
     // backgroundColor: "#3bedac",
