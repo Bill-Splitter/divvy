@@ -63,7 +63,7 @@ const AllGroups = () => {
       {allGroups.length > 0 ? (
         <View style={styles.listElementContainer} underlayColor={"white"}>
           <FlatList
-            keyExtractor={(item, index) => item[index]}
+            keyExtractor={(item, index) => index.toString()}
             data={allGroups}
             renderItem={(item) => {
               return (

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 const SplitEvenly = (props) => {
+
   return (
     <ScrollView style={styles.info}>
       <View style={styles.borderBar}></View>

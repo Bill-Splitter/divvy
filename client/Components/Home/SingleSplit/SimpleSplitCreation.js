@@ -22,7 +22,7 @@ import Banner2 from "../Banner2";
 const SimpleSplitCreation = (props) => {
   const navigation = useNavigation();
   const [total, setTotal] = React.useState();
-  const [tip, setTip] = React.useState();
+  const [tip, setTip] = React.useState(0);
   const [event, setEvent] = React.useState();
 
   const clickSubmit = () => {

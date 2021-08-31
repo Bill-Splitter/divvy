@@ -10,6 +10,8 @@ const SplitCustom = (props) => {
   let [values, setValues] = React.useState(length);
   let [total, setTotal] = React.useState(props.info.total);
 
+  
+
   const update = (text, index) => {
     if (isNaN(text)) {
       alert("NOT A VALID INPUT");
@@ -26,11 +28,20 @@ const SplitCustom = (props) => {
 
       if (billTotal - assigined >= 0) {
         setTotal(billTotal - assigined);
+        console.log(billTotal,total)
+
+        if(billTotal === assigined) {
+            props.toggle(true)
+        }
+        else(
+            props.toggle(false)
+        )
       } else {
         temp[index] = oldValue;
         setValues(temp);
         alert("That puts you over bill amount");
       }
+      
     }
   };
   return (
@@ -39,7 +50,6 @@ const SplitCustom = (props) => {
       <View style={styles.listRow}>
         <Text style={styles.listName}>Unassigned</Text>
         <Text style={styles.listPercent}>
-          {/* {Math.floor(100 / (props.groupFriends.length + 1))}% */}
         </Text>
 
         <Text style={styles.listText}>

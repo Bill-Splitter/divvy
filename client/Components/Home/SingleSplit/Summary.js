@@ -28,20 +28,32 @@ const Summary = () => {
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
   const [selected, setSelected] = React.useState('simple')
+  const [valid, setValid] = React.useState(false)
 
   const sendInvoices = () => {
-    Alert.alert(
-      "Sending Invoices",
-      "Each user will be sent a request for their repsective amount.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "Send", onPress: () => submit() },
-      ]
-    );
+    if(valid || selected==="simple"){
+      Alert.alert(
+        "Sending Invoices",
+        "Each user will be sent a request for their repsective amount.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "Send", onPress: () => submit() },
+        ]
+      );
+
+    } else {
+      Alert.alert("Notice", "Cannot Process Until All Dollars Have Been Assigned")
+    }
+
   };
+
+  const toggle  = (value) => {
+    if(value === true) setValid(true)
+    if(value === false) setValid(false)
+  }
 
   const submit = () => {
     const billText = {
@@ -96,8 +108,8 @@ const Summary = () => {
           />
         </View>
         {selected === "simple" ? 
-        <SplitEvenly groupFriends={groupFriends} info={info}  /> :
-        <SplitCustom groupFriends={groupFriends} info={info}/> 
+        <SplitEvenly groupFriends={groupFriends} info={info} toggle={toggle}  /> :
+        <SplitCustom groupFriends={groupFriends} info={info} toggle={toggle}/> 
         }
 
         <View style={styles.footer}>
