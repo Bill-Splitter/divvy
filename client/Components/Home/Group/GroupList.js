@@ -21,10 +21,11 @@ const GroupList = (props) => {
   const allGroups = props.groups || [];
 
   const selectGroup = (groupname, users) => {
-    console.log('group stuff: ', groupname, users);
+    //console.log('group stuff: ', groupname, users);
     props.setGroup(groupname, users);
+    
     if(route.params){
-      navigation.navigate("Summary", route.params);
+      navigation.navigate("SendItemizedBills", route.params);
     } else {
       navigation.navigate("Summary");
     }

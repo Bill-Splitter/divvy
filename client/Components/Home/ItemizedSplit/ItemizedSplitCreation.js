@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { setDataComplex } from "../../../store/split";
+import { setData } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
@@ -35,13 +35,13 @@ const ItemizedSplitCreation = (props) => {
       alert("Must enter total");
     } else {
       const totalDollars = Number(total) + Number(tip);
-      props.submit(event, totalDollars, image);
+      props.submit(event, totalDollars);
       navigation.navigate("GroupList", {image: image});
     }
   };
   
-  console.log('route: ', route);
-  console.log('navigation: ', navigation);
+  //console.log('route: ', route);
+  //console.log('navigation: ', navigation);
   
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
@@ -104,17 +104,13 @@ const ItemizedSplitCreation = (props) => {
 const mapStateToProps = (state) => ({
   name: state.split.name,
   total: state.split.total,
-  image: state.split.image,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submit: (name, total, image) => dispatch(setDataComplex(name, total, image)),
+  submit: (name, total) => dispatch(setData(name, total)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ItemizedSplitCreation);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemizedSplitCreation);
 
 const styles = StyleSheet.create({
   view: {

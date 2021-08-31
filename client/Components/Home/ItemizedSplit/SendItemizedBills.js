@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
+import formatPhoneNumber from "../../Helpers/formatPhone";
 
 import {
   StyleSheet,
@@ -15,13 +16,14 @@ import {
 
 import Banner3 from "../Banner3";
 
-const Summary = () => {
+const SendItemizedBills = () => {
   const info = useSelector((state) => state.split);
   const friends = useSelector((state) => state.user);
   const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
+  const route = useRoute();
 
   const sendInvoices = () => {
     Alert.alert(
@@ -36,8 +38,9 @@ const Summary = () => {
       ]
     );
   };
-
+  
   const submit = () => {
+    console.log(route.params);
     const billText = {
       title: info.name,
       total: info.total,
@@ -46,15 +49,20 @@ const Summary = () => {
     };
 
     const newBill = {
-      type: "simple",
+      type: "complex",
       name: info.name,
       total: info.total,
       parsedBill: billText,
-      completed: true,
+      image: route.params.image.uri,
+      completed: false,
       userId: userId,
       date: Date.now(),
     };
     dispatch(createBillThunk(newBill, userId, groupFriends));
+    
+    //send group text message to all members of group
+    
+    //natigate to OwnerOpenBill
     navigation.navigate("ProfilePage");
   };
 
@@ -80,32 +88,15 @@ const Summary = () => {
           <View style={styles.header}>
             <Text style={styles.headerText}>Event Summary</Text>
           </View>
-
           <View style={styles.borderBar}></View>
-          <View style={styles.listRow}>
-            <Text style={styles.listName}>You</Text>
-            <Text style={styles.listPercent}>
-              {Math.floor(100 / (groupFriends.length + 1))}%
-            </Text>
-
-            <Text style={styles.listText}>
-              {"$ "}
-              {(info.total / (groupFriends.length + 1)).toFixed(2)}
-            </Text>
-          </View>
-
           {groupFriends.map((element) => {
             return (
               <View key={element.id} style={styles.listRow}>
                 <Text numberOfLines={1} style={styles.listName}>
                   {element.fName} {element.lName}
                 </Text>
-                <Text style={styles.listPercent}>
-                  {Math.floor(100 / (groupFriends.length + 1))}
-                  {"%"}
-                </Text>
-                <Text numberOfLines={1} style={styles.listText}>
-                  {"$"} {(info.total / (groupFriends.length + 1)).toFixed(2)}
+                <Text style={styles.phoneNumber} numberOfLines={1}>
+                  {formatPhoneNumber(element.phoneNumber)}
                 </Text>
               </View>
             );
@@ -121,7 +112,7 @@ const Summary = () => {
             style={styles.sendInvoice}
             onPress={() => sendInvoices()}
           >
-            <Text style={styles.sendInvoiceText}>Send Invoices</Text>
+            <Text style={styles.sendInvoiceText}>Send Invoice Invites</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -129,7 +120,7 @@ const Summary = () => {
   );
 };
 
-export default Summary;
+export default SendItemizedBills;
 
 const styles = StyleSheet.create({
   listRow: {
@@ -157,12 +148,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     fontWeight: "bold",
   },
-  listPercent: {
-    width: "20%",
+  phoneNumber: {
+    width: "50%",
     textAlign: "center",
     // color: "#ED3B5B",
-    fontSize: 25,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontStyle: "italic",
   },
 
   headerText: {
@@ -196,7 +187,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   sendInvoice: {
-    width: "50%",
+    width: "66%",
     backgroundColor: "#3bedac",
     borderRadius: 45,
     marginTop: 20,

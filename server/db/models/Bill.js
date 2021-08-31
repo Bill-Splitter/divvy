@@ -28,6 +28,7 @@ const Bill = db.define("bill", {
   
   image: {
     type: Sequelize.TEXT,
+    length: "long",
     defaultValue:
       "https://www.pngarea.com/pngm/534/7779866_ace-cash-express-receipt-png-download-check-free.png",
   },
