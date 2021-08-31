@@ -180,8 +180,9 @@ export const updateUserThunk = (userId, data) => {
       let user = await instance.put(`/api/users/${userId}`, { data: data });
 
       const updatedUser = user.data;
-
-      dispatch(updateUser(updatedUser));
+      if(updatedUser === "error"){
+        return "error"
+      }else dispatch(updateUser(updatedUser));
     } catch (error) {
       console.error(error);
     }

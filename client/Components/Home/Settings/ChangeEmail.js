@@ -9,6 +9,7 @@ import {
   View,
   TextInput,
   TouchableHighlight,
+  Alert,
 } from "react-native";
 
 const ChangeEmail = () => {
@@ -17,16 +18,22 @@ const ChangeEmail = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.id);
 
-  const updateEmail = () => {
+  const updateEmail = async () => {
     if (!email) {
-      alert("Email Cannot Be Blank");
+      Alert.alert("Email Cannot Be Blank");
     } else {
       const update = {
         email: email.trim(),
       };
-      dispatch(updateUserThunk(userId, update));
-      alert("Email Address was updated");
-      navigation.goBack();
+      const status = await dispatch(updateUserThunk(userId, update));
+      if(status) {
+        Alert.alert("Invalid Email Address")
+      } else {
+        Alert.alert("Email Address was updated");
+        navigation.goBack();
+
+      }
+ 
     }
   };
 

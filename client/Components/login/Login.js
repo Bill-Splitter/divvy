@@ -21,11 +21,11 @@ const Login = (props) => {
 
   const clickSubmit = async () => {
     if (!username || !password) {
-      alert("all fields must be filled");
+      Alert.alert("all fields must be filled");
     } else {
       const status = await props.login(username, password);
       if (status === "error") {
-        alert("Invalid Username or Password");
+        Alert.alert("Error","Invalid Username or Password");
         setUsername("");
         setPassword("");
       } else {

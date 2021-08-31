@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TextInput,
+  Alert
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
@@ -35,13 +36,13 @@ const Signup = (props) => {
       !lName ||
       !fName
     ) {
-      alert("all fields must be filled");
+      Alert.alert("all fields must be filled");
     } else if (check !== password) {
-      alert("passwords do not match");
+      Alert.alert("passwords do not match");
     } else if (!email.includes("@")) {
-      alert("not a valid email");
+      Alert.alert("not a valid email");
     } else if (password.length < 4) {
-      alert("password must be at least four characters");
+      Alert.alert("password must be at least four characters");
     } else {
       const f = fName[0].toUpperCase() + fName.slice(1).toLowerCase().trim()
       const l = lName[0].toUpperCase() + lName.slice(1).toLowerCase().trim()
@@ -57,9 +58,8 @@ const Signup = (props) => {
       };
 
       const status = await props.signUp(data);
-      console.log(status,"jkjkjkj")
       if(status){
-        alert(status || "error")
+        Alert.alert(status || "error")
 
       }
       else navigation.navigate("BottomTabNav");

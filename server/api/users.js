@@ -27,7 +27,7 @@ router.put("/:id", async (req, res, next) => {
     });
     res.json(await userToUpdate.update(req.body.data));
   } catch (error) {
-    next(error);
+    res.json("error")
   }
 });
 
