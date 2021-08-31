@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
-
+import items from "./options";
+import Item from "./Item";
+import SplitEvenly from "./SplitEvenly";
 
 import {
   StyleSheet,
@@ -12,10 +14,10 @@ import {
   TouchableHighlight,
   ScrollView,
   Alert,
+  FlatList,
 } from "react-native";
 
 import Banner3 from "../Banner3";
-
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -40,8 +42,6 @@ const Summary = () => {
   };
 
   const submit = () => {
-   
-
     const billText = {
       title: info.name,
       total: info.total,
@@ -80,41 +80,20 @@ const Summary = () => {
           justifyContent: "space-between",
         }}
       >
-        <ScrollView style={styles.info}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Event Summary</Text>
-          </View>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Event Summary</Text>
+          <FlatList
+            horizontal={true}
+            data={items}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={(item) => {
+              return <Item data={item} />;
+            }}
+          />
+        </View>
 
-          <View style={styles.borderBar}></View>
-          <View style={styles.listRow}>
-            <Text style={styles.listName}>You</Text>
-            <Text style={styles.listPercent}>
-              {Math.floor(100 / (groupFriends.length + 1))}%
-            </Text>
+        <SplitEvenly groupFriends={groupFriends} info={info} />
 
-            <Text style={styles.listText}>
-              {"$ "}
-              {(info.total / (groupFriends.length + 1)).toFixed(2)}
-            </Text>
-          </View>
-
-          {groupFriends.map((element) => {
-            return (
-              <View key={element.id} style={styles.listRow}>
-                <Text numberOfLines={1} style={styles.listName}>
-                  {element.fName} {element.lName}
-                </Text>
-                <Text style={styles.listPercent}>
-                  {Math.floor(100 / (groupFriends.length + 1))}
-                  {"%"}
-                </Text>
-                <Text numberOfLines={1} style={styles.listText}>
-                  {"$"} {(info.total / (groupFriends.length + 1)).toFixed(2)}
-                </Text>
-              </View>
-            );
-          })}
-        </ScrollView>
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
           <Text style={styles.eventName}>{info.name}</Text>
@@ -136,6 +115,7 @@ const Summary = () => {
 export default Summary;
 
 const styles = StyleSheet.create({
+
   listRow: {
     width: "100%",
     display: "flex",
@@ -171,7 +151,7 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    // color: "#ED3B5B",
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,
