@@ -12,12 +12,6 @@ const instance = axios.create({ baseURL: source });
 const initialState = {
   bill: {},
   bills: [],
-
-
-
-
-  
-
 };
 
 export const setBills = (bills) => {
