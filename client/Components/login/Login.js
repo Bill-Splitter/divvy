@@ -29,6 +29,8 @@ const Login = (props) => {
         setUsername("");
         setPassword("");
       } else {
+        setUsername("");
+        setPassword("");
         navigation.navigate("BottomTabNav");
       }
     }
