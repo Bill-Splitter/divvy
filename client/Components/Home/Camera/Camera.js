@@ -40,13 +40,14 @@ const Cameras = (props) => {
   };
 
   const __takePicture = async () => {
-    const photo: any = await camera.takePictureAsync({base64: true});
+    const photo: any = await camera.takePictureAsync({quality: 0.1, base64: true});
     setPreviewVisible(true);
     setCapturedImage(photo);
   };
 
   const __savePhoto = () => {
-    const Image_Http_URL = {uri: 'data:image/png;base64,' + capturedImage.base64};
+    console.log('image size: ', capturedImage.base64.length);
+    const Image_Http_URL = {uri: 'data:image/jpg;base64,' + capturedImage.base64};
     //then send that string/text to ItemizedSplitCreation as props
     navigation.navigate("ItemizedSplitCreation", {image: Image_Http_URL});
   };
