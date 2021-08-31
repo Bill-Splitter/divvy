@@ -25,7 +25,7 @@ const Signup = (props) => {
   const [fName, setFName] = React.useState();
   const [lName, setLName] = React.useState();
 
-  const clickSubmit = () => {
+  const clickSubmit = async () => {
     if (
       !email ||
       !username ||
@@ -55,8 +55,14 @@ const Signup = (props) => {
         lName: l,
 
       };
-      props.signUp(data);
-      navigation.navigate("BottomTabNav");
+
+      const status = await props.signUp(data);
+      console.log(status,"jkjkjkj")
+      if(status){
+        alert(status || "error")
+
+      }
+      else navigation.navigate("BottomTabNav");
     }
   };
 

@@ -91,9 +91,13 @@ export const signupThunk = (formData) => {
     try {
       const x = await instance.post("/api/users/", { formData });
       const user = x.data;
-      dispatch(login(user));
+      console.log(user)
 
-      //axious post request
+      if (user.error) {
+        return user.error;
+      } else {
+        dispatch(login(user));
+      }
     } catch (error) {
       console.error(error);
     }
