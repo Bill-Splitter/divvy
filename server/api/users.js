@@ -55,9 +55,44 @@ router.get("/login", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await User.create(req.body.formData));
+    let user = await User.create(req.body.formData);
+    console.log(user, "is user")
+    if(user) {
+      let u1 = await User.findByPk(1)
+      await user.addRequestee(u1)
+      let u2 = await User.findByPk(2)
+      await user.addRequestee(u2)
+      let u3 = await User.findByPk(3)
+      await user.addRequestee(u3)
+      let u4 = await User.findByPk(4)
+      await user.addRequestee(u4)
+      let u5 = await User.findByPk(5)
+      await user.addRequestee(u5)
+      let u0 = await User.findByPk(0)
+      await user.addRequestee(u0)
+      let u6 = await User.findByPk(6)
+      await user.addRequestee(u6)
+      let u7 = await User.findByPk(7)
+      await user.addRequestee(u7)
+      let u8 = await User.findByPk(8)
+      await user.addRequestee(u8)
+      let u9 = await User.findByPk(9)
+      await user.addRequestee(u9)
+      let u10 = await User.findByPk(0)
+      await user.addRequestee(u10)
+      let u11 = await User.findByPk(11)
+      await user.addRequestee(u11)
+
+    }
+
+ 
+
+
+    res.status(201).send()
   } catch (error) {
-    const message = "";
+    console.log("the error is ", error)
+
+    let message = "";
     if (error.errors) message = error.errors[0].message;
 
     if (message === "Validation isEmail on email failed")
@@ -76,7 +111,7 @@ router.delete("/denyRequest/", async (req, res, next) => {
 
   try {
     const user = await User.findByPk(sender);
-    user.removeRequestee(receiver);
+    await user.removeRequestee(receiver);
     res.sendStatus(200);
   } catch (error) {
     next(error);
@@ -92,8 +127,8 @@ router.delete("/deleteFriend/", async (req, res, next) => {
     const user1 = await User.findByPk(u1);
     const user2 = await User.findByPk(u2);
     if (user1 && user2) {
-      user1.removeFriend(user2);
-      user2.removeFriend(user1);
+      await user1.removeFriend(user2);
+      await user2.removeFriend(user1);
 
       res.json(user2);
     } else next(error);
@@ -125,13 +160,13 @@ router.post("/approveRequest", async (req, res, next) => {
     const user1 = await User.findByPk(senderId);
     const user2 = await User.findByPk(receiverId);
     if (user1 && user2) {
-      user1.addFriend(user2);
-      user2.addFriend(user1);
+      await user1.addFriend(user2);
+      await user2.addFriend(user1);
 
-      user2.removeRequestee(senderId);
-      user1.removeRequestee(senderId);
-      user2.removeRequestee(receiverId);
-      user1.removeRequestee(receiverId);
+      await user2.removeRequestee(senderId);
+      await user1.removeRequestee(senderId);
+      await user2.removeRequestee(receiverId);
+      await user1.removeRequestee(receiverId);
 
       res.json(user2);
     } else next(error);
@@ -162,7 +197,7 @@ router.post("/addFriend/", async (req, res, next) => {
     }
 
     if (receiver) {
-      receiver.addRequestee(senderId);
+      await receiver.addRequestee(senderId);
       res.json(receiver);
     } else {
       res.json("user not found");
