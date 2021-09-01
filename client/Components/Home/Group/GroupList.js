@@ -21,7 +21,6 @@ const GroupList = (props) => {
   const allGroups = props.groups || [];
 
   const selectGroup = (groupname, users) => {
-    //console.log('group stuff: ', groupname, users);
     props.setGroup(groupname, users);
     
     if(route.params){

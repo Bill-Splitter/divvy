@@ -14,7 +14,6 @@ if(process.env.LOGGING === 'true'){
 }
 
 //https://stackoverflow.com/questions/61254851/heroku-postgres-sequelize-no-pg-hba-conf-entry-for-host
-//decide if this is needed for our react native use-case
 if(process.env.DATABASE_URL){
   config.dialectOptions = {
     ssl: {

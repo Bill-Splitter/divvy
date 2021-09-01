@@ -99,8 +99,6 @@ const styles = StyleSheet.create({
   topCard: {
     display: "flex",
     flexDirection: "row",
-    // borderBottomWidth: 2,
-    // borderColor: "lightgray",
     padding: 10,
   },
   name: {

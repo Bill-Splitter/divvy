@@ -40,7 +40,6 @@ const SendItemizedBills = () => {
   };
   
   const submit = () => {
-    //console.log(route.params);
     const billText = {
       title: info.name,
       total: info.total,
@@ -136,13 +135,11 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 20,
     width: "33.33%",
-    // color: "#ED3B5B",
     fontSize: 25,
     fontWeight: "bold",
   },
   listName: {
     textAlign: "left",
-    // color: "#ED3B5B",
     width: "45%",
     fontSize: 20,
     paddingLeft: 15,
@@ -151,7 +148,6 @@ const styles = StyleSheet.create({
   phoneNumber: {
     width: "50%",
     textAlign: "center",
-    // color: "#ED3B5B",
     fontSize: 22,
     fontStyle: "italic",
   },

@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     padding: 5
-    // color: "#ED3B5B",
 
   }, dollars: {
     fontSize: 30,

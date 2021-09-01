@@ -26,7 +26,6 @@ const ItemizedSplitCreation = (props) => {
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
   const { image } = route.params;
-  //const Image_Http_URL = {uri: 'data:image/png;base64,' + image};
   
   const clickSubmit = () => {
     if (!tip) setTip(0);
@@ -39,9 +38,6 @@ const ItemizedSplitCreation = (props) => {
       navigation.navigate("GroupList", {image: image});
     }
   };
-  
-  //console.log('route: ', route);
-  //console.log('navigation: ', navigation);
   
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
@@ -179,9 +175,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "50%",
-    // backgroundColor: "#3bedac",
     backgroundColor: "#ED3B5B",
-    // backgroundColor: "#32d197",
     borderRadius: 45,
     marginTop: 10,
   },
