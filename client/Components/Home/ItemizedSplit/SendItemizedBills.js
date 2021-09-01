@@ -25,10 +25,16 @@ const SendItemizedBills = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
+  const groupFriends = friendArray.filter((element) => {
+    if (info.idArray.includes(element.id)) {
+      return element;
+    }
+  });
+  
   const sendInvoices = () => {
     Alert.alert(
       "Sending Invoices",
-      "Each user will be sent a request for their repsective amount.",
+      "Each user will be sent a request for their respective amount.",
       [
         {
           text: "Cancel",
@@ -45,7 +51,10 @@ const SendItemizedBills = () => {
       title: info.name,
       total: info.total,
       group: info.group,
-      userAmounts: (info.total / (friendArray.length + 1)).toFixed(2),
+      userAmounts: {
+        //will contain splits for all payees & bill owner as attributes
+        //not sure if users will be represented by username or ID, but probably ID
+      },
     };
 
     const newBill = {
@@ -63,14 +72,8 @@ const SendItemizedBills = () => {
     //send group text message to all members of group
     
     //natigate to OwnerOpenBill
-    navigation.navigate("ProfilePage");
+    navigation.navigate("OwnerOpenBill", {billInfo: newBill, groupFriends: groupFriends});
   };
-
-  const groupFriends = friendArray.filter((element) => {
-    if (info.idArray.includes(element.id)) {
-      return element;
-    }
-  });
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
