@@ -15,6 +15,8 @@ import GroupList from "../Components/Home/Group/GroupList.js";
 import AllGroups from "../Components/Home/Group/AllGroups";
 import CreateGroup from "../Components/Home/Group/CreateGroup.js";
 import CreateGroupName from "../Components/Home/Group/CreateGroupName.js";
+import GroupMembers from "../Components/Home/Group/GroupMembers.js";
+import GroupMembersItemBox from "../Components/Home/Group/GroupMembersItemBox.js";
 import FriendsList from "../Components/Home/Friends/FriendsList.js";
 import Summary from "../Components/Home/SingleSplit/Summary.js";
 import AddFriend from "../Components/Home/Friends/AddFriend.js";
@@ -68,6 +70,11 @@ const Home = () => {
       <HomeStack.Screen name="AllGroups" component={AllGroups} />
       <HomeStack.Screen name="CreateGroup" component={CreateGroup} />
       <HomeStack.Screen name="CreateGroupName" component={CreateGroupName} />
+      <HomeStack.Screen name="GroupMembers" component={GroupMembers} />
+      <HomeStack.Screen
+        name="GroupMembersItemBox"
+        component={GroupMembersItemBox}
+      />
       <HomeStack.Screen name="FriendsList" component={FriendsList} />
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
@@ -79,7 +86,10 @@ const Home = () => {
       <HomeStack.Screen name="IndividualTrans" component={IndividualTrans} />
       <HomeStack.Screen name="ChangeIcon" component={ChangeIcon} />
       <HomeStack.Screen name="ChangePassword" component={ChangePassword} />
-      <HomeStack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
+      <HomeStack.Screen
+        name="ChangePhoneNumber"
+        component={ChangePhoneNumber}
+      />
       <HomeStack.Screen name="ChangeUsername" component={ChangeUsername} />
       <HomeStack.Screen name="ChangeEmail" component={ChangeEmail} />
       <HomeStack.Screen name="DeleteAccount" component={DeleteAccount} />

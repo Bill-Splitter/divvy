@@ -21,10 +21,9 @@ const GroupList = (props) => {
   const allGroups = props.groups || [];
 
   const selectGroup = (groupname, users) => {
-    //console.log('group stuff: ', groupname, users);
     props.setGroup(groupname, users);
-    
-    if(route.params){
+
+    if (route.params) {
       navigation.navigate("SendItemizedBills", route.params);
     } else {
       navigation.navigate("Summary");
@@ -44,11 +43,6 @@ const GroupList = (props) => {
         }}
       >
         <View>
-          {/* <View style={styles.header}>
-            <Text style={styles.headerText}>Group List</Text>
-          </View> */}
-          {/*
-          <View style={styles.borderBar}></View> */}
           <ScrollView style={{ minHeight: "85%" }}>
             <TouchableHighlight
               style={styles.listElementContainer}
@@ -71,14 +65,6 @@ const GroupList = (props) => {
               </View>
             </TouchableHighlight>
           </ScrollView>
-          {/* <View style={styles.centerButton}>
-            <TouchableHighlight
-              style={styles.loginButton}
-              onPress={() => navigation.navigate("CreateGroup")}
-            >
-              <Text style={styles.loginButtonText}>Create New Group</Text>
-            </TouchableHighlight>
-          </View> */}
         </View>
       </View>
     </View>

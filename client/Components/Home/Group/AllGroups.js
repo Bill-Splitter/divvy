@@ -63,12 +63,12 @@ const AllGroups = () => {
       {allGroups.length > 0 ? (
         <View style={styles.listElementContainer} underlayColor={"white"}>
           <FlatList
-            keyExtractor={(item, index) => item[index]}
+            keyExtractor={(item, index) => index.toString()}
             data={allGroups}
             renderItem={(item) => {
               return (
                 <TouchableHighlight
-                  onPress={() => console.log("group has been pressed")}
+                  onPress={() => navigation.navigate("GroupMembers")}
                   underlayColor={"transparent"}
                 >
                   <GroupItemBox
