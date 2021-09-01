@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const CreateGroupName = (props) => {
+const CreateGroupName = () => {
   const navigation = useNavigation();
   const [groupName, setGroupName] = React.useState();
 

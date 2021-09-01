@@ -13,20 +13,33 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
 
-const GroupMembers = () => {
+const GroupMembers = ({ route }) => {
   const friends = useSelector((state) => state.user.friend);
   const groups = useSelector((state) => state.user.groups);
   const myId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
-
+  const groupName = route.params.groupName;
+  const groupIndex = route.params.itemIndex;
   const allFriends = friends || [];
   const allGroups = groups || [];
 
-  console.log(allGroups.map((elem) => elem.users));
+  const usersInGroups = allGroups.map((elem) => elem.users[groupIndex]);
+
+  console.log(
+    "here are arrays index",
+    allGroups.map((elem) => elem.users[groupIndex])
+  );
   console.log(
     "here are all friends",
     allFriends.map((elem) => elem.id)
   );
+
+  const groupFriends = friends.filter((element) => {
+    if (usersInGroups.includes(element.id)) {
+      return element;
+    }
+  });
+  console.log("here is filtered array", groupFriends);
 
   const deleteItem = (id) => {
     console.log(id);
@@ -35,13 +48,13 @@ const GroupMembers = () => {
 
   return (
     <View style={{ flex: 0, backgroundColor: "white", height: "100%" }}>
-      <Banner2 name={`Remove friends from Group`} />
+      <Banner2 name={`Remove friends from ${groupName}`} />
 
       <View style={styles.listElementContainer} underlayColor={"white"}>
         <View style={{ flex: 1, width: "100%" }}>
           <FlatList
             keyExtractor={(item, index) => item.id.toString()}
-            data={allFriends}
+            data={groupFriends}
             renderItem={(item) => {
               return (
                 <GroupMembersItemBox

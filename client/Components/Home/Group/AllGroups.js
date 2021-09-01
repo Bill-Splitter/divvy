@@ -68,7 +68,12 @@ const AllGroups = () => {
             renderItem={(item) => {
               return (
                 <TouchableHighlight
-                  onPress={() => navigation.navigate("GroupMembers")}
+                  onPress={() =>
+                    navigation.navigate("GroupMembers", {
+                      itemIndex: item.index,
+                      groupName: item.item.groupname,
+                    })
+                  }
                   underlayColor={"transparent"}
                 >
                   <GroupItemBox
