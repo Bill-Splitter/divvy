@@ -8,7 +8,6 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import { updateUser } from "../../../store";
 
 const SplitPercentage = (props) => {
   const length = new Array(props.groupFriends.length + 1).fill(0);

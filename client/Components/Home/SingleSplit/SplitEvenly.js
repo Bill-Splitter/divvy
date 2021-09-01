@@ -1,18 +1,8 @@
 import React, { useState } from "react";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Alert,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 const SplitEvenly = (props) => {
-
-
-
   return (
     <ScrollView style={styles.info}>
       <View style={styles.borderBar}></View>
@@ -22,7 +12,7 @@ const SplitEvenly = (props) => {
           {Math.floor(100 / (props.groupFriends.length + 1))}%
         </Text>
 
-        <Text  numberOfLines={1} style={styles.listText}>
+        <Text numberOfLines={1} style={styles.listText}>
           {"$ "}
           {(props.info.total / (props.groupFriends.length + 1)).toFixed(2)}
         </Text>

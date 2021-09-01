@@ -8,6 +8,7 @@ import Item from "./Item";
 import SplitEvenly from "./SplitEvenly";
 import SplitCustom from "./SplitCustom";
 import SplitPercentage from "./SplitPercentage";
+import SplitInequel from "./SplitInequel";
 
 import {
   StyleSheet,
@@ -104,15 +105,7 @@ const Summary = () => {
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
       <Banner2 name={info.group} />
-      <View
-        style={{
-          display: "flex",
-          backgroundColor: "white",
-          height: "100%",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={styles.something}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Event Summary</Text>
           <FlatList
@@ -147,22 +140,26 @@ const Summary = () => {
                 setUserData={setUserData}
               />
             ) : (
-              <SplitPercentage
-                groupFriends={groupFriends}
-                info={info}
-                toggle={toggle}
-                setUserData={setUserData}
-              />
+              <>
+                {selected === "percentage" ? (
+                  <SplitPercentage
+                    groupFriends={groupFriends}
+                    info={info}
+                    toggle={toggle}
+                    setUserData={setUserData}
+                  />
+                ) : (
+                  <SplitInequel
+                    groupFriends={groupFriends}
+                    info={info}
+                    toggle={toggle}
+                    setUserData={setUserData}
+                  />
+                )}
+              </>
             )}
           </>
         )}
-
-        {/* <SplitCustom
-            groupFriends={groupFriends}
-            info={info}
-            toggle={toggle}
-            setUserData={setUserData}
-          /> */}
 
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
@@ -233,6 +230,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginTop: 10,
+  },
+  something: {
+    display: "flex",
+    backgroundColor: "white",
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   eventName: {
     textAlign: "center",
