@@ -4,13 +4,14 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
   ScrollView,
   Alert,
   FlatList,
 } from "react-native";
 
 const SplitEvenly = (props) => {
+
+
 
   return (
     <ScrollView style={styles.info}>
@@ -21,7 +22,7 @@ const SplitEvenly = (props) => {
           {Math.floor(100 / (props.groupFriends.length + 1))}%
         </Text>
 
-        <Text style={styles.listText}>
+        <Text  numberOfLines={1} style={styles.listText}>
           {"$ "}
           {(props.info.total / (props.groupFriends.length + 1)).toFixed(2)}
         </Text>
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     width: "33.33%",
     // color: "#ED3B5B",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
   },
   listName: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     width: "20%",
     textAlign: "center",
     // color: "#ED3B5B",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
   },
 

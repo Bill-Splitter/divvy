@@ -1,55 +1,58 @@
 import React, { useState } from "react";
 
-import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  Alert,
+} from "react-native";
 import { updateUser } from "../../../store";
 
-const SplitCustom = (props) => {
+const SplitPercentage = (props) => {
   const length = new Array(props.groupFriends.length + 1).fill(0);
   const billTotal = props.info.total;
 
   let [values, setValues] = React.useState(length);
-  let [total, setTotal] = React.useState(props.info.total);
+  const [perc, setPerc] = React.useState(100);
 
-  let data = []
+  let data = [];
 
   const prepUserData = () => {
-    data = [{name: "you", value: values[0]}]
-    props.groupFriends.forEach((element,index) => {
-      const name = element.fName + " " + element.lName
-      data.push({name: name, value: values[index+1] })
-    })
-  }
+    data = [{ name: "you", value: values[0] }];
+    props.groupFriends.forEach((element, index) => {
+      const name = element.fName + " " + element.lName;
+      data.push({ name: name, value: values[index + 1] });
+    });
+  };
 
   const update = (text, index) => {
+    console.log(text, index);
     if (isNaN(text)) {
       Alert.alert("NOT A VALID INPUT");
     } else {
       let temp = values;
-      const oldValue = temp[index];
+      const oldNumber = values[index];
       temp[index] = Number(text);
       setValues(temp);
 
-      let assigined = values.reduce(
+      let assigned = values.reduce(
         (accumulator, currentValue) => accumulator + currentValue
       );
 
-      if (billTotal - assigined >= 0) {
-        setTotal(billTotal - assigined);
-      
-        if(billTotal === assigined) {
-            props.toggle(true)
-            prepUserData();
-            props.setUserData(data)
-        }
-        else(
-            props.toggle(false)
-        )
+      if (assigned <= 100) {
+        setPerc(100 - assigned);
+        if (assigned === 100) {
+          props.toggle(true);
+          prepUserData();
+          props.setUserData(data);
+        } else props.toggle(false);
       } else {
-        temp[index] = oldValue;
+        temp[index] = oldNumber;
         setValues(temp);
-
         alert("That puts you over bill amount");
-      }    
+      }
     }
   };
   return (
@@ -58,25 +61,30 @@ const SplitCustom = (props) => {
       <View style={styles.listRow}>
         <Text style={styles.listName}>Unassigned</Text>
         <Text style={styles.listPercent}>
+          {perc.toFixed(2)}
+          {" %"}
         </Text>
 
-        <Text style={styles.listText}>
-          {"$ "}
-          {total.toFixed(2)}
-        </Text>
+        <Text style={styles.listText}></Text>
       </View>
       <View style={styles.listRow}>
         <Text style={styles.listName}>You</Text>
-        <Text style={styles.listPercent}>
-          {/* {Math.floor(100 / (props.groupFriends.length + 1))}% */}
-        </Text>
         <TextInput
           style={styles.input}
-          placeholder="0.00"
+          placeholder="0%"
           keyboardType={"phone-pad"}
           textContentType={"telephoneNumber"}
           onChangeText={(text) => update(text, 0)}
         ></TextInput>
+        <Text>%</Text>
+
+        {values[0] === 0 ? (
+          <Text style={styles.listText}>$0.00</Text>
+        ) : (
+          <Text style={styles.listText}>
+            ${(props.info.total / values[0]).toFixed(2)}
+          </Text>
+        )}
       </View>
 
       {props.groupFriends.map((element, index) => {
@@ -85,17 +93,23 @@ const SplitCustom = (props) => {
             <Text numberOfLines={1} style={styles.listName}>
               {element.fName} {element.lName}
             </Text>
-            <Text style={styles.listPercent}>
-            </Text>
-            <View></View>
+
             <TextInput
               style={styles.input}
-              placeholder="0.00"
-              maxLength={8}
+              placeholder="0%"
               keyboardType={"phone-pad"}
               textContentType={"telephoneNumber"}
               onChangeText={(text) => update(text, index + 1)}
             ></TextInput>
+            <Text>%</Text>
+
+            {values[index + 1] === 0 ? (
+              <Text style={styles.listText}>$0.00</Text>
+            ) : (
+              <Text style={styles.listText}>
+                ${(props.info.total / values[index + 1]).toFixed(2)}
+              </Text>
+            )}
           </View>
         );
       })}
@@ -103,7 +117,7 @@ const SplitCustom = (props) => {
   );
 };
 
-export default SplitCustom;
+export default SplitPercentage;
 
 const styles = StyleSheet.create({
   listRow: {
@@ -117,27 +131,27 @@ const styles = StyleSheet.create({
   },
   listText: {
     textAlign: "right",
-    width: "33.33%",
-    fontSize: 25,
+    width: "30%",
+    fontSize: 20,
     fontWeight: "bold",
   },
   listName: {
     textAlign: "left",
-    width: "45%",
+    width: "40%",
     fontSize: 20,
     paddingLeft: 15,
     fontWeight: "bold",
   },
   listPercent: {
-    width: "20%",
+    width: "25%",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
   },
 
   input: {
-    width: "30%",
-    fontSize: 25,
+    width: "15%",
+    fontSize: 20,
     fontWeight: "bold",
     borderBottomWidth: 2,
     borderColor: "#706567",

@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
   SafeAreaView,
   TouchableHighlight,
   TextInput,
@@ -26,13 +27,23 @@ const SimpleSplitCreation = (props) => {
   const [event, setEvent] = React.useState();
 
   const clickSubmit = () => {
+ 
 
     if (!tip) setTip(0);
     if (!total || !event) {
       alert("Must enter total");
-    } else {
+    }
+    else if(isNaN(total) || isNaN(tip)){
+      Alert.alert("Error", "Total's and Tips must be numbers")
+
+    }
+     else {
       const totalDollars = Number(total) + Number(tip);
       props.submit(event, totalDollars);
+      setTotal("")
+      setEvent("")
+      setTip(0)
+
       navigation.navigate("GroupList");
     }
   };

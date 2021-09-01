@@ -28,7 +28,7 @@ const ChangePhoneNumber = () => {
       };
 
       const status = await dispatch(updateUserThunk(userId, update));
-      console.log(status)
+
 
       if (status) {
         Alert.alert(

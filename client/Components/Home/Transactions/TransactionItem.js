@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 const TransactionItem = (props) => {
-  console.log(props.data.item.id)
   const rightSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],

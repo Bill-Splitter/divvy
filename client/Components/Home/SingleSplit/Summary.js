@@ -7,6 +7,7 @@ import items from "./options";
 import Item from "./Item";
 import SplitEvenly from "./SplitEvenly";
 import SplitCustom from "./SplitCustom";
+import SplitPercentage from "./SplitPercentage";
 
 import {
   StyleSheet,
@@ -19,6 +20,7 @@ import {
 } from "react-native";
 
 import Banner3 from "../Banner3";
+import Banner2 from "../Banner2";
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -27,11 +29,12 @@ const Summary = () => {
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
-  const [selected, setSelected] = React.useState('simple')
-  const [valid, setValid] = React.useState(false)
+  const [selected, setSelected] = React.useState("simple");
+  const [valid, setValid] = React.useState(false);
+  const [infoArray, setInfoArray] = React.useState([]);
 
   const sendInvoices = () => {
-    if(valid || selected==="simple"){
+    if (valid || selected === "simple") {
       Alert.alert(
         "Sending Invoices",
         "Each user will be sent a request for their repsective amount.",
@@ -43,25 +46,41 @@ const Summary = () => {
           { text: "Send", onPress: () => submit() },
         ]
       );
-
     } else {
-      Alert.alert("Notice", "Cannot Process Until All Dollars Have Been Assigned")
+      Alert.alert(
+        "Notice",
+        "Cannot Process Until All Dollars Have Been Assigned"
+      );
     }
-
   };
 
-  const toggle  = (value) => {
-    if(value === true) setValid(true)
-    if(value === false) setValid(false)
-  }
+  const toggle = (value) => {
+    if (value === true) setValid(true);
+    if (value === false) setValid(false);
+  };
+
+  const setUserData = (data) => {
+    setInfoArray(data);
+  };
 
   const submit = () => {
-    const billText = {
-      title: info.name,
-      total: info.total,
-      group: info.group,
-      userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
-    };
+    let billText = {};
+    if (selected === "simple") {
+      billText = {
+        title: info.name,
+        total: info.total,
+        group: info.group,
+        userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
+      };
+    } else {
+      billText = {
+        title: info.name,
+        total: info.total,
+        group: info.group,
+        userAmounts: infoArray[0].value,
+        data: infoArray,
+      };
+    }
 
     const newBill = {
       type: "simple",
@@ -76,8 +95,6 @@ const Summary = () => {
     navigation.navigate("ProfilePage");
   };
 
- 
-
   const groupFriends = friendArray.filter((element) => {
     if (info.idArray.includes(element.id)) {
       return element;
@@ -86,7 +103,7 @@ const Summary = () => {
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner3 name={info.group} />
+      <Banner2 name={info.group} />
       <View
         style={{
           display: "flex",
@@ -103,14 +120,49 @@ const Summary = () => {
             data={items}
             keyExtractor={(item, index) => index.toString()}
             renderItem={(item) => {
-              return <Item data={item} selected={selected} setSelected={setSelected}/>;
+              return (
+                <Item
+                  data={item}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              );
             }}
           />
         </View>
-        {selected === "simple" ? 
-        <SplitEvenly groupFriends={groupFriends} info={info} toggle={toggle}  /> :
-        <SplitCustom groupFriends={groupFriends} info={info} toggle={toggle}/> 
-        }
+        {selected === "simple" ? (
+          <SplitEvenly
+            groupFriends={groupFriends}
+            info={info}
+            toggle={toggle}
+            setUserData={setUserData}
+          />
+        ) : (
+          <>
+            {selected === "custom" ? (
+              <SplitCustom
+                groupFriends={groupFriends}
+                info={info}
+                toggle={toggle}
+                setUserData={setUserData}
+              />
+            ) : (
+              <SplitPercentage
+                groupFriends={groupFriends}
+                info={info}
+                toggle={toggle}
+                setUserData={setUserData}
+              />
+            )}
+          </>
+        )}
+
+        {/* <SplitCustom
+            groupFriends={groupFriends}
+            info={info}
+            toggle={toggle}
+            setUserData={setUserData}
+          /> */}
 
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
@@ -133,7 +185,6 @@ const Summary = () => {
 export default Summary;
 
 const styles = StyleSheet.create({
-
   listRow: {
     width: "100%",
     display: "flex",
