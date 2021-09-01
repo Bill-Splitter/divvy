@@ -27,6 +27,7 @@ const SimpleSplitCreation = (props) => {
   const [event, setEvent] = React.useState();
 
   const clickSubmit = () => {
+
  
 
     if (!tip) setTip(0);
