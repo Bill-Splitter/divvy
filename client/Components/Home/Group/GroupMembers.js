@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFriendThunk } from "../../../store";
+import { updateUserThunk } from "../../../store";
 import GroupMembersItemBox from "./GroupMembersItemBox";
 import {
   StyleSheet,
@@ -20,33 +20,34 @@ const GroupMembers = ({ route }) => {
   const dispatch = useDispatch();
   const groupName = route.params.groupName;
   const groupIndex = route.params.itemIndex;
-  const allFriends = friends || [];
+
+  // const allFriends = friends || [];
   const allGroups = groups || [];
 
   const usersInGroups = allGroups[groupIndex].users;
-
-  console.log(
-    "here are arrays index",
-    allGroups.map((elem) => elem.users)
-  );
-  console.log("single groups index", allGroups[groupIndex].users);
-
-  console.log("here are group index", route.params.itemIndex);
-
-  console.log(
-    "here are all friends",
-    allFriends.map((elem) => elem.id)
-  );
 
   const groupFriends = friends.filter((element) => {
     if (usersInGroups.includes(element.id)) {
       return element;
     }
   });
+  // console.log("users in groups", usersInGroups);
 
-  const deleteItem = (id) => {
-    console.log(id);
-    dispatch(deleteFriendThunk(myId, id));
+  // console.log("here is array", usersInGroups);
+  // console.log("here is groups", groupFriends);
+
+  const removeFriend = (id) => {
+    let temp = allGroups;
+
+    let x = temp[groupIndex].users.filter((element) => {
+      console.log("this is the element", element);
+      return Number(element) !== id;
+    });
+    temp[groupIndex].users = x;
+    const data = { groups: temp };
+    console.log(data);
+
+    dispatch(updateUserThunk(myId, data));
   };
 
   return (
@@ -62,7 +63,10 @@ const GroupMembers = ({ route }) => {
               return (
                 <GroupMembersItemBox
                   data={item}
-                  handleDelete={() => deleteItem(item.item.id)}
+                  handleDelete={() => removeFriend(item.item.id)}
+                  // handleDelete={() =>
+                  //   console.log("ive been selected", item.item.id)
+                  // }
                 />
               );
             }}
