@@ -12,7 +12,10 @@ export default function Banner2(props) {
       <TouchableHighlight
         underlayColor={"transparent"}
         style={styles.leftArrow}
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          if(props.home) navigation.navigate("ProfilePage");
+          else navigation.goBack();
+        }}
       >
         <AntDesign name="left" size={35} color="#fff" />
       </TouchableHighlight>

@@ -8,3 +8,203 @@ see figma for visual reference:
     
     4) next button sends you to ItemizedSummary view
 */
+
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { setData } from "../../../store/split";
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableHighlight,
+  TextInput,
+  Image,
+  ScrollView,
+} from "react-native";
+import Banner2 from "../Banner2";
+
+//going to use state for this obv, otherwise it'd get set empty every open
+let groupPaymentTracker = {};
+
+const OwnerOpenBill = (props) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  //const [parsedBill, setParsedBill] = useState();
+  //const [event, setEvent] = useState();
+  const { billInfo, groupFriends } = route.params;
+  const { name, total, image, userID } = billInfo;
+  
+  console.log(groupFriends);
+  
+  if(groupFriends){
+    groupFriends.forEach((friend,index) => {
+      groupPaymentTracker[friend.username] = {
+        username: friend.username,
+        id: friend.id,
+        fName: friend.fName,
+        lName: friend.lName,
+        total: 20 * index, //maybe make array for each item?
+        paid: true,
+      };
+    });
+  } else {
+    groupPaymentTracker = {};
+  }
+  
+  console.log(groupPaymentTracker);
+  
+  const clickSubmit = () => {
+    //props.submit(event, parsedBill);
+    groupPaymentTracker = {};
+    navigation.navigate("ProfilePage");
+  };
+  
+  //console.log('route: ', route);
+  //console.log('navigation: ', navigation);
+  
+  return (
+    <View style={{ backgroundColor: "white", height: "95%" }}>
+      <Banner2 name='Awaiting Payment' home={true}/>
+      <View style={styles.view}>
+        <Image source={{uri: image}} style={{
+          flex: 20, 
+          width: "100%", 
+          height: "100%", 
+          resizeMode : 'contain',
+          }} 
+        />
+        <View style={styles.textFields}>
+          <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
+          {Object.values(groupPaymentTracker).length ? 
+            (Object.values(groupPaymentTracker).map((friend) => {
+              return (
+                <View style={styles.textRow}>
+                  <Text
+                    style={styles.listText}
+                    key={friend.username}
+                    onPress={() =>
+                      console.log("change friend's total to show each line item")
+                    }
+                  >
+                    {friend.paid ? 
+                      (`${friend.fName} ${friend.lName}: $${friend.total}`
+                      ) : ( 
+                      `${friend.fName} ${friend.lName}: not recieved`)
+                    }
+                  </Text>
+                </View>
+              );
+            })) : (
+              <View style={styles.textRow}>
+                <Text style={styles.listText}>
+                  No Friend Data Recieved
+                </Text>
+              </View>
+            )
+          }
+          </ScrollView>
+          <View style={styles.statusField}>
+            <Text 
+              style={styles.paymentStatus} 
+              AccessibilityRole={'summary'}
+              numberOfLines={1}
+              suppressHighlighting={true}
+              onPress={() => console.log('resendTextPrompt()')}
+            >
+              Awaiting Group Payments...
+            </Text>
+          </View>
+        </View>
+        {/*
+        uncomment when logic for hiding until all payments recieved is done
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => clickSubmit()}
+        >
+          <Text style={styles.loginButtonText}>Select Group</Text>
+        </TouchableHighlight>
+        */}
+      </View>
+    </View>
+  );
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  submit: (name, total) => dispatch(setData(name, total)),
+});
+
+export default connect(null, mapDispatchToProps)(OwnerOpenBill);
+
+const styles = StyleSheet.create({
+  view: {
+    height: "100%",
+    display: 'flex',
+    backgroundColor: "#6e6e6e",
+    justifyContent: 'flex-start',
+    alignContent: "center",
+    textAlign: "left",
+    alignItems: "center",
+    top: 0,
+    bottom: 55,
+  },
+  textFields: {
+    backgroundColor: "white",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    flex: 9,
+    paddingTop: 5,
+  },
+  textRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    width: "100%",
+    height: "100%",
+    flex: 8,
+    bottom: 8
+  },
+  listText: {
+    fontSize: 26,
+    color: "black",
+    padding: 5,
+    textAlign: "left",
+  },
+  statusField: {
+    backgroundColor: "black",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flex: 1,
+  },
+  paymentStatus: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#ababab",
+    width: '100%',
+    top: 7,
+  },
+  loginButton: {
+    width: "50%",
+    // backgroundColor: "#3bedac",
+    backgroundColor: "#ED3B5B",
+    // backgroundColor: "#32d197",
+    borderRadius: 45,
+    marginTop: 10,
+  },
+  loginButtonText: {
+    fontSize: 20,
+    color: "white",
+    padding: 10,
+    textAlign: "center",
+  },
+});
