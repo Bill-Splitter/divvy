@@ -21,7 +21,6 @@ const GroupMembers = ({ route }) => {
   const groupName = route.params.groupName;
   const groupIndex = route.params.itemIndex;
 
-  // const allFriends = friends || [];
   const allGroups = groups || [];
 
   const usersInGroups = allGroups[groupIndex].users;
@@ -31,21 +30,15 @@ const GroupMembers = ({ route }) => {
       return element;
     }
   });
-  // console.log("users in groups", usersInGroups);
-
-  // console.log("here is array", usersInGroups);
-  // console.log("here is groups", groupFriends);
 
   const removeFriend = (id) => {
     let temp = allGroups;
 
     let x = temp[groupIndex].users.filter((element) => {
-      console.log("this is the element", element);
-      return Number(element) !== id;
+      return element !== id;
     });
     temp[groupIndex].users = x;
     const data = { groups: temp };
-    console.log(data);
 
     dispatch(updateUserThunk(myId, data));
   };
@@ -64,9 +57,6 @@ const GroupMembers = ({ route }) => {
                 <GroupMembersItemBox
                   data={item}
                   handleDelete={() => removeFriend(item.item.id)}
-                  // handleDelete={() =>
-                  //   console.log("ive been selected", item.item.id)
-                  // }
                 />
               );
             }}
