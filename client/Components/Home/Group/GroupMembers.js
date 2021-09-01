@@ -23,12 +23,16 @@ const GroupMembers = ({ route }) => {
   const allFriends = friends || [];
   const allGroups = groups || [];
 
-  const usersInGroups = allGroups.map((elem) => elem.users[groupIndex]);
+  const usersInGroups = allGroups[groupIndex].users;
 
   console.log(
     "here are arrays index",
-    allGroups.map((elem) => elem.users[groupIndex])
+    allGroups.map((elem) => elem.users)
   );
+  console.log("single groups index", allGroups[groupIndex].users);
+
+  console.log("here are group index", route.params.itemIndex);
+
   console.log(
     "here are all friends",
     allFriends.map((elem) => elem.id)
@@ -39,7 +43,6 @@ const GroupMembers = ({ route }) => {
       return element;
     }
   });
-  console.log("here is filtered array", groupFriends);
 
   const deleteItem = (id) => {
     console.log(id);
