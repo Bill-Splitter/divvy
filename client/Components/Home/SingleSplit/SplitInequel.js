@@ -18,7 +18,7 @@ const SplitInequel = (props) => {
   let [total, setTotal] = React.useState(props.info.total);
   let [selected, setSelected] = React.useState(false);
   let [selectedValue, setSelectedValue] = React.useState("");
-  let [inValue, setInValue] = React.useState();
+  let [inValue, setInValue] = React.useState(0);
   let [selectable, setSelectable] = React.useState(true);
 
   let data = [];
@@ -34,6 +34,7 @@ const SplitInequel = (props) => {
   const click = (data, index) => {
     setSelectedValue(data);
     setSelected(index);
+    console.log(selectedValue, "is the value");
   };
 
   const distro = () => {
@@ -63,36 +64,63 @@ const SplitInequel = (props) => {
         <Text style={styles.listText}></Text>
       </View>
       <View style={styles.listRow}>
-        {selectedValue === "you" ? (
-          <Text
-            numberOfLines={1}
-            style={styles.listNameSelected}
-            onPress={() => click("you", 0)}
+        <>
+          {selectedValue === "you" ? (
+            <Text
+              numberOfLines={1}
+              style={styles.listNameSelected}
+              onPress={() => click("you", 0)}
+            >
+              You
+            </Text>
+          ) : (
+            <>
+              {selectable ? (
+                <Text
+                  numberOfLines={1}
+                  style={styles.listName}
+                  onPress={() => click("you", 0)}
+                >
+                  You
+                </Text>
+              ) : (
+                <Text numberOfLines={1} style={styles.listName}>
+                  You
+                </Text>
+              )}
+            </>
+          )}
+          <View
+            style={{
+              width: "55%",
+              display: "flex",
+              flexDirection: "row-reverse",
+            }}
           >
-            You
-          </Text>
-        ) : (
-          <>
-            {selectable ? (
-              <Text
-                numberOfLines={1}
-                style={styles.listName}
-                onPress={() => click("you", 0)}
-              >
-                You
+            {selectable === false && selectedValue === "" ? (
+              <Text>
+                {selected === "you" ? (
+                  <Text numberOfLines={1} style={styles.listText2}>
+                    ${Number(inValue).toFixed(2)}
+                  </Text>
+                ) : (
+                  <Text numberOfLines={1} style={styles.listText2}>
+                    $
+                    {(
+                      (Number(total) - Number(inValue)) /
+                      props.groupFriends.length
+                    ).toFixed(2)}
+                  </Text>
+                )}
               </Text>
             ) : (
-              <Text numberOfLines={1} style={styles.listName}>
-                You
-              </Text>
+              <Text></Text>
             )}
-          </>
-        )}
+          </View>
+        </>
 
-        <Text style={styles.listPercent}></Text>
         {selectedValue === "you" ? (
           <TextInput
-            style={styles.input}
             placeholder="0.00"
             keyboardType={"phone-pad"}
             textContentType={"telephoneNumber"}
@@ -133,6 +161,27 @@ const SplitInequel = (props) => {
             )}
 
             <Text style={styles.listPercent}></Text>
+            <>
+              {selectable === false && selectedValue === "" ? (
+                <>
+                  {selected === index + 1 ? (
+                    <Text numberOfLines={1} style={styles.listText}>
+                      ${Number(inValue).toFixed(2)}
+                    </Text>
+                  ) : (
+                    <Text numberOfLines={1} style={styles.listText}>
+                      $
+                      {(
+                        (Number(total) - Number(inValue)) /
+                        props.groupFriends.length
+                      ).toFixed(2)}
+                    </Text>
+                  )}
+                </>
+              ) : (
+                <Text></Text>
+              )}
+            </>
             <View></View>
             {selectedValue === element.id ? (
               <TextInput
@@ -199,10 +248,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 10,
   },
+  listText2: {
+    width: "100%",
+    marginRight: 10,
+
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: 10,
+    textAlign: "right",
+  },
   listName: {
     textAlign: "left",
     width: "45%",
-    fontSize: 20,
+    fontSize: 21,
     paddingLeft: 15,
     fontWeight: "bold",
     padding: 10,

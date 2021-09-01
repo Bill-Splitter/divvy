@@ -58,11 +58,13 @@ const Signup = (props) => {
       };
 
       const status = await props.signUp(data);
+      console.log("the statis is:", status)
       if(status){
+        console.log("the statis is")
         Alert.alert(status || "error")
 
       }
-      else navigation.navigate("BottomTabNav");
+      else navigation.navigate("Login");
     }
   };
 
