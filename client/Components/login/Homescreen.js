@@ -10,31 +10,47 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Platform } from 'react-native';
+import { Linking } from 'react-native';
 
 export default function Homescreen({ navigation }) {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ top: 100 }}>
-        <Entypo name="scissors" size={200} color="#ED3B5B" />
-        <Text style={styles.logoText}>divvy</Text>
-      </View>
+  if (Platform.OS === 'ios') {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={{ top: 100 }}>
+          <Entypo name="scissors" size={200} color="#ED3B5B" />
+          <Text style={styles.logoText}>divvy</Text>
+        </View>
 
-      <View style={styles.buttonHolder}>
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => navigation.navigate("Signup")}
-          style={styles.signupButton}
-        >
-          <Text style={styles.signupButtonText}>Sign Up</Text>
-        </TouchableHighlight>
+        <View style={styles.buttonHolder}>
+          <TouchableHighlight
+            style={styles.loginButton}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.loginText}>Login</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={() => navigation.navigate("Signup")}
+            style={styles.signupButton}
+          >
+            <Text style={styles.signupButtonText}>Sign Up</Text>
+          </TouchableHighlight>
+        </View>
+      </SafeAreaView>
+    );
+  } else if (Platform.OS === 'android') {
+    return (
+      <SafeAreaView style={styles.container}>
+      <View style={{ top: 100 }}>
+        <Text style={styles.logoText}>Get An iPhone</Text>
+        <Text style={styles.androidMessage}
+          onPress={() => Linking.openURL('https://www.apple.com/store')}>
+        Available at: https://www.apple.com/store
+        </Text>
       </View>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -80,6 +96,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#ED3B5B",
     padding: 15,
+    textAlign: "center",
+  },
+  androidMessage: {
+    fontSize: 15,
+    color: 'blue',
     textAlign: "center",
   },
 });
