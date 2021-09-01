@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
-
+import items from "./options";
+import Item from "./Item";
+import SplitEvenly from "./SplitEvenly";
+import SplitCustom from "./SplitCustom";
+import SplitPercentage from "./SplitPercentage";
+import SplitInequel from "./SplitInequel";
 
 import {
   StyleSheet,
@@ -12,10 +17,11 @@ import {
   TouchableHighlight,
   ScrollView,
   Alert,
+  FlatList,
 } from "react-native";
 
 import Banner3 from "../Banner3";
-
+import Banner2 from "../Banner2";
 
 const Summary = () => {
   const info = useSelector((state) => state.split);
@@ -24,30 +30,58 @@ const Summary = () => {
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
+  const [selected, setSelected] = React.useState("simple");
+  const [valid, setValid] = React.useState(false);
+  const [infoArray, setInfoArray] = React.useState([]);
 
   const sendInvoices = () => {
-    Alert.alert(
-      "Sending Invoices",
-      "Each user will be sent a request for their repsective amount.",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "Send", onPress: () => submit() },
-      ]
-    );
+    if (valid || selected === "simple") {
+      Alert.alert(
+        "Sending Invoices",
+        "Each user will be sent a request for their repsective amount.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "Send", onPress: () => submit() },
+        ]
+      );
+    } else {
+      Alert.alert(
+        "Notice",
+        "Cannot Process Until All Dollars Have Been Assigned"
+      );
+    }
+  };
+
+  const toggle = (value) => {
+    if (value === true) setValid(true);
+    if (value === false) setValid(false);
+  };
+
+  const setUserData = (data) => {
+    setInfoArray(data);
   };
 
   const submit = () => {
-   
-
-    const billText = {
-      title: info.name,
-      total: info.total,
-      group: info.group,
-      userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
-    };
+    let billText = {};
+    if (selected === "simple") {
+      billText = {
+        title: info.name,
+        total: info.total,
+        group: info.group,
+        userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
+      };
+    } else {
+      billText = {
+        title: info.name,
+        total: info.total,
+        group: info.group,
+        userAmounts: infoArray[0].value,
+        data: infoArray,
+      };
+    }
 
     const newBill = {
       type: "simple",
@@ -70,51 +104,63 @@ const Summary = () => {
 
   return (
     <View style={{ display: "flex", backgroundColor: "white", height: "88%" }}>
-      <Banner3 name={info.group} />
-      <View
-        style={{
-          display: "flex",
-          backgroundColor: "white",
-          height: "100%",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <ScrollView style={styles.info}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Event Summary</Text>
-          </View>
+      <Banner2 name={info.group} />
+      <View style={styles.something}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Event Summary</Text>
+          <FlatList
+            horizontal={true}
+            data={items}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={(item) => {
+              return (
+                <Item
+                  data={item}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              );
+            }}
+          />
+        </View>
+        {selected === "simple" ? (
+          <SplitEvenly
+            groupFriends={groupFriends}
+            info={info}
+            toggle={toggle}
+            setUserData={setUserData}
+          />
+        ) : (
+          <>
+            {selected === "custom" ? (
+              <SplitCustom
+                groupFriends={groupFriends}
+                info={info}
+                toggle={toggle}
+                setUserData={setUserData}
+              />
+            ) : (
+              <>
+                {selected === "percentage" ? (
+                  <SplitPercentage
+                    groupFriends={groupFriends}
+                    info={info}
+                    toggle={toggle}
+                    setUserData={setUserData}
+                  />
+                ) : (
+                  <SplitInequel
+                    groupFriends={groupFriends}
+                    info={info}
+                    toggle={toggle}
+                    setUserData={setUserData}
+                  />
+                )}
+              </>
+            )}
+          </>
+        )}
 
-          <View style={styles.borderBar}></View>
-          <View style={styles.listRow}>
-            <Text style={styles.listName}>You</Text>
-            <Text style={styles.listPercent}>
-              {Math.floor(100 / (groupFriends.length + 1))}%
-            </Text>
-
-            <Text style={styles.listText}>
-              {"$ "}
-              {(info.total / (groupFriends.length + 1)).toFixed(2)}
-            </Text>
-          </View>
-
-          {groupFriends.map((element) => {
-            return (
-              <View key={element.id} style={styles.listRow}>
-                <Text numberOfLines={1} style={styles.listName}>
-                  {element.fName} {element.lName}
-                </Text>
-                <Text style={styles.listPercent}>
-                  {Math.floor(100 / (groupFriends.length + 1))}
-                  {"%"}
-                </Text>
-                <Text numberOfLines={1} style={styles.listText}>
-                  {"$"} {(info.total / (groupFriends.length + 1)).toFixed(2)}
-                </Text>
-              </View>
-            );
-          })}
-        </ScrollView>
         <View style={styles.footer}>
           <View style={styles.borderBar}></View>
           <Text style={styles.eventName}>{info.name}</Text>
@@ -168,7 +214,7 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    // color: "#ED3B5B",
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,
@@ -181,6 +227,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginTop: 10,
+  },
+  something: {
+    display: "flex",
+    backgroundColor: "white",
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   eventName: {
     textAlign: "center",
