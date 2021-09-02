@@ -44,26 +44,38 @@ const GroupList = (props) => {
       >
         <View>
           <ScrollView style={{ minHeight: "85%" }}>
-            <TouchableHighlight
-              style={styles.listElementContainer}
-              underlayColor={"white"}
-            >
-              <View style={styles.listElement}>
-                {allGroups.map((element, index) => {
-                  return (
-                    <Text
-                      style={styles.listText}
-                      key={index}
-                      onPress={() =>
-                        selectGroup(element.groupname, element.users)
-                      }
-                    >
-                      {element.groupname}
-                    </Text>
-                  );
-                })}
+            {allGroups.length > 0 ? (
+              <TouchableHighlight
+                style={styles.listElementContainer}
+                underlayColor={"white"}
+              >
+                <View style={styles.listElement}>
+                  {allGroups.map((element, index) => {
+                    return (
+                      <Text
+                        style={styles.listText}
+                        key={index}
+                        onPress={() =>
+                          selectGroup(element.groupname, element.users)
+                        }
+                      >
+                        {element.groupname}
+                      </Text>
+                    );
+                  })}
+                </View>
+              </TouchableHighlight>
+            ) : (
+              <View style={styles.no}>
+                <Text style={styles.noGroups}>You have no groups</Text>
+                <TouchableHighlight
+                  style={styles.loginButton}
+                  onPress={() => navigation.navigate("AllGroups")}
+                >
+                  <Text style={styles.loginButtonText}>Create A Group</Text>
+                </TouchableHighlight>
               </View>
-            </TouchableHighlight>
+            )}
           </ScrollView>
         </View>
       </View>
@@ -85,6 +97,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "flex-start",
     marginLeft: 20,
+  },
+  no: {
+    alignItems: "center",
+    padding: 15,
+  },
+  noGroups: {
+    fontSize: 30,
+    color: "#ED3B5B",
+    marginBottom: 10,
+    fontWeight: "700",
+  },
+  loginButton: {
+    width: "70%",
+    backgroundColor: "#ED3B5B",
+    borderRadius: 45,
+    marginTop: 20,
+    alignContent: "center",
   },
 
   listText: {
