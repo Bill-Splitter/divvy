@@ -24,23 +24,33 @@ const SplitInequel = (props) => {
   let data = [];
 
   const prepUserData = () => {
-    data = [{ name: "you", value: values[0] }];
+    if(selected === 0) data = [{ name: "you", value: inValue }];
+    else data = [{ name: "you", value: (Number(total) - Number(inValue)) /
+    props.groupFriends.length }];
     props.groupFriends.forEach((element, index) => {
       const name = element.fName + " " + element.lName;
-      data.push({ name: name, value: values[index + 1] });
+      if(selected === index)  data.push({ name: name, value: inValue });
+      else data.push({ name: name, value: (Number(total) - Number(inValue)) /
+        props.groupFriends.length });
     });
   };
 
   const click = (data, index) => {
     setSelectedValue(data);
     setSelected(index);
-    console.log(selectedValue, "is the value");
+
+
   };
 
   const distro = () => {
     setSelectedValue("");
     setSelectable(false);
+    prepUserData()
+    props.setUserData(data);
+    props.toggle(true)
   };
+
+
 
   const update = (text, index) => {
     if (isNaN(text)) {
@@ -98,13 +108,13 @@ const SplitInequel = (props) => {
             }}
           >
             {selectable === false && selectedValue === "" ? (
-              <Text>
-                {selected === "you" ? (
-                  <Text numberOfLines={1} style={styles.listText2}>
+              <Text style={styles.listText3}>
+                {selected === 0 ? (
+                  <Text numberOfLines={1} style={styles.listText3}>
                     ${Number(inValue).toFixed(2)}
                   </Text>
                 ) : (
-                  <Text numberOfLines={1} style={styles.listText2}>
+                  <Text numberOfLines={1} style={styles.listText3}>
                     $
                     {(
                       (Number(total) - Number(inValue)) /
@@ -116,19 +126,27 @@ const SplitInequel = (props) => {
             ) : (
               <Text></Text>
             )}
+            {selectedValue === "you" ? (
+              <TextInput
+                style={styles.input2}
+                placeholder="0.00"
+                maxLength={8}
+                keyboardType={"phone-pad"}
+                textContentType={"telephoneNumber"}
+                onChangeText={(text) => update(text, 0)}
+              ></TextInput>
+            ) : (
+              <Text></Text>
+            )}
+
           </View>
+        
+          <View></View>
+          
         </>
 
-        {selectedValue === "you" ? (
-          <TextInput
-            placeholder="0.00"
-            keyboardType={"phone-pad"}
-            textContentType={"telephoneNumber"}
-            onChangeText={(text) => update(text, 0)}
-          ></TextInput>
-        ) : (
-          <Text></Text>
-        )}
+ 
+       
       </View>
 
       {props.groupFriends.map((element, index) => {
@@ -257,6 +275,15 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: "right",
   },
+  listText3: {
+    width: "100%",
+    marginRight: 10,
+
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "right",
+
+  },
   listName: {
     textAlign: "left",
     width: "45%",
@@ -283,6 +310,14 @@ const styles = StyleSheet.create({
 
   input: {
     width: "30%",
+    fontSize: 25,
+    fontWeight: "bold",
+    borderBottomWidth: 2,
+    borderColor: "#706567",
+    textAlign: "right",
+  },
+  input2: {
+    width: "55%",
     fontSize: 25,
     fontWeight: "bold",
     borderBottomWidth: 2,
