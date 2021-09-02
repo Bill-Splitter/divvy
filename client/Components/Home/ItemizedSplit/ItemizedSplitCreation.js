@@ -4,8 +4,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { setData } from "../../../store/split";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Foundation } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { Foundation } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import {
   StyleSheet,
@@ -26,29 +26,31 @@ const ItemizedSplitCreation = (props) => {
   const [tip, setTip] = React.useState();
   const [event, setEvent] = React.useState();
   const { image } = route.params;
-  
+
   const clickSubmit = () => {
     if (!tip) setTip(0);
-    
+
     if (!total || !event) {
       alert("Must enter total");
     } else {
       const totalDollars = Number(total) + Number(tip);
       props.submit(event, totalDollars);
-      navigation.navigate("GroupList", {image: image});
+      navigation.navigate("GroupList", { image: image });
     }
   };
-  
+
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
-      <Banner2 name='Create Divvy Event'/>
+      <Banner2 name="Create Divvy Event" />
       <View style={styles.view}>
-        <Image source={image} style={{
-          flex: 10, 
-          width: "100%", 
-          height: "100%", 
-          resizeMode : 'contain',
-          }} 
+        <Image
+          source={image}
+          style={{
+            flex: 10,
+            width: "100%",
+            height: "100%",
+            resizeMode: "contain",
+          }}
         />
         <View style={styles.inputFields}>
           <View style={styles.inputRow}>
@@ -63,9 +65,11 @@ const ItemizedSplitCreation = (props) => {
               onChangeText={(text) => setEvent(text)}
             ></TextInput>
           </View>
-  
+
           <View style={styles.inputRow}>
-            <Text style={styles.iconHolder}><Foundation name="dollar" size={44} color="black" /></Text>
+            <Text style={styles.iconHolder}>
+              <Foundation name="dollar" size={44} color="black" />
+            </Text>
             <TextInput
               placeholder="Enter Total w/ Tax"
               style={styles.input2}
@@ -74,9 +78,11 @@ const ItemizedSplitCreation = (props) => {
               onChangeText={(text) => setTotal(text)}
             ></TextInput>
           </View>
-  
+
           <View style={styles.inputRow}>
-            <Text style={styles.iconHolder}><FontAwesome name="gratipay" size={28} color="black" /></Text>
+            <Text style={styles.iconHolder}>
+              <FontAwesome name="gratipay" size={28} color="black" />
+            </Text>
             <TextInput
               placeholder="Tip (optional)"
               style={styles.input3}
@@ -105,14 +111,17 @@ const mapDispatchToProps = (dispatch) => ({
   submit: (name, total) => dispatch(setData(name, total)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemizedSplitCreation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemizedSplitCreation);
 
 const styles = StyleSheet.create({
   view: {
     width: "100%",
-    display: 'flex',
+    display: "flex",
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     alignContent: "center",
     textAlign: "left",
     alignItems: "center",
@@ -123,7 +132,6 @@ const styles = StyleSheet.create({
     width: 39,
     margin: 0,
     padding: 0,
-
   },
   inputField: {
     display: "flex",
@@ -159,7 +167,7 @@ const styles = StyleSheet.create({
     width: "65%",
     paddingLeft: 20,
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   input3: {
     height: 35,
@@ -171,7 +179,7 @@ const styles = StyleSheet.create({
     width: "65%",
     paddingLeft: 20,
     fontSize: 23,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   loginButton: {
     width: "50%",
