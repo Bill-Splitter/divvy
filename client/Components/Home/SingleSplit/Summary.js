@@ -65,7 +65,6 @@ const Summary = () => {
   };
 
   const submit = () => {
-    console.log(infoArray)
     let billText = {};
     if (selected === "simple") {
       billText = {
