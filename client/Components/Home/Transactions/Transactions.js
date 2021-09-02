@@ -20,7 +20,7 @@ export default Transactions = () => {
   }, []);
 
   const deleteItem = (id) => {
-    dispatch(deleteTransactionThunk(id))
+    dispatch(deleteTransactionThunk(id));
   };
 
   const items = bills.reverse();
@@ -30,7 +30,7 @@ export default Transactions = () => {
       <Banner2 name={"Transactions"} />
       {items.length > 0 ? (
         <FlatList
-          keyExtractor={(item, index) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           data={items}
           renderItem={(item) => {
             return (
