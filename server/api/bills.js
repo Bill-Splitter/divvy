@@ -22,7 +22,10 @@ router.get("/:userId", async (req, res, next) => {
         userId: userId,
       },
     });
-    res.json(bills);
+    const user = await User.findByPk(userId);
+    let owes = await user.getOwed();
+
+    res.json(bills.concat(owes));
   } catch (error) {
     next(error);
   }
@@ -100,6 +103,20 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+// router.get("/", async (req, res, next) => {
+//   const friendArray = req.body.friendArray;
+//   const friendIds = friendArray.map((elem) => elem.id);
+//   console.log("here is req body", req.body.friendArray);
+//   try {
+//     const friendsBill = Bill.findByPk(friendArray);
+//     friendArray.forEach((e) => )
+
+//     res.json(friendsBill);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 router.delete("/:id", async (req, res, next) => {
   const billId = req.params.id;
