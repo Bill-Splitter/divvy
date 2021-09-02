@@ -14,6 +14,12 @@ const initialState = {
   bills: [],
 };
 
+export const setBill = (bill) => {
+  return {
+    type: SET_BILL,
+    bill,
+  };
+};
 export const setBills = (bills) => {
   return {
     type: SET_BILLS,
@@ -21,15 +27,14 @@ export const setBills = (bills) => {
   };
 };
 
-
-//is best way to create bill with userID, then fetch bill and attach photo?
+//best way to get open bills for people added to pending complex split?
 
 export const deleteBill = (id) => {
   return {
     type: DELETE_BILL,
     id
-  }
-}
+  };
+};
 
 
 export const fetchBillsThunk = (userId) => {
@@ -42,6 +47,46 @@ export const fetchBillsThunk = (userId) => {
   };
 };
 
+export const fetchBillThunk = (userId, billName) => {
+  return async (dispatch) => {
+    try {
+      const foundBill = await instance.get(`api/bills/${userId}/${billName}`);
+      const b = foundBill.data;
+      dispatch(setBill(b));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+//right now, the component gets the whole parsed bill & adds to it, vs 
+export const updateParsedBillThunk = (userId, billName, parsedBill) => {
+  return async (dispatch) => {
+    try {
+      await instance.put(`api/bills/${userId}/${billName}/parse`, {
+        parsedBill: parsedBill
+      });
+      
+      //shouldnt need updated bill
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const completeBillThunk = (userId, billName) => {
+  return async (dispatch) => {
+    try {
+      await instance.put(`api/bills/${userId}/${billName}/complete`, {
+        complete: 'true'
+      });
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 export const createBillThunk = (bill, userid, friends) => {
   return async (dispatch) => {
     try {
@@ -50,7 +95,7 @@ export const createBillThunk = (bill, userid, friends) => {
         userid: userid,
         friendArray: friends,
       });
-      const data = newBill.data;
+      //const data = newBill.data;
       
       //need to change this below
       //dispatch(data);
@@ -82,6 +127,8 @@ export default function (state = initialState, action) {
     return { ...state, bills: bil };
     case SET_BILLS:
       return { ...state, bills: action.bills };
+    case SET_BILL:
+      return { ...state, bill: action.bill };
     default:
       return state;
   }

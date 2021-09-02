@@ -1,6 +1,6 @@
 /*
 see figma for visual reference:
-    1) get bill picture
+    1) get bill picture, done
      
     2) poll bill at set interval to see if payees sent updates to the parsed bill
     
@@ -8,11 +8,10 @@ see figma for visual reference:
     
     4) next button sends you to ItemizedSummary view
 */
-
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { setData } from "../../../store/split";
+import { fetchBillThunk, completeBillThunk } from "../../../store/bill";
 
 import {
   StyleSheet,
@@ -26,39 +25,52 @@ import {
 } from "react-native";
 import Banner2 from "../Banner2";
 
-//going to use state for this obv, otherwise it'd get set empty every open
-let groupPaymentTracker = {};
+const adder = (total, num) => {
+  return total + num;
+};
 
 const OwnerOpenBill = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  //const [parsedBill, setParsedBill] = useState();
-  //const [event, setEvent] = useState();
-  const { billInfo, groupFriends } = route.params;
-  const { name, total, image, userID } = billInfo;
+  const dispatch = useDispatch();
+  const bill = useSelector((state) => state.bill.bill || []);
+  const user = useSelector((state) => state.user);
+  const { allFriendsPaid, setAllFriendsPaid } = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const userAmounts = bill.parsedBill.userAmounts;
   
-  console.log(groupFriends);
+  //add logic to use route.params info when it exists, otherwise state data
+  // let billInfo, groupFriends, name, total, image;
+  // if(route.params.billInfo){
+  //   console.log();
+  // }
   
-  if(groupFriends){
-    groupFriends.forEach((friend,index) => {
-      groupPaymentTracker[friend.username] = {
-        username: friend.username,
-        id: friend.id,
-        fName: friend.fName,
-        lName: friend.lName,
-        total: 20 * index, //maybe make array for each item?
-        paid: true,
-      };
+  //loads bill into state on load
+  //... wait, cant we just use the bill findByPk??
+  if (!mounted) dispatch(fetchBillThunk(user.id, props.data.name));
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  //checks if all friends paid
+  if(bill){
+    let allFriendsPaidTemp = true;
+    
+    bill.owes.forEach((payee) => {
+      if(!userAmounts.hasOwnProperty(payee.id)){
+        allFriendsPaidTemp = false;
+      }
     });
-  } else {
-    groupPaymentTracker = {};
+    
+    if(allFriendsPaidTemp){
+      setAllFriendsPaid(true);
+    }  
   }
   
-  console.log(groupPaymentTracker);
-  
+  //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
     //props.submit(event, parsedBill);
-    groupPaymentTracker = {};
     navigation.navigate("ProfilePage");
   };
   
@@ -69,7 +81,7 @@ const OwnerOpenBill = (props) => {
     <View style={{ backgroundColor: "white", height: "95%" }}>
       <Banner2 name='Awaiting Payment' home={true}/>
       <View style={styles.view}>
-        <Image source={{uri: image}} style={{
+        <Image source={{uri: bill.image}} style={{
           flex: 20, 
           width: "100%", 
           height: "100%", 
@@ -78,8 +90,8 @@ const OwnerOpenBill = (props) => {
         />
         <View style={styles.textFields}>
           <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
-          {Object.values(groupPaymentTracker).length ? 
-            (Object.values(groupPaymentTracker).map((friend) => {
+          {Object.values(bill.owes).length ? 
+            (Object.values(bill.owes).map((friend) => {
               return (
                 <View style={styles.textRow}>
                   <Text
@@ -89,10 +101,10 @@ const OwnerOpenBill = (props) => {
                       console.log("change friend's total to show each line item")
                     }
                   >
-                    {friend.paid ? 
-                      (`${friend.fName} ${friend.lName}: $${friend.total}`
+                    {userAmounts.hasOwnProperty(friend.id) ? 
+                      (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
                       ) : ( 
-                      `${friend.fName} ${friend.lName}: not recieved`)
+                      `${friend.fName} ${friend.lName}: none yet`)
                     }
                   </Text>
                 </View>
@@ -112,7 +124,7 @@ const OwnerOpenBill = (props) => {
               AccessibilityRole={'summary'}
               numberOfLines={1}
               suppressHighlighting={true}
-              onPress={() => console.log('resendTextPrompt()')}
+              onPress={() => console.log('resendTextPromptToAll()')}
             >
               Awaiting Group Payments...
             </Text>
@@ -132,11 +144,7 @@ const OwnerOpenBill = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  submit: (name, total) => dispatch(setData(name, total)),
-});
-
-export default connect(null, mapDispatchToProps)(OwnerOpenBill);
+export default OwnerOpenBill;
 
 const styles = StyleSheet.create({
   view: {
