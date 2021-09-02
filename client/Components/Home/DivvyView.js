@@ -46,12 +46,25 @@ export default DivvyView = (props) => {
               <MaterialIcons name="attach-money" size={35} color="#ED3B5B" />
               <Text style={styles.listText}>Simple Split</Text>
             </View>
-         
+          </View>
+        </TouchableHighlight>
+        <View style={styles.borderBar}></View>
+
+        <TouchableHighlight
+          style={styles.listElementContainer}
+          onPress={() => navigation.navigate("SoloSplitCreation")}
+          underlayColor={"white"}
+        >
+          <View>
+            <View style={styles.listElement}>
+              <MaterialIcons name="person" size={35} color="#ED3B5B" />
+              <Text style={styles.listText}>Solo Split</Text>
+            </View>
           </View>
         </TouchableHighlight>
         <View style={styles.borderBar}></View>
       </View>
-    </View>
+      </View>
   );
 };
 const styles = StyleSheet.create({
