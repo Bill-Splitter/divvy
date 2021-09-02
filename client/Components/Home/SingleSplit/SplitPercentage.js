@@ -70,7 +70,7 @@ const SplitPercentage = (props) => {
         <Text style={styles.listName}>You</Text>
         <TextInput
           style={styles.input}
-          placeholder="0%"
+          placeholder="0"
           keyboardType={"phone-pad"}
           textContentType={"telephoneNumber"}
           onChangeText={(text) => update(text, 0)}
@@ -95,7 +95,7 @@ const SplitPercentage = (props) => {
 
             <TextInput
               style={styles.input}
-              placeholder="0%"
+              placeholder="0"
               keyboardType={"phone-pad"}
               textContentType={"telephoneNumber"}
               onChangeText={(text) => update(text, index + 1)}
@@ -106,7 +106,7 @@ const SplitPercentage = (props) => {
               <Text style={styles.listText}>$0.00</Text>
             ) : (
               <Text style={styles.listText}>
-                ${(props.info.total / values[index + 1]).toFixed(2)}
+                ${(props.info.total * (.01 * values[index + 1])).toFixed(2)}
               </Text>
             )}
           </View>
