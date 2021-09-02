@@ -8,12 +8,11 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableHighlight,
   TextInput,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import Banner from "./Banner";
 
 const Signup = (props) => {
@@ -44,8 +43,8 @@ const Signup = (props) => {
     } else if (password.length < 4) {
       Alert.alert("password must be at least four characters");
     } else {
-      const f = fName[0].toUpperCase() + fName.slice(1).toLowerCase().trim()
-      const l = lName[0].toUpperCase() + lName.slice(1).toLowerCase().trim()
+      const f = fName[0].toUpperCase() + fName.slice(1).toLowerCase().trim();
+      const l = lName[0].toUpperCase() + lName.slice(1).toLowerCase().trim();
       const data = {
         username: username.trim(),
         email: email.trim(),
@@ -54,22 +53,22 @@ const Signup = (props) => {
         phoneNumber: phone.trim(),
         fName: f,
         lName: l,
-
       };
 
       const status = await props.signUp(data);
-      console.log("the statis is:", status)
-      if(status){
-        console.log("the statis is")
-        Alert.alert(status || "error")
-
-      }
-      else navigation.navigate("Login");
+      console.log("the statis is:", status);
+      if (status) {
+        console.log("the statis is");
+        Alert.alert(status || "error");
+      } else navigation.navigate("Login");
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <Banner></Banner>
       <View style={styles.form}>
         <Entypo name="scissors" size={50} color="#ED3B5B" />
@@ -131,7 +130,7 @@ const Signup = (props) => {
           <Text style={styles.submitText}>Signup</Text>
         </TouchableHighlight>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
