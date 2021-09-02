@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";

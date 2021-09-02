@@ -28,6 +28,67 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
+//not the best way, but it should work until a user makes 2 bills with the same name open at once
+router.get("/:userId/:billName", async (req, res, next) => {
+  const { userId, billName } = req.params;
+  try {
+    const bill = await Bill.findOne({
+      where: {
+        userId: userId,
+        name: billName,
+        completed: false,
+        type: "complex",
+      }
+    });
+    
+    res.json(bill);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//to update parsedBill in Bill when payee(s) reply
+router.put("/:userId/:billName/parse", async (req, res, next) => {
+  try {
+    const { userId, billName } = req.params;
+    await Bill.update({
+      parsedBill: req.body.parsedBill 
+    }, {
+      where: {
+        userId: userId,
+        name: billName,
+        completed: false,
+        type: "complex",
+      },
+    });
+    
+    res.sendStatus(201);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//to update completed in Bill when all payees reply
+router.put("/:userId/:billName/complete", async (req, res, next) => {
+  try {
+    const { userId, billName } = req.params;
+    await Bill.update({
+      completed: true 
+    }, {
+      where: {
+        userId: userId,
+        name: billName,
+        completed: false,
+        type: "complex",
+      },
+    });
+    
+    res.sendStatus(201);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const bill = await Bill.create(req.body.bill);
