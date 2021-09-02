@@ -8,6 +8,7 @@ import Messages from "../Components/Home/Messages.js";
 import Transactions from "../Components/Home/Transactions/Transactions.js";
 import DivvyView from "../Components/Home/DivvyView.js";
 import SimpleSplitCreation from "../Components/Home/SingleSplit/SimpleSplitCreation.js";
+import SoloSplitCreation from "../Components/Home/SingleSplit/SoloSplitCreation.js";
 import ItemizedSplitCreation from "../Components/Home/ItemizedSplit/ItemizedSplitCreation.js";
 import SendItemizedBills from "../Components/Home/ItemizedSplit/SendItemizedBills.js";
 import OwnerOpenBill from "../Components/Home/ItemizedSplit/OwnerOpenBill.js";
@@ -59,6 +60,10 @@ const Home = () => {
       <HomeStack.Screen
         name="ItemizedSplitCreation"
         component={ItemizedSplitCreation}
+      />
+      <HomeStack.Screen
+        name="SoloSplitCreation"
+        component={SoloSplitCreation}
       />
       <HomeStack.Screen
         name="SendItemizedBills"
