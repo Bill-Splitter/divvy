@@ -4,16 +4,25 @@ import axios from "axios";
 import source from "../../source";
 // const ApiKey = "cca55ddcec88957";
 
+const SET_PARSED_BILL = "SET_BILL";
 const SET_BILL = "SET_BILL";
 const SET_BILLS = "SET_BILLS";
 const DELETE_BILL = "DELETE_BILL"
 const instance = axios.create({ baseURL: source });
 
 const initialState = {
+  parsedBill: {},
   bill: {},
   bills: [],
 };
 
+//action creators
+export const setParsedBill = (parsedBill) => {
+  return {
+    type: SET_PARSED_BILL,
+    parsedBill,
+  };
+};
 export const setBill = (bill) => {
   return {
     type: SET_BILL,
@@ -26,9 +35,6 @@ export const setBills = (bills) => {
     bills,
   };
 };
-
-//best way to get open bills for people added to pending complex split?
-
 export const deleteBill = (id) => {
   return {
     type: DELETE_BILL,
@@ -36,7 +42,7 @@ export const deleteBill = (id) => {
   };
 };
 
-
+//thunk creators
 export const fetchBillsThunk = (userId) => {
   return async (dispatch) => {
     try {
@@ -47,10 +53,10 @@ export const fetchBillsThunk = (userId) => {
   };
 };
 
-export const fetchBillThunk = (userId, billName) => {
+export const fetchBillThunk = (billId) => {
   return async (dispatch) => {
     try {
-      const foundBill = await instance.get(`api/bills/${userId}/${billName}`);
+      const foundBill = await instance.get(`api/bills/${billId}/pk`);
       const b = foundBill.data;
       dispatch(setBill(b));
     } catch (error) {
@@ -59,14 +65,25 @@ export const fetchBillThunk = (userId, billName) => {
   };
 };
 
-//right now, the component gets the whole parsed bill & adds to it, vs 
-export const updateParsedBillThunk = (userId, billName, parsedBill) => {
+export const fetchParsedBillThunk = (billId) => {
   return async (dispatch) => {
     try {
-      await instance.put(`api/bills/${userId}/${billName}/parse`, {
+      const parsedBill = await instance.get(`api/bills/${billId}/parse`);
+      const pb = parsedBill.data;
+      dispatch(setParsedBill(pb));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+//the component gets the whole parsed bill & adds to it 
+export const updateParsedBillThunk = (billId, parsedBill) => {
+  return async (dispatch) => {
+    try {
+      await instance.put(`api/bills/${billId}/parse`, {
         parsedBill: parsedBill
       });
-      
       //shouldnt need updated bill
     } catch (error) {
       console.error(error);
@@ -74,10 +91,10 @@ export const updateParsedBillThunk = (userId, billName, parsedBill) => {
   };
 };
 
-export const completeBillThunk = (userId, billName) => {
+export const completeBillThunk = (billId) => {
   return async (dispatch) => {
     try {
-      await instance.put(`api/bills/${userId}/${billName}/complete`, {
+      await instance.put(`api/bills/${billId}/complete`, {
         complete: 'true'
       });
       
@@ -90,15 +107,12 @@ export const completeBillThunk = (userId, billName) => {
 export const createBillThunk = (bill, userid, friends) => {
   return async (dispatch) => {
     try {
-      const newBill = await instance.post("api/bills/", {
+      await instance.post("api/bills/", {
         bill: bill,
         userid: userid,
         friendArray: friends,
       });
-      //const data = newBill.data;
       
-      //need to change this below
-      //dispatch(data);
     } catch (error) {
       console.error(error);
     }
@@ -108,27 +122,30 @@ export const createBillThunk = (bill, userid, friends) => {
 export const deleteTransactionThunk = (id) => {
   return async (dispatch) => {
     try {
-      await instance.delete(`api/bills/${id}`)
-      dispatch(deleteBill(id))
+      await instance.delete(`api/bills/${id}`);
+      dispatch(deleteBill(id));
 
     } catch (error) {
 
     }
-  }
-}
+  };
+};
 
+//reducers
 export default function (state = initialState, action) {
   switch (action.type) {
     case DELETE_BILL: 
-      let bil = state.bills
+      let bil = state.bills;
       bil = bil.filter((element) => {
-        if(element.id !== action.id) return element
-      })
+        if(element.id !== action.id) return element;
+      });
     return { ...state, bills: bil };
     case SET_BILLS:
       return { ...state, bills: action.bills };
     case SET_BILL:
       return { ...state, bill: action.bill };
+    case SET_PARSED_BILL:
+      return { ...state, parsedBill: action.parsedBill };
     default:
       return state;
   }
