@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
@@ -12,6 +13,9 @@ import {
 } from "react-native";
 
 const TransactionItem = (props) => {
+  const user = useSelector((state) => state.user);
+  const navigation = useNavigation();
+  
   const rightSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],
@@ -35,8 +39,6 @@ const TransactionItem = (props) => {
     );
   };
 
-  const navigation = useNavigation();
-
   let dateObj = new Date(props.data.item.date);
   var month = dateObj.getUTCMonth() + 1; //months from 1-12
   var day = dateObj.getUTCDate();
@@ -47,41 +49,105 @@ const TransactionItem = (props) => {
     .replace("-", "/");
 
   return (
-    <Swipeable renderRightActions={rightSwipe}>
-      <TouchableHighlight underlayColor={"transparent"}>
-        <View style={styles.container}>
-          <Text
-            style={styles.dateText}
-            onPress={() =>
-              navigation.navigate("IndividualTrans", { data: props.data.item })
-            }
-          >
-            {month}/{day}
-          </Text>
+    <Text>
+      
+      {props.data.item.completed ? (
+        <Swipeable renderRightActions={rightSwipe}>
+          <TouchableHighlight underlayColor={"transparent"}>
+            <View style={styles.container}>
+              <Text
+                style={styles.dateText}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                {month}/{day}
+              </Text>
 
-          <TouchableHighlight
-            style={styles.info}
-            underlayColor={"transparent"}
-            onPress={() =>
-              navigation.navigate("IndividualTrans", { data: props.data.item })
-            }
-          >
-            <View>
-              <Text numberOfLines={1} style={styles.text2}>
-                {props.data.item.name}
+              <TouchableHighlight
+                style={styles.info}
+                underlayColor={"transparent"}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                <View>
+                  <Text numberOfLines={1} style={styles.text2}>
+                    {props.data.item.name}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Total: ${Number(props.data.item.total).toFixed(2)}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Your Share: $
+                    {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </TouchableHighlight>
+        </Swipeable>
+      ) : (
+        <View>
+          <TouchableHighlight underlayColor={"transparent"}>
+            <View style={styles.container}>
+              <Text
+                style={styles.dateText}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                {month}/{day}
               </Text>
-              <Text numberOfLines={1} style={styles.text}>
-                Total: ${Number(props.data.item.total).toFixed(2)}
-              </Text>
-              <Text numberOfLines={1} style={styles.text}>
-                Your Share: $
-                {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
-              </Text>
+
+              <TouchableHighlight
+                style={styles.info}
+                underlayColor={"transparent"}
+                onPress={() => {
+                  //if complex, choose between top 2
+                  props.data.item.type === "complex" ? (
+                    //navigates to correct openBill component, conditional on user-bill ownership
+                    user.id === props.data.item.userId ? (
+                      navigation.navigate("OwnerOpenBill", {
+                        bill: props.data.item,
+                      })
+                    ) : (
+                      navigation.navigate("PayeeOpenBill", {
+                        bill: props.data.item,
+                      })
+                    )
+                  ) : (
+                    //else, go to IndividualTrans
+                    navigation.navigate("IndividualTrans", {
+                      data: props.data.item,
+                    })
+                  );
+                }}
+              >
+                <View>
+                  <Text numberOfLines={1} style={styles.text2}>
+                    {props.data.item.name}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Total: ${Number(props.data.item.total).toFixed(2)}
+                  </Text>
+                  {/* <Text numberOfLines={1} style={styles.text}>
+                    Your Share: $
+                    {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
+                  </Text> */}
+                </View>
+              </TouchableHighlight>
             </View>
           </TouchableHighlight>
         </View>
-      </TouchableHighlight>
-    </Swipeable>
+      )}
+    </Text>
   );
 };
 
@@ -91,6 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     alignItems: "center",
+    width: "100%",
   },
   dateText: {
     fontSize: 38,
