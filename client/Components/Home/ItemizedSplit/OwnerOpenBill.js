@@ -52,7 +52,7 @@ const OwnerOpenBill = (props) => {
   console.log('route.params: ', route.params.bill);
   console.log('bill: ', bill);
   console.log('parsedBill: ', parsedBill);
-  Object.keys(bill).length !== 0 ? (console.log('true')) : (console.log('false'));
+  Object.keys(bill).length !== 0 ? (console.log('true', bill.owes)) : (console.log('false'));
   
   if (!mounted){
     //console.log('(mounted) route.params: ', route.params.bill);

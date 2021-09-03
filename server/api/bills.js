@@ -107,22 +107,18 @@ router.post("/", async (req, res, next) => {
     const bill = await Bill.create(req.body.bill);
     req.body.friendArray.forEach((element) => {
       bill.addOwes(element.id);
-    }).then((res1)=> {
-      console.log(res1);
     });
-    console.log(bill);
+    console.log(bill.toJSON());
     
     const billReturn = await Bill.findOne({
       where: {
         id: bill.id
       },
       include: ["owes"]
-    }).then((res2)=> {
-      console.log(res2);
     });
-    console.log(billReturn);
-    
-    res.json(billReturn);
+    console.log(billReturn.toJSON());
+    //await bill.update();
+    res.json(bill);
   } catch (error) {
     next(error);
   }
