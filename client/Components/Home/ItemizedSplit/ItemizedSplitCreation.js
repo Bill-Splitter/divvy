@@ -69,6 +69,9 @@ const ItemizedSplitCreation = (props) => {
               onChangeText={(text) => setEvent(text)}
             ></TextInput>
           </View>
+          {/* <EventField /> */}
+
+          {/* below is the total with tax field */}
 
           <View style={styles.inputRow}>
             <Text style={styles.iconHolder}>
@@ -83,6 +86,8 @@ const ItemizedSplitCreation = (props) => {
             ></TextInput>
           </View>
 
+          {/* // below is the tip field */}
+
           <View style={styles.inputRow}>
             <Text style={styles.iconHolder}>
               <FontAwesome name="gratipay" size={28} color="black" />
@@ -96,6 +101,9 @@ const ItemizedSplitCreation = (props) => {
             ></TextInput>
           </View>
         </View>
+
+        {/* below is the submit button to select a group (should render after tip field is entered) */}
+
         <TouchableHighlight
           style={styles.loginButton}
           onPress={() => clickSubmit()}
@@ -119,6 +127,50 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ItemizedSplitCreation);
+
+export const EventField = () => {
+  // const navigation = useNavigation();
+  // const onToNext = () => {
+  //   navigation.navigate("TotalField");
+  // };
+  return (
+    <View style={styles.inputRow}>
+      <Text style={styles.iconHolder}>
+        <MaterialIcons name="event" size={32} color="black" />
+      </Text>
+      <TextInput
+        placeholder="Event Name Here"
+        style={styles.input}
+        // value={event}
+        maxLength={28}
+        onChangeText={(text) => setEvent(text)}
+      ></TextInput>
+
+      <TouchableHighlight style={styles.nextButton}>
+        <Text style={styles.nextButtonText} onPress={console.log("next")}>
+          Next
+        </Text>
+      </TouchableHighlight>
+    </View>
+  );
+};
+
+// export const TotalField = () => {
+//   return (
+//     <View style={styles.inputRow}>
+//       <Text style={styles.iconHolder}>
+//         <Foundation name="dollar" size={44} color="black" />
+//       </Text>
+//       <TextInput
+//         placeholder="Enter Total w/ Tax"
+//         style={styles.input2}
+//         value={total}
+//         maxLength={6}
+//         onChangeText={(text) => setTotal(text)}
+//       ></TextInput>
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   view: {
@@ -193,6 +245,18 @@ const styles = StyleSheet.create({
   },
 
   loginButtonText: {
+    fontSize: 20,
+    color: "white",
+    padding: 10,
+    textAlign: "center",
+  },
+  nextButton: {
+    width: "50%",
+    backgroundColor: "#ED3B5B",
+    borderRadius: 45,
+    marginTop: 10,
+  },
+  nextButtonText: {
     fontSize: 20,
     color: "white",
     padding: 10,
