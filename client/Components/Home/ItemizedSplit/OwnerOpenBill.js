@@ -11,7 +11,7 @@ see figma for visual reference:
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { fetchBillThunk, completeBillThunk } from "../../../store/bill";
+import { fetchBillThunk, fetchParsedBillThunk, completeBillThunk } from "../../../store/bill";
 
 import {
   StyleSheet,
@@ -34,6 +34,7 @@ const OwnerOpenBill = (props) => {
   const route = useRoute();
   const dispatch = useDispatch();
   const bill = useSelector((state) => state.bill.bill || []);
+  const parsedBill = useSelector((state) => state.bill.parsedBill || []);
   const user = useSelector((state) => state.user);
   const { allFriendsPaid, setAllFriendsPaid } = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -47,7 +48,8 @@ const OwnerOpenBill = (props) => {
   
   //loads bill into state on load
   //... wait, cant we just use the bill findByPk??
-  if (!mounted) dispatch(fetchBillThunk(user.id, props.data.name));
+  console.log(props.data);
+  if (!mounted) dispatch(fetchBillThunk(props.data.id));
 
   useEffect(() => {
     setMounted(true);
