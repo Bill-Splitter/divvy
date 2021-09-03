@@ -62,7 +62,6 @@ const SimpleSplitCreation = (props) => {
           <TextInput
             placeholder="Event Name Here"
             style={styles.input}
-            value={event}
             maxLength={28}
             onChangeText={(text) => setEvent(text)}
           ></TextInput>
@@ -73,7 +72,6 @@ const SimpleSplitCreation = (props) => {
           <TextInput
             placeholder="Enter Total w/ Tax"
             style={styles.input2}
-            value={total}
             maxLength={6}
             onChangeText={(text) => setTotal(text)}
           ></TextInput>
@@ -84,7 +82,6 @@ const SimpleSplitCreation = (props) => {
         <TextInput
           placeholder="Tip (optional)"
           style={styles.input2}
-          value={tip}
           maxLength={6}
           onChangeText={(text) => setTip(text)}
         ></TextInput>

@@ -65,6 +65,7 @@ const Summary = () => {
   };
 
   const submit = () => {
+    console.log(infoArray)
     let billText = {};
     if (selected === "simple") {
       billText = {
@@ -72,6 +73,7 @@ const Summary = () => {
         total: info.total,
         group: info.group,
         userAmounts: (info.total / (groupFriends.length + 1)).toFixed(2),
+        data: infoArray
       };
     } else {
       billText = {

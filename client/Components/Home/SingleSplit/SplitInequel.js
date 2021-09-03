@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   StyleSheet,
@@ -13,6 +14,7 @@ import {
 const SplitInequel = (props) => {
   const length = new Array(props.groupFriends.length + 1).fill(0);
   const billTotal = props.info.total;
+  const user = useSelector((state) => state.user);
 
   let [values, setValues] = React.useState(length);
   let [total, setTotal] = React.useState(props.info.total);
@@ -24,13 +26,13 @@ const SplitInequel = (props) => {
   let data = [];
 
   const prepUserData = () => {
-    if(selected === 0) data = [{ name: "you", value: inValue }];
-    else data = [{ name: "you", value: (Number(total) - Number(inValue)) /
-    props.groupFriends.length }];
+    if(selected === 0) data = [{ name: user.fName + " " + user.lName, value: inValue, id: user.id }];
+    else data = [{ name: user.fName + " " + user.lName, value: (Number(total) - Number(inValue)) /
+    props.groupFriends.length, id: user.id}];
     props.groupFriends.forEach((element, index) => {
       const name = element.fName + " " + element.lName;
-      if(selected === index)  data.push({ name: name, value: inValue });
-      else data.push({ name: name, value: (Number(total) - Number(inValue)) /
+      if(selected === index)  data.push({ name: name, value: inValue, id: element.id });
+      else data.push({ name: name, id: element.id, value: (Number(total) - Number(inValue)) /
         props.groupFriends.length });
     });
   };
