@@ -1,8 +1,36 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
 
 const SplitEvenly = (props) => {
+  const user = useSelector((state) => state.user);
+  let [loaded, setLoaded] = React.useState(false);
+  let data = [];
+  const prepUserData = () => {
+    data = [
+      {
+        name: user.fName + " " + user.lName,
+        id: user.id,
+        value: props.info.total / (props.groupFriends.length + 1).toFixed(2),
+      },
+    ];
+    props.groupFriends.forEach((element, index) => {
+      const name = element.fName + " " + element.lName;
+      data.push({
+        name: name,
+        id: element.id,
+        value: props.info.total / (props.groupFriends.length + 1).toFixed(2),
+      });
+    });
+  };
+
+  if (!loaded) {
+    prepUserData();
+    props.setUserData(data);
+    setLoaded(true);
+  }
+
   return (
     <ScrollView style={styles.info}>
       <View style={styles.borderBar}></View>
