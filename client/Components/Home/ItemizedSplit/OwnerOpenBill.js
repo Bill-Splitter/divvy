@@ -48,8 +48,12 @@ const OwnerOpenBill = (props) => {
   
   //loads bill into state on load
   //... wait, cant we just use the bill findByPk??
-  console.log(props.data);
-  if (!mounted) dispatch(fetchBillThunk(props.data.id));
+  console.log('props.data: ', props.data);
+  console.log('route.params.data: ', route.params.data);
+  if (!mounted){
+    dispatch(fetchBillThunk(route.params.data)); 
+    dispatch(fetchParsedBillThunk(route.params.data))
+  }
 
   useEffect(() => {
     setMounted(true);
