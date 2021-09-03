@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
@@ -12,6 +13,9 @@ import {
 } from "react-native";
 
 const TransactionItem = (props) => {
+  const user = useSelector((state) => state.user);
+  const navigation = useNavigation();
+  
   const rightSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],
@@ -34,8 +38,6 @@ const TransactionItem = (props) => {
       </TouchableOpacity>
     );
   };
-
-  const navigation = useNavigation();
 
   let dateObj = new Date(props.data.item.date);
   var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -107,11 +109,26 @@ const TransactionItem = (props) => {
               <TouchableHighlight
                 style={styles.info}
                 underlayColor={"transparent"}
-                onPress={() =>
-                  navigation.navigate("IndividualTrans", {
-                    data: props.data.item,
-                  })
-                }
+                onPress={() => {
+                  //if complex, choose between top 2
+                  props.data.item.type === "complex" ? (
+                    //navigates to correct openBill component, conditional on user-bill ownership
+                    user.id === props.data.item.userId ? (
+                      navigation.navigate("OwnerOpenBill", {
+                        bill: props.data.item,
+                      })
+                    ) : (
+                      navigation.navigate("PayeeOpenBill", {
+                        bill: props.data.item,
+                      })
+                    )
+                  ) : (
+                    //else, go to IndividualTrans
+                    navigation.navigate("IndividualTrans", {
+                      data: props.data.item,
+                    })
+                  );
+                }}
               >
                 <View>
                   <Text numberOfLines={1} style={styles.text2}>

@@ -19,6 +19,7 @@ const SendItemizedBills = () => {
   const info = useSelector((state) => state.split);
   const friends = useSelector((state) => state.user);
   const userId = useSelector((state) => state.user.id);
+  const bill = useSelector((state) => state.bill.bill);
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
@@ -44,7 +45,7 @@ const SendItemizedBills = () => {
     );
   };
   
-  const submit = () => {
+  const submit = async () => {
     const billText = {
       title: info.name,
       total: info.total,
@@ -54,7 +55,6 @@ const SendItemizedBills = () => {
         //not sure if users will be represented by username or ID, but probably ID
       },
     };
-
     const newBill = {
       type: "complex",
       name: info.name,
@@ -65,12 +65,14 @@ const SendItemizedBills = () => {
       userId: userId,
       date: Date.now(),
     };
-    dispatch(createBillThunk(newBill, userId, groupFriends));
+    
+    const billInstance = await dispatch(createBillThunk(newBill, userId, groupFriends));
+    //await dispatch(createBillThunk(newBill, userId, groupFriends));
     
     //send group text message to all members of group
     
     //natigate to OwnerOpenBill
-    navigation.navigate("OwnerOpenBill", {billInfo: newBill, groupFriends: groupFriends});
+    navigation.navigate("OwnerOpenBill", {bill: billInstance});
   };
 
   return (
