@@ -107,8 +107,22 @@ router.post("/", async (req, res, next) => {
     const bill = await Bill.create(req.body.bill);
     req.body.friendArray.forEach((element) => {
       bill.addOwes(element.id);
+    }).then((res1)=> {
+      console.log(res1);
     });
-    res.json(bill);
+    console.log(bill);
+    
+    const billReturn = await Bill.findOne({
+      where: {
+        id: bill.id
+      },
+      include: ["owes"]
+    }).then((res2)=> {
+      console.log(res2);
+    });
+    console.log(billReturn);
+    
+    res.json(billReturn);
   } catch (error) {
     next(error);
   }

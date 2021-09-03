@@ -37,7 +37,6 @@ const OwnerOpenBill = (props) => {
   const user = useSelector((state) => state.user || {});
   const bill = useSelector((state) => state.bill.bill || {});
   const parsedBill = useSelector((state) => state.bill.parsedBill || {});
-  const userAmounts = parsedBill.userAmounts;
   
   const { allFriendsPaid, setAllFriendsPaid } = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -53,7 +52,8 @@ const OwnerOpenBill = (props) => {
   console.log('route.params: ', route.params.bill);
   console.log('bill: ', bill);
   console.log('parsedBill: ', parsedBill);
-  Object.keys(bill).length !== 0 ? (console.log('true')) : (console.log('false'))
+  Object.keys(bill).length !== 0 ? (console.log('true')) : (console.log('false'));
+  
   if (!mounted){
     //console.log('(mounted) route.params: ', route.params.bill);
     dispatch(fetchBillThunk(route.params.bill.id)); 
@@ -70,7 +70,7 @@ const OwnerOpenBill = (props) => {
       let allFriendsPaidTemp = true;
       
       bill.owes.forEach((payee) => {
-        if(!userAmounts.hasOwnProperty(payee.id)){
+        if(!bill.parsedBill.userAmounts.hasOwnProperty(payee.id)){
           allFriendsPaidTemp = false;
         }
       });
@@ -106,11 +106,12 @@ const OwnerOpenBill = (props) => {
           <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
             {Object.keys(bill).length !== 0 ? 
               (bill.owes.map((friend) => {
+                let userAmounts = bill.parsedBill.userAmounts;
                 return (
-                  <View style={styles.textRow}>
+                  <View style={styles.textRow} key={friend.id}>
                     <Text
                       style={styles.listText}
-                      key={friend.username}
+                      key={friend.id}
                       onPress={() =>
                         console.log("change friend's total to show each line item")
                       }
