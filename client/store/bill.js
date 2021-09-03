@@ -114,6 +114,7 @@ export const createBillThunk = (bill, userid, friends) => {
       });
       const b = newBill.data;
       dispatch(setBill(b));
+      return b;
     } catch (error) {
       console.error(error);
     }

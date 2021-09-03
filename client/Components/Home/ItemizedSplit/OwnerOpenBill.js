@@ -49,9 +49,9 @@ const OwnerOpenBill = (props) => {
   
   //loads bill into state on load
   //... wait, cant we just use the bill findByPk??
-  console.log('route.params: ', route.params.bill);
-  console.log('bill: ', bill);
-  console.log('parsedBill: ', parsedBill);
+  console.log('route.params.bill.owes: ', route.params.bill.owes);
+  //console.log('bill.owes: ', bill);
+  //console.log('parsedBill: ', parsedBill);
   Object.keys(bill).length !== 0 ? (console.log('true', bill.owes)) : (console.log('false'));
   
   if (!mounted){
@@ -104,7 +104,7 @@ const OwnerOpenBill = (props) => {
         />
         <View style={styles.textFields}>
           <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
-            {Object.keys(bill).length !== 0 ? 
+            {Object.keys(bill).length !== 0 && bill.owes ? 
               (bill.owes.map((friend) => {
                 let userAmounts = bill.parsedBill.userAmounts;
                 return (
