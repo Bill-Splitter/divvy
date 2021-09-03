@@ -1,17 +1,21 @@
 /*
 see figma for visual reference:
     1) get bill picture, done
-     
+
     2) poll bill at set interval to see if payees sent updates to the parsed bill
-    
+
     3) when all payees added to bill have submitted their payment, show Next button
-    
+
     4) next button sends you to ItemizedSummary view
 */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { fetchBillThunk, fetchParsedBillThunk, completeBillThunk } from "../../../store/bill";
+import {
+  fetchBillThunk,
+  fetchParsedBillThunk,
+  completeBillThunk,
+} from "../../../store/bill";
 
 import {
   StyleSheet,
@@ -33,77 +37,86 @@ const OwnerOpenBill = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  
+
   const user = useSelector((state) => state.user || {});
   const bill = useSelector((state) => state.bill.bill || {});
   const parsedBill = useSelector((state) => state.bill.parsedBill || {});
-  
+
   const { allFriendsPaid, setAllFriendsPaid } = useState(false);
   const [mounted, setMounted] = useState(false);
-  
-  //add logic to use route.params info when it exists, otherwise state data
-  // let billInfo, groupFriends, name, total, image;
-  // if(route.params.billInfo){
-  //   console.log();
-  // }
-  
+
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
   };
-  
+
   //loads bill into state on load
-  if (!mounted){
+  if (!mounted) {
     dispatch(fetchBillThunk(route.params.bill.id));
   }
 
   useEffect(() => {
     setMounted(true);
   }, []);
-  
-  console.log('parsedBill: ', parsedBill);
-  
+
+  console.log("parsedBill: ", parsedBill);
+
   const checkAllFriendsPaid = () => {
     //checks if all friends paid
-    if(bill){
+    if (bill) {
       let allFriendsPaidTemp = true;
-      
+
       bill.owes.forEach((payee) => {
-        if(!bill.parsedBill.userAmounts.hasOwnProperty(payee.id)){
+        if (!bill.parsedBill.userAmounts.hasOwnProperty(payee.id)) {
           allFriendsPaidTemp = false;
         }
       });
-      
-      if(allFriendsPaidTemp){
+
+      if (allFriendsPaidTemp) {
         setAllFriendsPaid(true);
-      }  
+      }
     }
-  }
-  
+  };
+
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
-    //props.submit(event, parsedBill);
     navigation.navigate("ProfilePage");
   };
-  
+
   //console.log('route: ', route);
   //console.log('navigation: ', navigation);
-  
+
   return (
     <View style={{ backgroundColor: "white", height: "95%" }}>
-      <Banner2 name='Awaiting Payment' home={true}/>
+      <Banner2
+        name={allFriendsPaid ? "Awaiting Payment" : "Recieved Payments"}
+        home={true}
+      />
       <View style={styles.view}>
-        <Image source={Object.keys(bill).length !== 0 ? ({uri: bill.image}) : ({uri:route.params.bill.image})} 
+        <Image
+          source={
+            Object.keys(bill).length !== 0
+              ? { uri: bill.image }
+              : { uri: route.params.bill.image }
+          }
           style={{
-            flex: 20, 
-            width: "100%", 
-            height: "100%", 
-            resizeMode : 'contain',
-            }} 
+            flex: 20,
+            width: "100%",
+            height: "100%",
+            resizeMode: "contain",
+          }}
         />
         <View style={styles.textFields}>
-          <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
-            {Object.keys(bill).length !== 0 && bill.owes ? 
-              (bill.owes.map((friend) => {
+          <ScrollView
+            style={{
+              display: "flex",
+              flex: 6,
+              width: "100%",
+              height: "100%",
+              minHeight: 38,
+            }}
+          >
+            {Object.keys(bill).length !== 0 && bill.owes ? (
+              bill.owes.map((friend) => {
                 let userAmounts = bill.parsedBill.userAmounts;
                 return (
                   <View style={styles.textRow} key={friend.id}>
@@ -111,33 +124,33 @@ const OwnerOpenBill = (props) => {
                       style={styles.listText}
                       key={friend.id}
                       onPress={() =>
-                        console.log("change friend's total to show each line item")
+                        console.log(
+                          "change friend's total to show each line item"
+                        )
                       }
                     >
-                      {userAmounts.hasOwnProperty(friend.id) ? 
-                        (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
-                        ) : ( 
-                        `${friend.fName} ${friend.lName}: none yet`)
-                      }
+                      {userAmounts.hasOwnProperty(friend.id)
+                        ? `${friend.fName} ${friend.lName}: $${userAmounts[
+                            friend.id
+                          ].reduce(adder)}`
+                        : `${friend.fName} ${friend.lName}: none yet`}
                     </Text>
                   </View>
                 );
-              })) : (
-                <View style={styles.textRow}>
-                  <Text style={styles.listText}>
-                    No Friend Data Recieved
-                  </Text>
-                </View>
-              )
-            }
+              })
+            ) : (
+              <View style={styles.textRow}>
+                <Text style={styles.listText}>No Friend Data Recieved</Text>
+              </View>
+            )}
           </ScrollView>
           <View style={styles.statusField}>
-            <Text 
-              style={styles.paymentStatus} 
-              AccessibilityRole={'summary'}
+            <Text
+              style={styles.paymentStatus}
+              AccessibilityRole={"summary"}
               numberOfLines={1}
               suppressHighlighting={true}
-              onPress={() => console.log('resendTextPromptToAll()')}
+              onPress={() => console.log("resendTextPromptToAll()")}
             >
               Awaiting Group Payments...
             </Text>
@@ -162,9 +175,9 @@ export default OwnerOpenBill;
 const styles = StyleSheet.create({
   view: {
     height: "100%",
-    display: 'flex',
+    display: "flex",
     backgroundColor: "#6e6e6e",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     alignContent: "center",
     textAlign: "left",
     alignItems: "center",
@@ -189,7 +202,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 8,
-    bottom: 8
+    bottom: 8,
   },
   listText: {
     fontSize: 26,
@@ -211,7 +224,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     color: "#ababab",
-    width: '100%',
+    width: "100%",
     top: 7,
   },
   loginButton: {

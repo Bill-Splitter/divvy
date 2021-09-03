@@ -15,7 +15,7 @@ import {
 const TransactionItem = (props) => {
   const user = useSelector((state) => state.user);
   const navigation = useNavigation();
-  
+
   const rightSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],
@@ -48,9 +48,26 @@ const TransactionItem = (props) => {
     .split("T")[0]
     .replace("-", "/");
 
+  const navigationRouter = () => {
+    //if complex, choose between top 2
+    if (props.data.item.type === "complex") {
+      //navigates to correct openBill component, conditional on user-bill ownership
+      user.id === props.data.item.userId
+        ? navigation.navigate("OwnerOpenBill", {
+            bill: props.data.item,
+          })
+        : navigation.navigate("PayeeOpenBill", {
+            bill: props.data.item,
+          });
+    } else {
+      //else, go to IndividualTrans
+      navigation.navigate("IndividualTrans", {
+        data: props.data.item,
+      });
+    }
+  };
   return (
     <Text>
-      
       {props.data.item.completed ? (
         <Swipeable renderRightActions={rightSwipe}>
           <TouchableHighlight underlayColor={"transparent"}>
@@ -95,40 +112,14 @@ const TransactionItem = (props) => {
         <View>
           <TouchableHighlight underlayColor={"transparent"}>
             <View style={styles.container}>
-              <Text
-                style={styles.dateText}
-                onPress={() =>
-                  navigation.navigate("IndividualTrans", {
-                    data: props.data.item,
-                  })
-                }
-              >
+              <Text style={styles.dateText} onPress={() => navigationRouter()}>
                 {month}/{day}
               </Text>
 
               <TouchableHighlight
                 style={styles.info}
                 underlayColor={"transparent"}
-                onPress={() => {
-                  //if complex, choose between top 2
-                  props.data.item.type === "complex" ? (
-                    //navigates to correct openBill component, conditional on user-bill ownership
-                    user.id === props.data.item.userId ? (
-                      navigation.navigate("OwnerOpenBill", {
-                        bill: props.data.item,
-                      })
-                    ) : (
-                      navigation.navigate("PayeeOpenBill", {
-                        bill: props.data.item,
-                      })
-                    )
-                  ) : (
-                    //else, go to IndividualTrans
-                    navigation.navigate("IndividualTrans", {
-                      data: props.data.item,
-                    })
-                  );
-                }}
+                onPress={() => navigationRouter()}
               >
                 <View>
                   <Text numberOfLines={1} style={styles.text2}>

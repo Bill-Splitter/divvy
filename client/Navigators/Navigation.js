@@ -24,6 +24,7 @@ import FriendsList from "../Components/Home/Friends/FriendsList.js";
 import Summary from "../Components/Home/SingleSplit/Summary.js";
 import AddFriend from "../Components/Home/Friends/AddFriend.js";
 import FriendRequests from "../Components/Home/Friends/FriendRequests.js";
+import TotalField from "../Components/Home/ItemizedSplit/ItemizedSplitCreation.js";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -70,14 +71,8 @@ const Home = () => {
         name="SendItemizedBills"
         component={SendItemizedBills}
       />
-      <HomeStack.Screen
-        name="OwnerOpenBill"
-        component={OwnerOpenBill}
-      />
-      <HomeStack.Screen
-        name="PayeeOpenBill"
-        component={PayeeOpenBill}
-      />
+      <HomeStack.Screen name="OwnerOpenBill" component={OwnerOpenBill} />
+      <HomeStack.Screen name="PayeeOpenBill" component={PayeeOpenBill} />
       <HomeStack.Screen name="Camera" component={Cameras} />
       <HomeStack.Screen name="GroupList" component={GroupList} />
       <HomeStack.Screen name="AllGroups" component={AllGroups} />
@@ -97,6 +92,8 @@ const Home = () => {
       <HomeStack.Screen name="Messages" component={Messages} />
       <HomeStack.Screen name="FriendRequests" component={FriendRequests} />
       <HomeStack.Screen name="IndividualTrans" component={IndividualTrans} />
+      <HomeStack.Screen name="TotalField" component={TotalField} />
+
       <HomeStack.Screen name="ChangeIcon" component={ChangeIcon} />
       <HomeStack.Screen name="ChangePassword" component={ChangePassword} />
       <HomeStack.Screen
