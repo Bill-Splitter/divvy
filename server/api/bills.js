@@ -38,9 +38,11 @@ router.get("/:billId/pk", async (req, res, next) => {
     const bill = await Bill.findOne({
       where: {
         id: billId
+      },
+      attributes: {
+        include: ["owes"]
       }
     });
-    
     res.json(bill);
   } catch (error) {
     next(error);
