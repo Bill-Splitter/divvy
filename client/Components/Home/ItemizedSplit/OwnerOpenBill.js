@@ -33,12 +33,14 @@ const OwnerOpenBill = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  const bill = useSelector((state) => state.bill.bill || []);
-  const parsedBill = useSelector((state) => state.bill.parsedBill || []);
-  const user = useSelector((state) => state.user);
+  
+  const user = useSelector((state) => state.user || {});
+  const bill = useSelector((state) => state.bill.bill || {});
+  const parsedBill = useSelector((state) => state.bill.parsedBill || {});
+  const userAmounts = parsedBill.userAmounts;
+  
   const { allFriendsPaid, setAllFriendsPaid } = useState(false);
   const [mounted, setMounted] = useState(false);
-  const userAmounts = parsedBill.userAmounts;
   
   //add logic to use route.params info when it exists, otherwise state data
   // let billInfo, groupFriends, name, total, image;
@@ -48,13 +50,12 @@ const OwnerOpenBill = (props) => {
   
   //loads bill into state on load
   //... wait, cant we just use the bill findByPk??
-  console.log('props.data: ', props.data);
-  console.log('route.params.data: ', route.params);
+  console.log('route.params: ', route.params.bill);
+  console.log('bill: ', bill);
   if (!mounted){
-    console.log('(mounted) props.data: ', props.data);
-    console.log('(mounted) route.params.data: ', route.params);
-    //dispatch(fetchBillThunk(route.params.data)); 
-    //dispatch(fetchParsedBillThunk(route.params.data));
+    //console.log('(mounted) route.params: ', route.params.bill);
+    dispatch(fetchBillThunk(route.params.bill.id)); 
+    dispatch(fetchParsedBillThunk(route.params.bill.id));
   }
 
   useEffect(() => {
@@ -87,12 +88,12 @@ const OwnerOpenBill = (props) => {
   //console.log('route: ', route);
   //console.log('navigation: ', navigation);
   
-  if(false){
+  if(bill){
     return (
       <View style={{ backgroundColor: "white", height: "95%" }}>
         <Banner2 name='Awaiting Payment' home={true}/>
         <View style={styles.view}>
-          <Image source={route.params.image ? (route.params.bill.image) : ({uri: bill.image})} style={{
+          <Image source={bill.image ? ({uri:route.params.bill.image}) : ({uri: bill.image})} style={{
             flex: 20, 
             width: "100%", 
             height: "100%", 
@@ -101,33 +102,33 @@ const OwnerOpenBill = (props) => {
           />
           <View style={styles.textFields}>
             <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
-            {Object.values(bill.owes).length ? 
-              (Object.values(bill.owes).map((friend) => {
-                return (
+              {bill && bill.owes.length ? 
+                (bill.owes.map((friend) => {
+                  return (
+                    <View style={styles.textRow}>
+                      <Text
+                        style={styles.listText}
+                        key={friend.username}
+                        onPress={() =>
+                          console.log("change friend's total to show each line item")
+                        }
+                      >
+                        {userAmounts.hasOwnProperty(friend.id) ? 
+                          (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
+                          ) : ( 
+                          `${friend.fName} ${friend.lName}: none yet`)
+                        }
+                      </Text>
+                    </View>
+                  );
+                })) : (
                   <View style={styles.textRow}>
-                    <Text
-                      style={styles.listText}
-                      key={friend.username}
-                      onPress={() =>
-                        console.log("change friend's total to show each line item")
-                      }
-                    >
-                      {userAmounts.hasOwnProperty(friend.id) ? 
-                        (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
-                        ) : ( 
-                        `${friend.fName} ${friend.lName}: none yet`)
-                      }
+                    <Text style={styles.listText}>
+                      No Friend Data Recieved
                     </Text>
                   </View>
-                );
-              })) : (
-                <View style={styles.textRow}>
-                  <Text style={styles.listText}>
-                    No Friend Data Recieved
-                  </Text>
-                </View>
-              )
-            }
+                )
+              }
             </ScrollView>
             <View style={styles.statusField}>
               <Text 
