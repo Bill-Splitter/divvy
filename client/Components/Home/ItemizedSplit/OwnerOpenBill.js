@@ -38,7 +38,7 @@ const OwnerOpenBill = (props) => {
   const user = useSelector((state) => state.user);
   const { allFriendsPaid, setAllFriendsPaid } = useState(false);
   const [mounted, setMounted] = useState(false);
-  const userAmounts = bill.parsedBill.userAmounts;
+  const userAmounts = parsedBill.userAmounts;
   
   //add logic to use route.params info when it exists, otherwise state data
   // let billInfo, groupFriends, name, total, image;
@@ -49,29 +49,33 @@ const OwnerOpenBill = (props) => {
   //loads bill into state on load
   //... wait, cant we just use the bill findByPk??
   console.log('props.data: ', props.data);
-  console.log('route.params.data: ', route.params.data);
+  console.log('route.params.data: ', route.params);
   if (!mounted){
-    dispatch(fetchBillThunk(route.params.data)); 
-    dispatch(fetchParsedBillThunk(route.params.data))
+    console.log('(mounted) props.data: ', props.data);
+    console.log('(mounted) route.params.data: ', route.params);
+    //dispatch(fetchBillThunk(route.params.data)); 
+    //dispatch(fetchParsedBillThunk(route.params.data));
   }
 
   useEffect(() => {
     setMounted(true);
   }, []);
   
-  //checks if all friends paid
-  if(bill){
-    let allFriendsPaidTemp = true;
-    
-    bill.owes.forEach((payee) => {
-      if(!userAmounts.hasOwnProperty(payee.id)){
-        allFriendsPaidTemp = false;
-      }
-    });
-    
-    if(allFriendsPaidTemp){
-      setAllFriendsPaid(true);
-    }  
+  const checkAllFriendsPaid = () => {
+    //checks if all friends paid
+    if(bill){
+      let allFriendsPaidTemp = true;
+      
+      bill.owes.forEach((payee) => {
+        if(!userAmounts.hasOwnProperty(payee.id)){
+          allFriendsPaidTemp = false;
+        }
+      });
+      
+      if(allFriendsPaidTemp){
+        setAllFriendsPaid(true);
+      }  
+    }
   }
   
   //only clickable if allFriendsPaid == true
@@ -83,71 +87,79 @@ const OwnerOpenBill = (props) => {
   //console.log('route: ', route);
   //console.log('navigation: ', navigation);
   
-  return (
-    <View style={{ backgroundColor: "white", height: "95%" }}>
-      <Banner2 name='Awaiting Payment' home={true}/>
-      <View style={styles.view}>
-        <Image source={{uri: bill.image}} style={{
-          flex: 20, 
-          width: "100%", 
-          height: "100%", 
-          resizeMode : 'contain',
-          }} 
-        />
-        <View style={styles.textFields}>
-          <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
-          {Object.values(bill.owes).length ? 
-            (Object.values(bill.owes).map((friend) => {
-              return (
+  if(false){
+    return (
+      <View style={{ backgroundColor: "white", height: "95%" }}>
+        <Banner2 name='Awaiting Payment' home={true}/>
+        <View style={styles.view}>
+          <Image source={route.params.image ? (route.params.bill.image) : ({uri: bill.image})} style={{
+            flex: 20, 
+            width: "100%", 
+            height: "100%", 
+            resizeMode : 'contain',
+            }} 
+          />
+          <View style={styles.textFields}>
+            <ScrollView style={{ display: "flex", flex: 6, width: "100%", height: "100%", minHeight: 38}}>
+            {Object.values(bill.owes).length ? 
+              (Object.values(bill.owes).map((friend) => {
+                return (
+                  <View style={styles.textRow}>
+                    <Text
+                      style={styles.listText}
+                      key={friend.username}
+                      onPress={() =>
+                        console.log("change friend's total to show each line item")
+                      }
+                    >
+                      {userAmounts.hasOwnProperty(friend.id) ? 
+                        (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
+                        ) : ( 
+                        `${friend.fName} ${friend.lName}: none yet`)
+                      }
+                    </Text>
+                  </View>
+                );
+              })) : (
                 <View style={styles.textRow}>
-                  <Text
-                    style={styles.listText}
-                    key={friend.username}
-                    onPress={() =>
-                      console.log("change friend's total to show each line item")
-                    }
-                  >
-                    {userAmounts.hasOwnProperty(friend.id) ? 
-                      (`${friend.fName} ${friend.lName}: $${userAmounts[friend.id].reduce(adder)}`
-                      ) : ( 
-                      `${friend.fName} ${friend.lName}: none yet`)
-                    }
+                  <Text style={styles.listText}>
+                    No Friend Data Recieved
                   </Text>
                 </View>
-              );
-            })) : (
-              <View style={styles.textRow}>
-                <Text style={styles.listText}>
-                  No Friend Data Recieved
-                </Text>
-              </View>
-            )
-          }
-          </ScrollView>
-          <View style={styles.statusField}>
-            <Text 
-              style={styles.paymentStatus} 
-              AccessibilityRole={'summary'}
-              numberOfLines={1}
-              suppressHighlighting={true}
-              onPress={() => console.log('resendTextPromptToAll()')}
-            >
-              Awaiting Group Payments...
-            </Text>
+              )
+            }
+            </ScrollView>
+            <View style={styles.statusField}>
+              <Text 
+                style={styles.paymentStatus} 
+                AccessibilityRole={'summary'}
+                numberOfLines={1}
+                suppressHighlighting={true}
+                onPress={() => console.log('resendTextPromptToAll()')}
+              >
+                Awaiting Group Payments...
+              </Text>
+            </View>
           </View>
+          {/*
+          uncomment when logic for hiding until all payments recieved is done
+          <TouchableHighlight
+            style={styles.loginButton}
+            onPress={() => clickSubmit()}
+          >
+            <Text style={styles.loginButtonText}>Select Group</Text>
+          </TouchableHighlight>
+          */}
         </View>
-        {/*
-        uncomment when logic for hiding until all payments recieved is done
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => clickSubmit()}
-        >
-          <Text style={styles.loginButtonText}>Select Group</Text>
-        </TouchableHighlight>
-        */}
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View style={{ backgroundColor: "white", height: "95%" }}>
+        <Banner2 name='Awaiting Payment' home={true}/>
+      </View> 
+    );
+  }
 };
 
 export default OwnerOpenBill;

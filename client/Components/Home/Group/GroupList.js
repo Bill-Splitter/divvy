@@ -24,7 +24,7 @@ const GroupList = (props) => {
     props.setGroup(groupname, users);
 
     if (route.params) {
-      navigation.navigate("SendItemizedBills", route.params);
+      navigation.navigate("SendItemizedBills", {image: route.params.image});
     } else {
       navigation.navigate("Summary");
     }

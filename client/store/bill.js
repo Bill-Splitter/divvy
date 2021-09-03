@@ -107,12 +107,12 @@ export const completeBillThunk = (billId) => {
 export const createBillThunk = (bill, userid, friends) => {
   return async (dispatch) => {
     try {
-      await instance.post("api/bills/", {
+      const newBill = await instance.post("api/bills/", {
         bill: bill,
         userid: userid,
         friendArray: friends,
       });
-      
+      dispatch(setBill(newBill));
     } catch (error) {
       console.error(error);
     }

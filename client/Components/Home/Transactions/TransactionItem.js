@@ -110,13 +110,21 @@ const TransactionItem = (props) => {
                 style={styles.info}
                 underlayColor={"transparent"}
                 onPress={() => {
-                  //navigates to correct openBill component conditional on user-bill ownership
-                  user.id === props.data.item.userId ? (
-                    navigation.navigate("OwnerOpenBill", {
-                      data: props.data.item,
-                    })
+                  //if complex, choose between top 2
+                  props.data.item.type === "complex" ? (
+                    //navigates to correct openBill component, conditional on user-bill ownership
+                    user.id === props.data.item.userId ? (
+                      navigation.navigate("OwnerOpenBill", {
+                        bill: props.data.item,
+                      })
+                    ) : (
+                      navigation.navigate("PayeeOpenBill", {
+                        bill: props.data.item,
+                      })
+                    )
                   ) : (
-                    navigation.navigate("PayeeOpenBill", {
+                    //else, go to IndividualTrans
+                    navigation.navigate("IndividualTrans", {
                       data: props.data.item,
                     })
                   );

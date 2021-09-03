@@ -108,7 +108,7 @@ router.post("/", async (req, res, next) => {
     req.body.friendArray.forEach((element) => {
       bill.addOwes(element.id);
     });
-    res.sendStatus(201);
+    res.json(bill);
   } catch (error) {
     next(error);
   }

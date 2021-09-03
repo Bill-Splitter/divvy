@@ -19,6 +19,7 @@ const SendItemizedBills = () => {
   const info = useSelector((state) => state.split);
   const friends = useSelector((state) => state.user);
   const userId = useSelector((state) => state.user.id);
+  const bill = useSelector((state) => state.bill.bill);
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
@@ -70,7 +71,7 @@ const SendItemizedBills = () => {
     //send group text message to all members of group
     
     //natigate to OwnerOpenBill
-    navigation.navigate("OwnerOpenBill", {billInfo: newBill, groupFriends: groupFriends});
+    navigation.navigate("OwnerOpenBill", {bill: bill});
   };
 
   return (
