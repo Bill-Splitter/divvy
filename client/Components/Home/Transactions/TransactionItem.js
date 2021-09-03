@@ -67,21 +67,24 @@ const TransactionItem = (props) => {
     }
   };
   return (
-    <Text>
+
+    <View>
       {props.data.item.completed ? (
         <Swipeable renderRightActions={rightSwipe}>
           <TouchableHighlight underlayColor={"transparent"}>
             <View style={styles.container}>
-              <Text
-                style={styles.dateText}
-                onPress={() =>
-                  navigation.navigate("IndividualTrans", {
-                    data: props.data.item,
-                  })
-                }
-              >
-                {month}/{day}
-              </Text>
+              <View style={{ minWidth: 120 }}>
+                <Text
+                  style={styles.dateText}
+                  onPress={() =>
+                    navigation.navigate("IndividualTrans", {
+                      data: props.data.item,
+                    })
+                  }
+                >
+                  {month}/{day}
+                </Text>
+              </View>
 
               <TouchableHighlight
                 style={styles.info}
@@ -101,7 +104,13 @@ const TransactionItem = (props) => {
                   </Text>
                   <Text numberOfLines={1} style={styles.text}>
                     Your Share: $
-                    {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
+                    <>
+                      {props.data.item.type === "simple" ? (
+                        <Text>{Number(props.data.item.final).toFixed(2)}</Text>
+                      ) : (
+                        <Text>{Number(props.data.item.total).toFixed(2)}</Text>
+                      )}
+                    </>
                   </Text>
                 </View>
               </TouchableHighlight>
@@ -138,7 +147,7 @@ const TransactionItem = (props) => {
           </TouchableHighlight>
         </View>
       )}
-    </Text>
+    </View>
   );
 };
 
@@ -148,7 +157,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     alignItems: "center",
-    width: "100%",
   },
   dateText: {
     fontSize: 38,
@@ -157,7 +165,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   info: {
-    marginLeft: 15,
+    marginLeft: 0,
     color: "#ED3B5B",
   },
   text: {

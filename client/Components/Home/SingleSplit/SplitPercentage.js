@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   StyleSheet,
@@ -12,6 +13,7 @@ import {
 const SplitPercentage = (props) => {
   const length = new Array(props.groupFriends.length + 1).fill(0);
   const billTotal = props.info.total;
+  const user = useSelector((state) => state.user);
 
   let [values, setValues] = React.useState(length);
   const [perc, setPerc] = React.useState(100);
@@ -19,10 +21,12 @@ const SplitPercentage = (props) => {
   let data = [];
 
   const prepUserData = () => {
-    data = [{ name: "you", value: values[0] }];
+    data = [
+      { name: user.fName + " " + user.lName, value: values[0], id: user.id },
+    ];
     props.groupFriends.forEach((element, index) => {
       const name = element.fName + " " + element.lName;
-      data.push({ name: name, value: values[index + 1] });
+      data.push({ name: name, value: values[index + 1], id: element.id });
     });
   };
 

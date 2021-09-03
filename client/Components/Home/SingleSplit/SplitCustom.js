@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  Alert,
+} from "react-native";
 import { updateUser } from "../../../store";
 
 const SplitCustom = (props) => {
@@ -9,16 +17,19 @@ const SplitCustom = (props) => {
 
   let [values, setValues] = React.useState(length);
   let [total, setTotal] = React.useState(props.info.total);
+  const user = useSelector((state) => state.user);
 
-  let data = []
+  let data = [];
 
   const prepUserData = () => {
-    data = [{name: "you", value: values[0]}]
-    props.groupFriends.forEach((element,index) => {
-      const name = element.fName + " " + element.lName
-      data.push({name: name, value: values[index+1] })
-    })
-  }
+    data = [
+      { name: user.fName + " " + user.lName, id: user.id, value: values[0] },
+    ];
+    props.groupFriends.forEach((element, index) => {
+      const name = element.fName + " " + element.lName;
+      data.push({ name: name, id: element.id, value: values[index + 1] });
+    });
+  };
 
   const update = (text, index) => {
     if (isNaN(text)) {
@@ -35,21 +46,18 @@ const SplitCustom = (props) => {
 
       if (billTotal - assigined >= 0) {
         setTotal(billTotal - assigined);
-      
-        if(billTotal === assigined) {
-            props.toggle(true)
-            prepUserData();
-            props.setUserData(data)
-        }
-        else(
-            props.toggle(false)
-        )
+
+        if (billTotal === assigined) {
+          props.toggle(true);
+          prepUserData();
+          props.setUserData(data);
+        } else props.toggle(false);
       } else {
         temp[index] = oldValue;
         setValues(temp);
 
         alert("That puts you over bill amount");
-      }    
+      }
     }
   };
   return (
@@ -57,8 +65,7 @@ const SplitCustom = (props) => {
       <View style={styles.borderBar}></View>
       <View style={styles.listRow}>
         <Text style={styles.listName}>Unassigned</Text>
-        <Text style={styles.listPercent}>
-        </Text>
+        <Text style={styles.listPercent}></Text>
 
         <Text style={styles.listText}>
           {"$ "}
@@ -85,8 +92,7 @@ const SplitCustom = (props) => {
             <Text numberOfLines={1} style={styles.listName}>
               {element.fName} {element.lName}
             </Text>
-            <Text style={styles.listPercent}>
-            </Text>
+            <Text style={styles.listPercent}></Text>
             <View></View>
             <TextInput
               style={styles.input}
