@@ -47,22 +47,20 @@ const OwnerOpenBill = (props) => {
   //   console.log();
   // }
   
-  //loads bill into state on load
-  //... wait, cant we just use the bill findByPk??
-  console.log('route.params.bill.owes: ', route.params.bill.owes);
-  //console.log('bill.owes: ', bill);
-  //console.log('parsedBill: ', parsedBill);
-  Object.keys(bill).length !== 0 ? (console.log('true', bill.owes)) : (console.log('false'));
+  const fetchStates = async () => {
+    await dispatch(fetchParsedBillThunk(route.params.bill.id));
+  };
   
+  //loads bill into state on load
   if (!mounted){
-    //console.log('(mounted) route.params: ', route.params.bill);
-    dispatch(fetchBillThunk(route.params.bill.id)); 
-    //dispatch(fetchParsedBillThunk(route.params.bill.id));
+    dispatch(fetchBillThunk(route.params.bill.id));
   }
 
   useEffect(() => {
     setMounted(true);
   }, []);
+  
+  console.log('parsedBill: ', parsedBill);
   
   const checkAllFriendsPaid = () => {
     //checks if all friends paid

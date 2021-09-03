@@ -66,13 +66,13 @@ const SendItemizedBills = () => {
       date: Date.now(),
     };
     
-    const newNewBill = await dispatch(createBillThunk(newBill, userId, groupFriends));
+    const billInstance = await dispatch(createBillThunk(newBill, userId, groupFriends));
     //await dispatch(createBillThunk(newBill, userId, groupFriends));
     
     //send group text message to all members of group
     
     //natigate to OwnerOpenBill
-    navigation.navigate("OwnerOpenBill", {bill: newNewBill});
+    navigation.navigate("OwnerOpenBill", {bill: billInstance});
   };
 
   return (
