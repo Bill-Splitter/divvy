@@ -39,9 +39,7 @@ router.get("/:billId/pk", async (req, res, next) => {
       where: {
         id: billId
       },
-      attributes: {
-        include: ["owes"]
-      }
+      include: ["owes"]
     });
     res.json(bill);
   } catch (error) {
