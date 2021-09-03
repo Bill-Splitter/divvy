@@ -40,9 +40,8 @@ const AllGroups = () => {
           <TouchableHighlight
             underlayColor={"#ED3B5B"}
             style={styles.leftArrow}
-            onPress={() => navigation.goBack()}
           >
-            <AntDesign name="left" size={35} color="#fff" />
+            <AntDesign name="left" size={35} color="#ED3B5B" />
           </TouchableHighlight>
 
           <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>

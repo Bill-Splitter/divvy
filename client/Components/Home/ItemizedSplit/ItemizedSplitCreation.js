@@ -15,6 +15,7 @@ import {
   TouchableHighlight,
   TextInput,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
@@ -40,7 +41,10 @@ const ItemizedSplitCreation = (props) => {
   };
 
   return (
-    <View style={{ backgroundColor: "white", height: "100%" }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ backgroundColor: "white", height: "100%" }}
+    >
       <Banner2 name="Create Divvy Event" />
       <View style={styles.view}>
         <Image
@@ -99,7 +103,7 @@ const ItemizedSplitCreation = (props) => {
           <Text style={styles.loginButtonText}>Select Group</Text>
         </TouchableHighlight>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 const mapStateToProps = (state) => ({
