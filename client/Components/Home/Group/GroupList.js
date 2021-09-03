@@ -72,7 +72,7 @@ const GroupList = (props) => {
                   style={styles.loginButton}
                   onPress={() => navigation.navigate("AllGroups")}
                 >
-                  <Text style={styles.loginButtonText}>Create A Group</Text>
+                  <Text style={styles.loginButtonText}>Create a Group</Text>
                 </TouchableHighlight>
               </View>
             )}
