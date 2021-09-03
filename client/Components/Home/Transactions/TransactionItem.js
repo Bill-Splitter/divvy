@@ -47,41 +47,90 @@ const TransactionItem = (props) => {
     .replace("-", "/");
 
   return (
-    <Swipeable renderRightActions={rightSwipe}>
-      <TouchableHighlight underlayColor={"transparent"}>
-        <View style={styles.container}>
-          <Text
-            style={styles.dateText}
-            onPress={() =>
-              navigation.navigate("IndividualTrans", { data: props.data.item })
-            }
-          >
-            {month}/{day}
-          </Text>
+    <Text>
+      
+      {props.data.item.completed ? (
+        <Swipeable renderRightActions={rightSwipe}>
+          <TouchableHighlight underlayColor={"transparent"}>
+            <View style={styles.container}>
+              <Text
+                style={styles.dateText}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                {month}/{day}
+              </Text>
 
-          <TouchableHighlight
-            style={styles.info}
-            underlayColor={"transparent"}
-            onPress={() =>
-              navigation.navigate("IndividualTrans", { data: props.data.item })
-            }
-          >
-            <View>
-              <Text numberOfLines={1} style={styles.text2}>
-                {props.data.item.name}
+              <TouchableHighlight
+                style={styles.info}
+                underlayColor={"transparent"}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                <View>
+                  <Text numberOfLines={1} style={styles.text2}>
+                    {props.data.item.name}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Total: ${Number(props.data.item.total).toFixed(2)}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Your Share: $
+                    {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </TouchableHighlight>
+        </Swipeable>
+      ) : (
+        <View>
+          <TouchableHighlight underlayColor={"transparent"}>
+            <View style={styles.container}>
+              <Text
+                style={styles.dateText}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                {month}/{day}
               </Text>
-              <Text numberOfLines={1} style={styles.text}>
-                Total: ${Number(props.data.item.total).toFixed(2)}
-              </Text>
-              <Text numberOfLines={1} style={styles.text}>
-                Your Share: $
-                {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
-              </Text>
+
+              <TouchableHighlight
+                style={styles.info}
+                underlayColor={"transparent"}
+                onPress={() =>
+                  navigation.navigate("IndividualTrans", {
+                    data: props.data.item,
+                  })
+                }
+              >
+                <View>
+                  <Text numberOfLines={1} style={styles.text2}>
+                    {props.data.item.name}
+                  </Text>
+                  <Text numberOfLines={1} style={styles.text}>
+                    Total: ${Number(props.data.item.total).toFixed(2)}
+                  </Text>
+                  {/* <Text numberOfLines={1} style={styles.text}>
+                    Your Share: $
+                    {Number(props.data.item.parsedBill.userAmounts).toFixed(2)}
+                  </Text> */}
+                </View>
+              </TouchableHighlight>
             </View>
           </TouchableHighlight>
         </View>
-      </TouchableHighlight>
-    </Swipeable>
+      )}
+    </Text>
   );
 };
 
@@ -91,6 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     alignItems: "center",
+    width: "100%",
   },
   dateText: {
     fontSize: 38,
