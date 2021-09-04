@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loginThunk } from "../../store";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   StyleSheet,
@@ -23,7 +24,9 @@ const Login = (props) => {
     if (!username || !password) {
       Alert.alert("all fields must be filled");
     } else {
-      const status = await props.login(username, password);
+      const status = await props.login(username, password);  
+
+
       if (status === "error") {
         Alert.alert("Error","Invalid Username or Password");
         setUsername("");

@@ -109,6 +109,16 @@ const Home = () => {
 
 const BottomTabNav = () => {
   let requests = useSelector((state) => state.user.requestee || []);
+  let bills = useSelector((state) => state.bill.bills || []);
+
+  if (bills) {
+    bills = bills.filter((element) => {
+      if (!element.completed) return element;
+    });
+  }
+
+  requests = requests.length;
+  requests += bills.length;
 
   return (
     <Tab.Navigator
@@ -139,7 +149,7 @@ const BottomTabNav = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarBadge: requests.length > 0 ? requests.length : null,
+          tabBarBadge: requests > 0 ? requests : null,
         }}
       />
       <Tab.Screen name="New Divvy" component={DivvyView} />
