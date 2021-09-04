@@ -13,21 +13,32 @@ import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { getUpdatedUserInfo } from "../../store";
-import { logout }from '../../store/user';
+import { logout } from "../../store/user";
+import { fetchBillsThunk } from "../../store/bill";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
   let user = useSelector((state) => state.user);
+  let bills = useSelector((state) => state.bill.bills || []);
   const [notis, setNotis] = React.useState(user.requestee);
   const dispatch = useDispatch();
+  const [mounted, setMounted] = useState(false);
+
+  if (!mounted) dispatch(fetchBillsThunk(user.id));
 
   const logOut = () => {
     dispatch(logout());
     navigation.navigate("Homescreen");
+  };
+
+  if (bills) {
+    bills = bills.filter((element) => {
+      if (!element.completed) return element;
+    });
   }
 
-
   React.useEffect(() => {
+    setMounted(true);
     if (user.requestee) setNotis(user.requestee.length);
     const unsubscribe = navigation.addListener("focus", () => {
       dispatch(getUpdatedUserInfo());
@@ -100,7 +111,16 @@ const ProfilePage = (props) => {
               <View style={styles.icon}>
                 <FontAwesome5 name="money-check" size={30} color="#ED3B5B" />
               </View>
-              <Text style={styles.listText}>Transactions</Text>
+              <Text style={styles.listText}>
+                Transactions
+                {bills.length > 0 ? (
+                  <Text style={styles.listText}> ( {bills.length} )</Text>
+                ) : (
+                  <></>
+                )}
+              </Text>
+              {/* <Text style={styles.listText}>Transactions</Text> */}
+              
             </View>
             <View style={styles.borderBar}></View>
           </View>
@@ -188,7 +208,6 @@ const ProfilePage = (props) => {
           style={styles.submitButton}
           onPress={() => logOut()}
         >
-          
           <Text style={styles.submitText}>Logout</Text>
         </TouchableHighlight>
       </View>

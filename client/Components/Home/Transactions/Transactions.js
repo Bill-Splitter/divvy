@@ -67,7 +67,14 @@ export default Transactions = () => {
             onPress={() => setSelected("open")}
             underlayColor={"#ED3B5B"}
           >
-            <Text style={styles.text}>Open</Text>
+            <Text style={styles.text}>
+              Open{" "}
+              {open.length > 0 ? (
+                <Text style={styles.text}>( {open.length} )</Text>
+              ) : (
+                <></>
+              )}
+            </Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -80,24 +87,30 @@ export default Transactions = () => {
             <Text style={styles.text}>Completed</Text>
           </TouchableHighlight>
           <TouchableHighlight style={styles.option}>
-            <Text style={styles.text}>Open</Text>
+            <Text style={styles.text}>
+              Open{" "}
+              {open.length > 0 ? (
+                <Text style={styles.text}>( {open.length} )</Text>
+              ) : (
+                <></>
+              )}
+            </Text>
           </TouchableHighlight>
         </View>
       )}
 
       {selected === "complete" ? (
-        <View style={{width: "100%"}}>
+        <View style={{ width: "100%" }}>
           {items.length > 0 ? (
             <FlatList
               keyExtractor={(item, index) => index.toString()}
               data={complete}
-              style={{width: "100%"}}
-         
+              style={{ width: "100%" }}
               renderItem={(item) => {
                 return (
                   <TransactionItem
                     data={item}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     handleDelete={() => deleteItem(item.item.id)}
                   />
                 );
@@ -109,7 +122,7 @@ export default Transactions = () => {
           ) : (
             <View style={{ alignItems: "center", padding: 10 }}>
               <FontAwesome5 name="shopping-bag" size={50} color="#ED3B5B" />
-              <Text style={styles.text}>No Transactions Yet</Text>
+              <Text style={styles.text2}>No Transactions Yet</Text>
             </View>
           )}
         </View>
@@ -134,7 +147,7 @@ export default Transactions = () => {
           ) : (
             <View style={{ alignItems: "center", padding: 10 }}>
               <FontAwesome5 name="shopping-bag" size={50} color="#ED3B5B" />
-              <Text style={styles.text}>No Transactions Yet</Text>
+              <Text style={styles.text2}>No Transactions Yet</Text>
             </View>
           )}
         </View>
@@ -173,6 +186,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+    padding: 15,
+  },
+  text2: {
+    color: "#e64c67",
     padding: 15,
   },
 });
