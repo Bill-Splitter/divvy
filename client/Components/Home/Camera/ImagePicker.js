@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native";
+import colorObj from "../../../colors";
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -52,15 +53,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 0.08,
-    color: "#ED3B5B",
-    backgroundColor: "#ED3B5B",
+    color: colorObj.main,
+    backgroundColor: colorObj.main,
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
     height: 50,
     margin: 12,
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     padding: 10,
     width: "95%",
     borderRadius: 999,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserThunk } from "../../../store";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -105,8 +106,8 @@ const ListItem = (props) => {
         <TouchableHighlight
           underlayColor={"transparent"}
           style={{
-            backgroundColor: "#3bedac",
-            color: "purple",
+            backgroundColor: colorObj.secondary,
+    
             justifyContent: "center",
           }}
           onPress={() => onPressed()}
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   regularElement: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 10,
     marginLeft: 20,
     textAlign: "left",
@@ -188,13 +189,13 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colorObj.bar,
     marginRight: 10,
     marginLeft: 10,
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",

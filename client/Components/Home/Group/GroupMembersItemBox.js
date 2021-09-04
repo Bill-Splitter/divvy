@@ -1,6 +1,7 @@
 import React from "react";
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -65,7 +66,7 @@ export default GroupItemBox;
 const styles = StyleSheet.create({
   listText: {
     fontSize: 32,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 25,
     paddingLeft: 10,
     paddingBottom: 10,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     marginRight: 10,
     marginLeft: 20,
   },

@@ -23,6 +23,10 @@ const items = [
       name: "DeleteAccount",
       title: "Delete Account",
     },
+    {
+      name: "Theme",
+      title: "Color Theme"
+    }
   ];
 
   export default items

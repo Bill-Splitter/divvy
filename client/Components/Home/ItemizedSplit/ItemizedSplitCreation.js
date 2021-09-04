@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -64,7 +65,7 @@ const ItemizedSplitCreation = (props) => {
             <TextInput
               placeholder="Event Name Here"
               style={styles.input}
-              value={event}
+         
               maxLength={28}
               onChangeText={(text) => setEvent(text)}
             ></TextInput>
@@ -80,7 +81,7 @@ const ItemizedSplitCreation = (props) => {
             <TextInput
               placeholder="Enter Total w/ Tax"
               style={styles.input2}
-              value={total}
+
               maxLength={6}
               onChangeText={(text) => setTotal(text)}
             ></TextInput>
@@ -95,7 +96,7 @@ const ItemizedSplitCreation = (props) => {
             <TextInput
               placeholder="Tip (optional)"
               style={styles.input3}
-              value={tip}
+       
               maxLength={6}
               onChangeText={(text) => setTip(text)}
             ></TextInput>
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 10,
   },
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 10,
   },

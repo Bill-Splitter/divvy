@@ -41,6 +41,9 @@ import ChangePhoneNumber from "../Components/Home/Settings/ChangePhoneNumber.js"
 import ChangeIcon from "../Components/Home/Settings/ChangeIcon.js";
 import ChangeEmail from "../Components/Home/Settings/ChangeEmail.js";
 import DeleteAccount from "../Components/Home/Settings/DeleteAccount.js";
+import Theme from "../Components/Home/Settings/Theme.js";
+
+import colorObj from "../colors.js";
 
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -103,6 +106,7 @@ const Home = () => {
       <HomeStack.Screen name="ChangeUsername" component={ChangeUsername} />
       <HomeStack.Screen name="ChangeEmail" component={ChangeEmail} />
       <HomeStack.Screen name="DeleteAccount" component={DeleteAccount} />
+      <HomeStack.Screen name="Theme" component={Theme} />
     </HomeStack.Navigator>
   );
 };
@@ -131,7 +135,7 @@ const BottomTabNav = () => {
               );
           }
         },
-        tabBarActiveTintColor: "#ED3B5B",
+        tabBarActiveTintColor: colorObj.main,
         tabBarInactiveTintColor: "gray",
       })}
     >

@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import colorObj from "../../colors";
 
 export default function Banner3(props) {
   const navigation = useNavigation();
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "13%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
   },
   leftArrow: {
     marginTop: 45,

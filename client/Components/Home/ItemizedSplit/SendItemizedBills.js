@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createBillThunk } from "../../../store/bill";
 import formatPhoneNumber from "../../Helpers/formatPhone";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,

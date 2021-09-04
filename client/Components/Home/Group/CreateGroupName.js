@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 12,
     borderWidth: 1,
-    borderColor: "#313359",
+    borderColor: colorObj.bar,
     padding: 10,
     width: "90%",
     borderRadius: 999,
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
 
   loginButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
   },

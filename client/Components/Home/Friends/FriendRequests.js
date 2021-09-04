@@ -7,6 +7,7 @@ import { Foundation } from "@expo/vector-icons";
 import { denyFriendRequest } from "../../../store";
 import { approveFriendRequest, getUpdatedUserInfo } from "../../../store";
 import { useDispatch, useSelector } from "react-redux";
+import colorObj from "../../../colors";
 
 
 import {
@@ -38,7 +39,7 @@ const FriendRequests = (props) => {
         <View style={styles.no}>
       
           <Text style={styles.listText}>No Pending Requests</Text>
-          <FontAwesome5 name="inbox" size={50} color="#ED3B5B" />
+          <FontAwesome5 name="inbox" size={50} color={colorObj.main} />
         </View>
       ) : (
         <ScrollView>
@@ -119,13 +120,13 @@ const styles = StyleSheet.create({
   },
   listText: {
     fontSize: 28,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 2,
     fontWeight: "bold",
   },
   listTextSmall: {
     fontSize: 16,
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginLeft: 5,
   },
   top: {
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     marginRight: 10,
   },
 

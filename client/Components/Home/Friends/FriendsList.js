@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -77,20 +78,20 @@ const styles = StyleSheet.create({
   },
   listText: {
     fontSize: 32,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 15,
     textAlign: "left",
   },
   groupText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     marginRight: 10,
   },
 });

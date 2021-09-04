@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import Banner2 from "./Banner2";
 import BottomNav from "./BottomNav";
+import colorObj from "../../colors";
 
 export default DivvyView = (props) => {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ export default DivvyView = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <Entypo name="scissors" size={35} color="#ED3B5B" />
+              <Entypo name="scissors" size={35} color={colorObj.main}/>
               <Text style={styles.listText}>Itemized Split</Text>
             </View>
           </View>
@@ -43,7 +44,7 @@ export default DivvyView = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="attach-money" size={35} color="#ED3B5B" />
+              <MaterialIcons name="attach-money" size={35} color={colorObj.main}/>
               <Text style={styles.listText}>Simple Split</Text>
             </View>
           </View>
@@ -57,7 +58,7 @@ export default DivvyView = (props) => {
         >
           <View>
             <View style={styles.listElement}>
-              <MaterialIcons name="person" size={35} color="#ED3B5B" />
+              <MaterialIcons name="person" size={35} color={colorObj.main}/>
               <Text style={styles.listText}>Solo Split</Text>
             </View>
           </View>
@@ -70,7 +71,7 @@ export default DivvyView = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colorObj.background,
     justifyContent: "space-between",
     height: "100%",
   },
@@ -84,15 +85,15 @@ const styles = StyleSheet.create({
   },
   listText: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 20,
     textAlign: "center",
   },
   borderBar: {
     width: "90%",
     borderBottomWidth: 1,
-    backgroundColor: "#D7CBCB",
-    borderColor: "#D7CBCB",
+    backgroundColor: colorObj.bar,
+    borderColor: colorObj.bar,
 
     height: 1,
   },
@@ -104,27 +105,17 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontSize: 25,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 10,
     paddingLeft: 100,
     fontWeight: "bold",
   },
   littleText: {
     fontSize: 25,
-    color: "#ED3B5B",
+    color: colorObj.main,
     paddingLeft: 100,
     padding: 2,
   },
-  submitButton: {
-    width: "50%",
-    backgroundColor: "#ED3B5B",
-    borderRadius: 45,
-    marginTop: 20,
-  },
-  submitText: {
-    fontSize: 25,
-    color: "white",
-    padding: 16,
-    textAlign: "center",
-  },
+
+
 });

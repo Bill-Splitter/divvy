@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Banner2 from "../Banner2";
 import { updateUserThunk } from "../../../store";
+import colorObj from "../../../colors";
 import {
   StyleSheet,
   Text,
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontSize: 26,
     fontWeight: "bold",
     padding: 10,
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     padding: 15,
     paddingLeft: 35,
     paddingRight: 35,

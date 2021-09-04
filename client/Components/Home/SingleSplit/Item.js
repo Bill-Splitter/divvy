@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -38,7 +39,7 @@ const Item = (props) => {
 
 const styles = StyleSheet.create({
   optionButton: {
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     height: 30,
     alignContent: "center",
     alignItems: "center",
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
   },
   optionButton2: {
-    backgroundColor: "#3bedac",
+    backgroundColor: colorObj.secondary,
     height: 30,
     alignContent: "center",
     alignItems: "center",

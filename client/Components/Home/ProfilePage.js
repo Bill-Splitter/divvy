@@ -14,6 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { getUpdatedUserInfo } from "../../store";
 import { logout }from '../../store/user';
+import colorObj from "../../colors";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
@@ -27,6 +28,8 @@ const ProfilePage = (props) => {
   }
 
 
+
+
   React.useEffect(() => {
     if (user.requestee) setNotis(user.requestee.length);
     const unsubscribe = navigation.addListener("focus", () => {
@@ -37,7 +40,7 @@ const ProfilePage = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
+      <View style={{ backgroundColor: colorObj.main, height: "13%" }}>
         <View
           style={{
             textAlign: "center",
@@ -82,7 +85,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <Entypo name="scissors" size={39} color="#ED3B5B" />
+                <Entypo name="scissors" size={39} color={colorObj.main}/>
               </View>
               <Text style={styles.listText}>New Divvy</Text>
             </View>
@@ -98,7 +101,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome5 name="money-check" size={30} color="#ED3B5B" />
+                <FontAwesome5 name="money-check" size={30} color={colorObj.main}/>
               </View>
               <Text style={styles.listText}>Transactions</Text>
             </View>
@@ -114,7 +117,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome5 name="user-friends" size={30} color="#ED3B5B" />
+                <FontAwesome5 name="user-friends" size={30} color={colorObj.main}/>
               </View>
               <Text style={styles.listText}>Friends</Text>
             </View>
@@ -122,21 +125,6 @@ const ProfilePage = (props) => {
           </View>
         </TouchableHighlight>
 
-        {/* <TouchableHighlight
-          style={styles.listElementContainer}
-          onPress={() => navigation.navigate("Messages")}
-          underlayColor={"white"}
-        >
-          <View>
-            <View style={styles.listElement}>
-              <View style={styles.icon}>
-                <Feather name="message-square" size={30} color="#ED3B5B" />
-              </View>
-              <Text style={styles.listText}>Messages</Text>
-            </View>
-            <View style={styles.borderBar}></View>
-          </View>
-        </TouchableHighlight> */}
         <TouchableHighlight
           style={styles.listElementContainer}
           onPress={() => navigation.navigate("FriendRequests")}
@@ -145,7 +133,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome name="user-plus" size={30} color="#ED3B5B" />
+                <FontAwesome name="user-plus" size={30} color={colorObj.main}/>
               </View>
               <Text style={styles.listText}>
                 Friend Requests
@@ -168,7 +156,7 @@ const ProfilePage = (props) => {
           <View>
             <View style={styles.listElement}>
               <View style={styles.icon}>
-                <FontAwesome name="gear" size={35} color="#ED3B5B" />
+                <FontAwesome name="gear" size={35} color={colorObj.main}/>
               </View>
               <Text style={styles.listText}>Settings</Text>
             </View>
@@ -201,7 +189,7 @@ export default ProfilePage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colorObj.background,
     justifyContent: "space-between",
     height: "100%",
   },
@@ -215,15 +203,15 @@ const styles = StyleSheet.create({
   },
   listText: {
     fontSize: 28,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 15,
     textAlign: "center",
   },
   borderBar: {
     width: "100%",
     borderBottomWidth: 1,
-    backgroundColor: "#D7CBCB",
-    borderColor: "#D7CBCB",
+    backgroundColor: colorObj.bar,
+    borderColor: colorObj.bar,
     marginTop: 10,
     height: 1,
   },
@@ -250,7 +238,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
   },

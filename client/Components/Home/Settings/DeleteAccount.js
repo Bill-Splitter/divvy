@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { deleteSelfThunk } from "../../../store";
 import Banner2 from "../Banner2";
+import colorObj from "../../../colors";
 import {
   StyleSheet,
   Text,
