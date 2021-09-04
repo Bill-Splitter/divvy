@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import GroupItemBox from "./GroupItemBox";
 import { updateUserThunk } from "../../../store";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -38,10 +39,10 @@ const AllGroups = () => {
       <View style={styles.container}>
         <View style={styles.holder}>
           <TouchableHighlight
-            underlayColor={"#ED3B5B"}
+            underlayColor={colorObj.main}
             style={styles.leftArrow}
           >
-            <AntDesign name="left" size={35} color="#ED3B5B" />
+            <AntDesign name="left" size={35} color={colorObj.main} />
           </TouchableHighlight>
 
           <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>
@@ -117,27 +118,27 @@ const styles = StyleSheet.create({
   },
   noGroups: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginBottom: 10,
     fontWeight: "700",
   },
 
   listText: {
     fontSize: 32,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 15,
     textAlign: "left",
   },
   groupText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
   },
   seperatorLine: {
     height: 1,
-    backgroundColor: "pink",
+    backgroundColor: colorObj.bar,
   },
   borderBar: {
     width: "100%",
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "13%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
   },
   plusText: {
     color: "white",

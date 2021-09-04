@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import items from "./menuItems";
 import formatPhoneNumber from "../../Helpers/formatPhone";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -79,10 +80,10 @@ const styles = StyleSheet.create({
   },
   seperatorLine: {
     height: 2,
-    backgroundColor: "pink",
+    backgroundColor: colorObj.bar,
   },
   text: {
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontSize: 26,
     padding: 18,
   },
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     marginRight: 20,
     marginLeft: 10,
   },
@@ -103,11 +104,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontWeight: "bold",
   },
   smallText: {
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginLeft: 5,
   },
 });

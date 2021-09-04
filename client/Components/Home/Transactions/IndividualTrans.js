@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Banner2 from "../Banner2";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   },
   event: {
     fontSize: 35,
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontWeight: "bold",
     padding: 5,
   },
@@ -123,14 +124,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   dateHolder: {
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 99,
   },
   dateHolder2: {
-    backgroundColor: "#3bedac",
+    backgroundColor: colorObj.secondary,
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   },
   dollars: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontWeight: "bold",
   },
   dollars2: {

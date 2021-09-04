@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserThunk } from "../../../store";
 import GroupMembersItemBox from "./GroupMembersItemBox";
+import colorObj from "../../../colors";
 import {
   StyleSheet,
   Text,
@@ -81,32 +82,32 @@ const styles = StyleSheet.create({
   },
   listText: {
     fontSize: 32,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 15,
     textAlign: "left",
   },
   groupText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
   },
   noFriends: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginBottom: 10,
     fontWeight: "700",
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",
   },
   deleteBox: {
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     alignItems: "center",
     justifyContent: "center",
     width: 100,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
 
   seperatorLine: {
     height: 1,
-    backgroundColor: "pink",
+    backgroundColor: colorObj.bar,
   },
   image: {
     width: 50,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     overflow: "hidden",
     borderWidth: 2,
-    borderColor: "#ED3B5B",
+    borderColor: colorObj.main,
     marginRight: 10,
     marginLeft: 10,
   },
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "13%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
   },
   leftArrow: {
     zIndex: 99,
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     padding: 15,
     paddingLeft: 35,
     paddingRight: 35,

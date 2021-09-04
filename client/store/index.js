@@ -6,7 +6,8 @@ import user from "./user";
 import bill from "./bill";
 import split from "./split";
 
-const reducer = combineReducers({ user, split, bill });
+
+const reducer = combineReducers({ user, split, bill});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware)
 );

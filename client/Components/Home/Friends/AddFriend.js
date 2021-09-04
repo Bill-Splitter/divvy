@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
+import colorObj from "../../../colors";
 import { Text, View, TouchableHighlight, TextInput, Alert } from "react-native";
 
 import Banner2 from "../Banner2";
@@ -76,7 +76,7 @@ const styles = {
   },
   submitButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
   },

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { setGroup } from "../../../store/split";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -104,13 +105,13 @@ const styles = StyleSheet.create({
   },
   noGroups: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginBottom: 10,
     fontWeight: "700",
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",
@@ -118,20 +119,20 @@ const styles = StyleSheet.create({
 
   listText: {
     fontSize: 32,
-    color: "#ED3B5B",
+    color: colorObj.main,
     padding: 15,
     textAlign: "left",
   },
   groupText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
   },
   loginButton: {
     width: "70%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
     alignContent: "center",
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 40,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,

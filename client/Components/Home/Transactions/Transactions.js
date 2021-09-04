@@ -13,6 +13,7 @@ import Banner2 from "../Banner2";
 import { fetchBillsThunk } from "../../../store/bill";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { deleteTransactionThunk } from "../../../store/bill";
+import colorObj from "../../../colors";
 
 export default Transactions = () => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ export default Transactions = () => {
           <TouchableOpacity
             style={styles.option2}
             onPress={() => setSelected("open")}
-            underlayColor={"#ED3B5B"}
+            underlayColor={colorObj.main}
           >
             <Text style={styles.text}>Open</Text>
           </TouchableOpacity>
@@ -75,7 +76,7 @@ export default Transactions = () => {
           <TouchableHighlight
             style={styles.option2}
             onPress={() => setSelected("complete")}
-            underlayColor={"#ED3B5B"}
+            underlayColor={colorObj.main}
           >
             <Text style={styles.text}>Completed</Text>
           </TouchableHighlight>
@@ -108,7 +109,7 @@ export default Transactions = () => {
             />
           ) : (
             <View style={{ alignItems: "center", padding: 10 }}>
-              <FontAwesome5 name="shopping-bag" size={50} color="#ED3B5B" />
+              <FontAwesome5 name="shopping-bag" size={50} color={colorObj.main} />
               <Text style={styles.text}>No Transactions Yet</Text>
             </View>
           )}
@@ -133,7 +134,7 @@ export default Transactions = () => {
             />
           ) : (
             <View style={{ alignItems: "center", padding: 10 }}>
-              <FontAwesome5 name="shopping-bag" size={50} color="#ED3B5B" />
+              <FontAwesome5 name="shopping-bag" size={50} color={colorObj.main} />
               <Text style={styles.text}>No Transactions Yet</Text>
             </View>
           )}
@@ -153,18 +154,18 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     textAlign: "center",
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontSize: 20,
   },
   option: {
     width: "50%",
     alignItems: "center",
-    backgroundColor: "#e64c67",
+    backgroundColor: colorObj.main,
   },
   option2: {
     width: "50%",
     alignItems: "center",
-    backgroundColor: "#e8647c",
+    backgroundColor: colorObj.secondary,
   },
   selection: {
     display: "flex",

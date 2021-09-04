@@ -11,6 +11,7 @@ see figma for visual reference:
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import colorObj from "../../../colors";
 import {
   fetchBillThunk,
   fetchParsedBillThunk,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   loginButton: {
     width: "50%",
     // backgroundColor: "#3bedac",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     // backgroundColor: "#32d197",
     borderRadius: 45,
     marginTop: 10,

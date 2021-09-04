@@ -1,6 +1,7 @@
 import axios from "axios";
 import source from "../../source";
 const instance = axios.create({ baseURL: source });
+import { setAllColors } from "../colors";
 
 //action types
 const LOGIN = "LOGIN";
@@ -14,6 +15,8 @@ const DELETE_FRIEND = "DELETE_FRIEND";
 
 //action creators
 export const login = (user) => {
+  console.log(user.color)
+  setAllColors(user.color)
   return {
     type: LOGIN,
     user,

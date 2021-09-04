@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
   },
 
   submit: {
-    backgroundColor: "#3bedac",
+    backgroundColor: colorObj.secondary,
     borderRadius: 999,
     padding: 15,
     paddingLeft: 30,
@@ -300,7 +301,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 15,
     fontWeight: "bold",
-    backgroundColor: "#3bedac",
+    backgroundColor: colorObj.secondary,
     padding: 10,
   },
   listPercent: {

@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import colorObj from "../../../colors";
 
 
 import {
@@ -47,7 +48,7 @@ const SoloSplitCreation = (props) => {
 
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
-      <Banner2 />
+      <Banner2 name={"solo"}/>
       <View style={styles.view}>
         <Text style={styles.loginText}>Create Divvy Event</Text>
 
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 30,
-    color: "#ED3B5B",
+    color: colorObj.main,
     textAlign: "left",
     marginBottom: 20,
     width: "80%",
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   
   loginButton: {
     width: "50%",
-    backgroundColor: "#ED3B5B",
+    backgroundColor: colorObj.main,
     borderRadius: 45,
     marginTop: 20,
   },

@@ -48,6 +48,12 @@ const User = db.define("user", {
       return this.setDataValue("groups", JSON.stringify(val));
     },
   },
+  color: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    //"#2b2a2a" dark bg
+ 
+    defaultValue: ["#ED3B5B","#3bedac","white","pink"]
+  }
 });
 
 module.exports = User;

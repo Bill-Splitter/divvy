@@ -9,6 +9,7 @@ import SplitEvenly from "./SplitEvenly";
 import SplitCustom from "./SplitCustom";
 import SplitPercentage from "./SplitPercentage";
 import SplitInequel from "./SplitInequel";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -216,7 +217,6 @@ const styles = StyleSheet.create({
 
   headerText: {
     fontSize: 40,
-    // color: "#ED3B5B",
     textAlign: "left",
     fontWeight: "bold",
     paddingLeft: 20,
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   },
   sendInvoice: {
     width: "50%",
-    backgroundColor: "#3bedac",
+    backgroundColor: colorObj.secondary,
     borderRadius: 45,
     marginTop: 20,
     marginBottom: 5,
@@ -267,8 +267,8 @@ const styles = StyleSheet.create({
   borderBar: {
     width: "100%",
     borderBottomWidth: 1,
-    backgroundColor: "#D7CBCB",
-    borderColor: "#D7CBCB",
+    backgroundColor: colorObj.bar,
+    borderColor: colorObj.bar,
     marginTop: 10,
     height: 1,
   },

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import colorObj from "../../../colors";
 
 import {
   StyleSheet,
@@ -161,18 +162,18 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 38,
     marginLeft: 10,
-    color: "#ED3B5B",
+    color: colorObj.main,
     marginRight: 10,
   },
   info: {
     marginLeft: 0,
-    color: "#ED3B5B",
+    color: colorObj.main,
   },
   text: {
-    color: "#ED3B5B",
+    color: colorObj.main,
   },
   text2: {
-    color: "#ED3B5B",
+    color: colorObj.main,
     fontSize: 18,
     fontWeight: "bold",
   },

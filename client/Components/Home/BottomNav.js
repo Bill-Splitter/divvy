@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: -30,
     width: "100%",
     height: "10%",
-    backgroundColor: "#fff",
+    backgroundColor: "pink",
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
