@@ -13,8 +13,9 @@ import {
 } from "react-native";
 
 import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native";
-import ImagePicker from "./ImagePicker";
+//import ImagePicker from "./ImagePicker";
 import Banner2 from "../Banner2";
 
 let camera: Camera;
@@ -67,6 +68,29 @@ const Cameras = (props) => {
       setFlashMode("auto");
     }
   };
+  
+  const openImagePickerAsync = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.1,
+      base64: true,
+    });
+    
+    console.log(pickerResult)
+    
+    if (!pickerResult.cancelled) {
+      setPreviewVisible(true);
+      setCapturedImage(pickerResult);
+    }
+  };
 
   __startCamera();
 
@@ -86,7 +110,7 @@ const Cameras = (props) => {
           style={{
             flex: 1,
             width: "100%",
-            height: "200%",
+            height: "100%",
             padding: 0,
             marginTop: -100,
             justifyContent: "space-between",
@@ -98,6 +122,7 @@ const Cameras = (props) => {
               photo={capturedImage}
               savePhoto={__savePhoto}
               retakePicture={__retakePicture}
+              style={{ flex: 1 }}
             />
           ) : (
             <Camera
@@ -177,7 +202,11 @@ const Cameras = (props) => {
               </View>
             </Camera>
           )}
-          <ImagePicker />
+          <SafeAreaView style={styles.container}>
+            <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
+              <Text style={styles.buttonText}>Upload Photo</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
         </View>
       ) : (
         <View>
@@ -270,3 +299,35 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 0.08,
+    color: "#ED3B5B",
+    backgroundColor: "#ED3B5B",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    height: 50,
+    margin: 12,
+    borderWidth: 2,
+    borderColor: "#ED3B5B",
+    padding: 10,
+    width: "95%",
+    borderRadius: 999,
+    paddingLeft: 20,
+  },
+  buttonText: {
+    fontSize: 25,
+    color: "white",
+    textAlign: "center",
+  },
+  thumbnail: {
+    width: 300,
+    height: 300,
+    resizeMode: "contain",
+  },
+  button: {
+    width: "60%",
+  },
+});

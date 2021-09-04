@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ED3B5B",
   },
   leftArrow: {
-    marginTop: 45,
+    marginTop: 39,
     marginLeft: -5,
     padding: 10,
     width: "25%",

@@ -86,7 +86,7 @@ const OwnerOpenBill = (props) => {
   //console.log('navigation: ', navigation);
 
   return (
-    <View style={{ backgroundColor: "white", height: "95%" }}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2
         name={allFriendsPaid ? "Awaiting Payment" : "Recieved Payments"}
         home={true}
@@ -112,28 +112,40 @@ const OwnerOpenBill = (props) => {
               flex: 6,
               width: "100%",
               height: "100%",
-              minHeight: 38,
+              minHeight: 37,
             }}
           >
             {Object.keys(bill).length !== 0 && bill.owes ? (
-              bill.owes.map((friend) => {
+              bill.owes.map((friend, index) => {
                 let userAmounts = bill.parsedBill.userAmounts;
                 return (
                   <View style={styles.textRow} key={friend.id}>
                     <Text
-                      style={styles.listText}
+                      style={styles.listTextName}
                       key={friend.id}
+                      numberOfLines={1}
                       onPress={() =>
                         console.log(
                           "change friend's total to show each line item"
                         )
                       }
                     >
-                      {userAmounts.hasOwnProperty(friend.id)
-                        ? `${friend.fName} ${friend.lName}: $${userAmounts[
-                            friend.id
-                          ].reduce(adder)}`
-                        : `${friend.fName} ${friend.lName}: none yet`}
+                      {friend.fName} {friend.lName}:
+                    </Text>
+                    <Text
+                      style={styles.listTextTotal}
+                      key={friend.fName + friend.lName}
+                      onPress={() =>
+                        console.log(
+                          "change friend's total to show each line item"
+                        )
+                      }
+                    >
+                      {userAmounts.hasOwnProperty(friend.id) ? (
+                        `$${userAmounts[friend.id].reduce(adder)}`
+                      ) : ( 
+                        "waiting..."
+                      )}
                     </Text>
                   </View>
                 );
@@ -175,17 +187,18 @@ export default OwnerOpenBill;
 const styles = StyleSheet.create({
   view: {
     height: "100%",
+    width: "100%",
     display: "flex",
-    backgroundColor: "#6e6e6e",
-    justifyContent: "flex-start",
+    flex: 1,
+    backgroundColor: "black",
+    flexDirection: "column",
+    justifyContent: "space-around",
     alignContent: "center",
     textAlign: "left",
     alignItems: "center",
-    top: 0,
-    bottom: 55,
   },
   textFields: {
-    backgroundColor: "white",
+    backgroundColor: "#e3e3e3",
     width: "100%",
     height: "100%",
     display: "flex",
@@ -193,39 +206,66 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     flex: 9,
-    paddingTop: 5,
   },
   textRow: {
+    borderStyle: "solid",
+    borderBottomWidth: 1.5,
+    borderBottomColor: "#828282",
+    borderTopWidth: 0.25,
+    borderTopColor: "#828282",
+    backgroundColor: "white",
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     width: "100%",
     height: "100%",
-    flex: 8,
-    bottom: 8,
+    flex: 1,
+    margin: -1
   },
-  listText: {
+  listTextName: {
+    display: "flex",
+    flex: 1,
     fontSize: 26,
     color: "black",
-    padding: 5,
     textAlign: "left",
+    left: 3
+  },
+  listTextTotal: {
+    borderStyle: "solid",
+    borderWidth: 3,
+    borderColor: "black",
+    display: "flex",
+    flex: 0,
+    height: "100%",
+    minWidth: "40%",
+    fontSize: 26,
+    fontStyle: "italic",
+    color: "white",
+    backgroundColor: "#ED3B5B",
+    padding: 4,
+    left: 1,
+    top: 0.25,
+    textAlign: "center",
   },
   statusField: {
-    backgroundColor: "black",
+    borderStyle: "solid",
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1,
+    borderColor: "#828282",
+    backgroundColor: "white",
     width: "100%",
-    height: "100%",
+    minHeight: 25,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start",
-    flex: 1,
+    alignContent: "center",
+    flex: 0,
   },
   paymentStatus: {
     textAlign: "center",
     fontSize: 16,
-    color: "#ababab",
+    color: "#ED3B5B",
     width: "100%",
-    top: 7,
   },
   loginButton: {
     width: "50%",
