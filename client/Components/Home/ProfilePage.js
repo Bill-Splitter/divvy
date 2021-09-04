@@ -37,7 +37,7 @@ const ProfilePage = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ backgroundColor: "#ED3B5B", height: "13%" }}>
+      <View style={{ backgroundColor: "#ED3B5B", height: "14%" }}>
         <View
           style={{
             textAlign: "center",

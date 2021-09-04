@@ -2,8 +2,10 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function App() {
+  const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -21,14 +23,15 @@ export default function App() {
       return;
     }
 
-    setSelectedImage({ localUri: pickerResult.uri });
+    setSelectedImage(pickerResult.uri);
   };
 
   if (selectedImage !== null) {
+    //navigation.navigate("ItemizedSplitCreation", {image: selectedImage});
     return (
       <View style={styles.container}>
         <Image
-          source={{ uri: selectedImage.localUri }}
+          source={{ uri: selectedImage }}
           style={styles.thumbnail}
         />
       </View>
