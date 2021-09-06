@@ -50,10 +50,10 @@ const SendItemizedBills = () => {
       title: info.name,
       total: info.total,
       group: info.group,
-      userAmounts: {
+      userAmounts: [
         //will contain splits for all payees & bill owner as attributes
         //not sure if users will be represented by username or ID, but probably ID
-      },
+      ],
     };
     const newBill = {
       type: "complex",
