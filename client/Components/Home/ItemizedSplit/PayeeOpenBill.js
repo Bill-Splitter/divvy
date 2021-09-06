@@ -20,7 +20,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   fetchBillThunk,
   fetchParsedBillThunk,
-  completeBillThunk,
+  updateParsedBillThunk,
 } from "../../../store/bill";
 
 import {
@@ -80,13 +80,33 @@ const PayeeOpenBill = (props) => {
   const clickSubmit = () => {
     if(!paid){
       Alert.alert("Error", "You must add all of your individual reciept items using input before submitting");
+      
+    } else {
+      //append this users parsedBill to parsedBill from state
+      const newUserAmounts = [...bill.parsedBill.userAmounts, {
+        id: user.id,
+        username: user.username,
+        fName: user.fName,
+        lName: user.lName,
+        name: user.fName + " " + user.lName,
+        userAmountsArr: userAmounts,
+        total: userAmounts.reduce(adder),
+        totalString: userAmounts.reduce(adder).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
+      }];
+      
+      const newParsedBill = {...bill.parsedBill, userAmounts: newUserAmounts};
+      
+      //confirm submission here?
+      
+      //send parsed bill to store to update bill in DB
+      dispatch(updateParsedBillThunk(route.params.bill.id, newParsedBill));
+      
+      //maybe go to a "Split Sucessfully Submitted" page?
+      navigation.navigate("ProfilePage");
     }
-    //append this users parsedBill to parsedBill from state
-    
-    //send parsed bill to store to update bill in DB
-    
-    //maybe go to a "Split Sucessfully Submitted" page?
-    navigation.navigate("ProfilePage");
   };
   
   const clickAdd = () => {
