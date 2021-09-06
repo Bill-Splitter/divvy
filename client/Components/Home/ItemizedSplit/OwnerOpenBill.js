@@ -66,7 +66,7 @@ const OwnerOpenBill = (props) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
+  
   //fetches only the parsedBill & loads it into state (not used)
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
@@ -76,12 +76,6 @@ const OwnerOpenBill = (props) => {
   if (!mounted) {
     dispatch(fetchBillThunk(route.params.bill.id));
   }
-
-  if (Object.keys(bill).length !== 0 && bill.parsedBill) {
-    userAmounts = bill.parsedBill.userAmounts;
-    checkAllFriendsPaid();
-  }
-  //console.log("parsedBill: ", parsedBill);
 
   const checkAllFriendsPaid = () => {
     //checks if all friends paid
@@ -122,6 +116,11 @@ const OwnerOpenBill = (props) => {
     
     return friendPaidTemp;
   };
+  
+  if (Object.keys(bill).length !== 0 && bill.parsedBill) {
+    userAmounts = bill.parsedBill.userAmounts;
+    checkAllFriendsPaid();
+  }
 
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
