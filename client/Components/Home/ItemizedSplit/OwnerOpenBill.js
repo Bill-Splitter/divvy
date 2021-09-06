@@ -44,6 +44,8 @@ const OwnerOpenBill = (props) => {
   const user = useSelector((state) => state.user || {});
   const bill = useSelector((state) => state.bill.bill || {});
   const parsedBill = useSelector((state) => state.bill.parsedBill || {});
+  //instead of parsedBill on state, I am using variable below for logic
+  let userAmounts;
 
   const [allFriendsPaid, setAllFriendsPaid] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -65,7 +67,7 @@ const OwnerOpenBill = (props) => {
     setMounted(true);
   }, []);
 
-  //fetches only the parsedBill & loads it into state
+  //fetches only the parsedBill & loads it into state (not used)
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
   };
@@ -75,20 +77,26 @@ const OwnerOpenBill = (props) => {
     dispatch(fetchBillThunk(route.params.bill.id));
   }
 
+  if (Object.keys(bill).length !== 0 && bill.parsedBill) {
+    userAmounts = bill.parsedBill.userAmounts;
+    checkAllFriendsPaid();
+  }
   //console.log("parsedBill: ", parsedBill);
 
   const checkAllFriendsPaid = () => {
     //checks if all friends paid
-    if (bill) {
+    if (Object.keys(bill).length !== 0 && bill.owes) {
       let allFriendsPaidTemp = true;
-
+      
+      //if any of them are false, the whole thing returns false;
       bill.owes.forEach((payee) => {
-        if (!bill.parsedBill.userAmounts.hasOwnProperty(payee.id)) {
+        if (checkIfFriendPaid(payee.id) === null) {
           allFriendsPaidTemp = false;
         }
       });
 
-      if (allFriendsPaidTemp) {
+      //dont want to reset state if not already true
+      if (!allFriendsPaid && allFriendsPaidTemp) {
         setAllFriendsPaid(true);
       }
       
@@ -98,6 +106,21 @@ const OwnerOpenBill = (props) => {
         setAllFriendsPaid(false);
       }
     }
+  };
+  
+  //return index of friend if they paid, returns false if not.
+  const checkIfFriendPaid = (friendId) => {
+    let friendPaidTemp = null;
+    
+    if (Object.keys(bill).length !== 0 && bill.parsedBill) {
+      userAmounts.forEach((payeeInfo, index) => {
+        if (payeeInfo.id === friendId) {
+          friendPaidTemp = index;
+        }
+      });
+    }
+    
+    return friendPaidTemp;
   };
 
   //only clickable if allFriendsPaid == true
@@ -112,7 +135,7 @@ const OwnerOpenBill = (props) => {
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <Banner2
-        name={allFriendsPaid ? "Awaiting Payment" : "Recieved Payments"}
+        name={allFriendsPaid ? "Recieved Payments" : "Awaiting Payment"}
         home={true}
       />
       <View style={styles.view}>
@@ -141,7 +164,15 @@ const OwnerOpenBill = (props) => {
           >
             {Object.keys(bill).length !== 0 && bill.owes ? (
               bill.owes.map((friend, index) => {
-                let userAmounts = bill.parsedBill.userAmounts;
+              
+                let nameOutput = '';
+                
+                if((friend.fName.length + friend.lName.length) > 10) {
+                  nameOutput = `${friend.fName} ${friend.lName[0]}:`;
+                } else {
+                  nameOutput = `${friend.fName} ${friend.lName}:`;
+                }
+                
                 return (
                   <View style={styles.textRow} key={friend.id}>
                     <Text
@@ -154,7 +185,7 @@ const OwnerOpenBill = (props) => {
                         )
                       }
                     >
-                      {friend.fName} {friend.lName}:
+                      {nameOutput}
                     </Text>
                     <Text
                       style={styles.listTextTotal}
@@ -164,9 +195,10 @@ const OwnerOpenBill = (props) => {
                           "change friend's total to show each line item"
                         )
                       }
-                    >
-                      {userAmounts.hasOwnProperty(friend.id) ? (
-                        `$${userAmounts[friend.id].reduce(adder)}`
+                    > 
+                      {/*had to say !== null because index 0 returning is a 'falsy' value*/}
+                      {checkIfFriendPaid(friend.id) !== null ? (
+                        userAmounts[checkIfFriendPaid(friend.id)].totalString
                       ) : ( 
                         "waiting..."
                       )}
@@ -181,15 +213,24 @@ const OwnerOpenBill = (props) => {
             )}
           </ScrollView>
           <View style={styles.statusField}>
-            <Text
-              style={styles.paymentStatus}
-              AccessibilityRole={"summary"}
-              numberOfLines={1}
-              suppressHighlighting={true}
-              onPress={() => console.log("resendTextPromptToAll()")}
-            >
-              Awaiting Group Payments...
-            </Text>
+            {allFriendsPaid ? (
+              <TouchableHighlight
+                style={styles.doneButton}
+                onPress={() => clickSubmit()}
+              >
+                <Text style={styles.doneButtonText}>Done</Text>
+              </TouchableHighlight>
+            ) : (
+              <Text
+                style={styles.paymentStatus}
+                AccessibilityRole={"summary"}
+                numberOfLines={1}
+                suppressHighlighting={true}
+                onPress={() => console.log("resendTextPromptToAll()")}
+              >
+                Awaiting Group Payments...
+              </Text>
+            )}
           </View>
         </View>
         {/*
@@ -222,7 +263,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textFields: {
-    backgroundColor: "#e3e3e3",
+    backgroundColor: "#e8e8e8",
     width: "100%",
     height: "100%",
     display: "flex",
@@ -288,19 +329,19 @@ const styles = StyleSheet.create({
   paymentStatus: {
     textAlign: "center",
     fontSize: 16,
-    color: "#ED3B5B",
+    color: "#828282",
     width: "100%",
   },
-  loginButton: {
-    width: "50%",
-    // backgroundColor: "#3bedac",
+  doneButton: {
+    width: "45%",
     backgroundColor: "#ED3B5B",
-    // backgroundColor: "#32d197",
     borderRadius: 45,
-    marginTop: 10,
+    marginTop: 0,
+    alignItems: "center",
+    alignSelf: "center",
   },
-  loginButtonText: {
-    fontSize: 20,
+  doneButtonText: {
+    fontSize: 22,
     color: "white",
     padding: 10,
     textAlign: "center",

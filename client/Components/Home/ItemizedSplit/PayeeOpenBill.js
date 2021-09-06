@@ -214,8 +214,7 @@ const PayeeOpenBill = (props) => {
               >
                 <Text style={styles.doneButtonText}>Done</Text>
               </TouchableHighlight>
-            )
-            }
+            )}
           </View>
         </View>
         </TouchableWithoutFeedback>
@@ -240,7 +239,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textFields: {
-    backgroundColor: "#A8A8A8",
+    backgroundColor: "white",
     width: "100%",
     height: "100%",
     display: "flex",
@@ -258,7 +257,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   inputField: {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: "#d6d6d6",
     display: "flex",
     flexDirection: "column",
     flex: 4,
@@ -270,7 +269,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
   },
   lineItemInputField: {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: "#d6d6d6",
     display: "flex",
     flexDirection: "row",
     flex: 1,
@@ -306,7 +305,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   lineItemSumField: {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: "#d6d6d6",
     width: "100%",
     height: "100%",
     display: "flex",
@@ -323,7 +322,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   totalField: {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: "#d6d6d6",
     width: "95%",
     height: "100%",
     minHeight: 10,
