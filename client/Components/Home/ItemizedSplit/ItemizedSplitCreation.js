@@ -16,6 +16,7 @@ import {
   TextInput,
   Image,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Banner2 from "../Banner2";
@@ -83,6 +84,7 @@ const ItemizedSplitCreation = (props) => {
               value={total}
               maxLength={6}
               onChangeText={(text) => setTotal(text)}
+              keyboardType="numeric"
             ></TextInput>
           </View>
 
@@ -98,6 +100,7 @@ const ItemizedSplitCreation = (props) => {
               value={tip}
               maxLength={6}
               onChangeText={(text) => setTip(text)}
+              keyboardType="numeric"
             ></TextInput>
           </View>
         </View>

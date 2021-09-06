@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "13%",
+    minHeight: 90,
     backgroundColor: "#ED3B5B",
   },
   leftArrow: {
