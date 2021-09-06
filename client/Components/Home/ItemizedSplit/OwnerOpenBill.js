@@ -28,10 +28,13 @@ import {
   ScrollView,
 } from "react-native";
 import Banner2 from "../Banner2";
+import useInterval from "../../Helpers/utils";
 
 const adder = (total, num) => {
   return total + num;
 };
+
+const oneSecond = 1000;
 
 const OwnerOpenBill = (props) => {
   const navigation = useNavigation();
@@ -42,9 +45,27 @@ const OwnerOpenBill = (props) => {
   const bill = useSelector((state) => state.bill.bill || {});
   const parsedBill = useSelector((state) => state.bill.parsedBill || {});
 
-  const { allFriendsPaid, setAllFriendsPaid } = useState(false);
+  const [allFriendsPaid, setAllFriendsPaid] = useState(false);
   const [mounted, setMounted] = useState(false);
+  
+  //1000ms * time you want between polls in seconds
+  const [updateRate, setUpdateRate] = useState((oneSecond * 10)); 
+  const [count, setCount] = useState(0);
 
+  //used to poll for bill/parsedBill updates
+  useInterval(() => {
+    //allows initial api call to be loaded into bill state
+    if(Object.keys(bill).length !== 0 && bill.owes){
+      checkAllFriendsPaid();
+      dispatch(fetchBillThunk(route.params.bill.id));
+    }
+  }, updateRate);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  //fetches only the parsedBill & loads it into state
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
   };
@@ -54,11 +75,7 @@ const OwnerOpenBill = (props) => {
     dispatch(fetchBillThunk(route.params.bill.id));
   }
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  console.log("parsedBill: ", parsedBill);
+  //console.log("parsedBill: ", parsedBill);
 
   const checkAllFriendsPaid = () => {
     //checks if all friends paid
@@ -74,11 +91,18 @@ const OwnerOpenBill = (props) => {
       if (allFriendsPaidTemp) {
         setAllFriendsPaid(true);
       }
+      
+      //catches if there is a time where all parsedBill had all friends,
+      //but then gets updated to no longer include all of them.
+      if (allFriendsPaid && !allFriendsPaidTemp) {
+        setAllFriendsPaid(false);
+      }
     }
   };
 
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
+    setUpdateRate(null);
     navigation.navigate("ProfilePage");
   };
 
@@ -220,7 +244,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     flex: 1,
-    margin: -1
+    margin: -1,
   },
   listTextName: {
     display: "flex",
@@ -228,7 +252,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "black",
     textAlign: "left",
-    left: 3
+    left: 3,
   },
   listTextTotal: {
     borderStyle: "solid",

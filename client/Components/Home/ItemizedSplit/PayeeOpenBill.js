@@ -20,7 +20,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   fetchBillThunk,
   fetchParsedBillThunk,
-  completeBillThunk,
+  updateParsedBillThunk,
 } from "../../../store/bill";
 
 import {
@@ -33,6 +33,10 @@ import {
   Image,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  Alert,
+  TouchableWithoutFeedback,
 } from "react-native";
 import Banner2 from "../Banner2";
 
@@ -52,6 +56,10 @@ const PayeeOpenBill = (props) => {
   const [paid, setPaid] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [userAmounts, setUserAmounts] = useState([]);
+  const [itemPrice, setItemPrice] = useState(null);
+  
+  let total = '$0.00';
+  let lineSumOutput = '';
 
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
@@ -66,23 +74,90 @@ const PayeeOpenBill = (props) => {
     setMounted(true);
   }, []);
 
-  console.log("parsedBill: ", parsedBill);
+  //console.log("parsedBill: ", parsedBill);
 
-  //only clickable if allFriendsPaid == true
+  //only clickable if paid === true
   const clickSubmit = () => {
-    navigation.navigate("ProfilePage");
+    if(!paid){
+      Alert.alert("Error", "You must add all of your individual reciept items using input before submitting");
+      
+    } else {
+      //append this users parsedBill to parsedBill from state
+      const newUserAmounts = [...bill.parsedBill.userAmounts, {
+        id: user.id,
+        username: user.username,
+        fName: user.fName,
+        lName: user.lName,
+        name: user.fName + " " + user.lName,
+        userAmountsArr: userAmounts,
+        total: userAmounts.reduce(adder),
+        totalString: userAmounts.reduce(adder).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
+      }];
+      
+      const newParsedBill = {...bill.parsedBill, userAmounts: newUserAmounts};
+      
+      //confirm submission here?
+      
+      //send parsed bill to store to update bill in DB
+      dispatch(updateParsedBillThunk(route.params.bill.id, newParsedBill));
+      
+      //maybe go to a "Split Sucessfully Submitted" page?
+      navigation.navigate("ProfilePage");
+    }
+  };
+  
+  const clickAdd = () => {
+    if(!itemPrice){
+      alert("Must enter line item price");
+      
+    } else if(isNaN(itemPrice)) {
+      Alert.alert("Error", "Line item price must be number; do not include $ sign");
+      
+    } else {
+      const newUserAmounts = [...userAmounts, Number(itemPrice)];
+      setUserAmounts(newUserAmounts);
+      setItemPrice(null);
+      setPaid(true);
+    }
   };
 
   //console.log('route: ', route);
   //console.log('navigation: ', navigation);
-
+  if(userAmounts.length !== 0){
+    const userAmountsCopy = [...userAmounts];
+    
+    total = userAmountsCopy.reduce(adder).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+    
+    //console.log(userAmountsCopy);
+    
+    lineSumOutput = '';
+    userAmountsCopy.map((value, index) => {
+      if(index === userAmountsCopy.length - 1){//last case
+        lineSumOutput = lineSumOutput.concat(` ${value}`);
+      } else if (index === 0){//first case
+        lineSumOutput = lineSumOutput.concat(`${value} +`);
+      } else {
+        lineSumOutput = lineSumOutput.concat(` ${value} +`);
+      }
+    });
+  }
+  
+  console.log(lineSumOutput);
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ backgroundColor: "white", height: "100%" }}
+      style={{flex: 1}}
     >
-      <View style={{ backgroundColor: "white", height: "95%" }}>
+      <View style={{ backgroundColor: "white", height: "100%" }}>
         <Banner2 name="Submitting Payment" home={true} />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.view}>
           <Image
             source={
@@ -99,32 +174,51 @@ const PayeeOpenBill = (props) => {
           />
 
           <View style={styles.textFields}>
+            <Text style={styles.infoText}>Calculate Your Bill Total</Text>
             <View style={styles.inputField}>
-              <View style={styles.lineItemInputField}></View>
-              <View style={styles.lineItemSumField}></View>
+              <View style={styles.lineItemInputField}>
+                <TextInput
+                  placeholder="Enter Item Price"
+                  style={styles.lineInput}
+                  maxLength={6}
+                  value={itemPrice}
+                  onChangeText={setItemPrice}
+                  keyboardType="numeric"
+                ></TextInput>
+                <TouchableHighlight
+                  style={styles.addButton}
+                  onPress={() => clickAdd()}
+                >
+                  <Text style={styles.addButtonText}>+</Text>
+                </TouchableHighlight>
+              </View>
+              <View style={styles.lineItemSumField}>
+                <Text style={styles.lineItemSumText}>{lineSumOutput}</Text>
+              </View>
             </View>
             <View style={styles.totalField}>
-              <Text
-                style={styles.totalText}
-                AccessibilityRole={"summary"}
-                numberOfLines={1}
-                suppressHighlighting={true}
-                onPress={() => console.log("resendTextPromptToAll()")}
-              >
-                Awaiting Group Payments...
-              </Text>
+              <Text style={styles.currentTotalLabel}>current total: </Text>
+              <Text style={styles.currentTotalText}>{total}</Text>
             </View>
+            {paid ? (
+              <TouchableHighlight
+                style={styles.doneButton}
+                onPress={() => clickSubmit()}
+              >
+                <Text style={styles.doneButtonText}>Done</Text>
+              </TouchableHighlight>
+            ) : (
+              <TouchableHighlight
+                style={styles.restrictedDoneButton}
+                onPress={() => clickSubmit()}
+              >
+                <Text style={styles.doneButtonText}>Done</Text>
+              </TouchableHighlight>
+            )
+            }
           </View>
-          {/*
-          uncomment when logic for hiding until all payments recieved is done
-          <TouchableHighlight
-            style={styles.loginButton}
-            onPress={() => clickSubmit()}
-          >
-            <Text style={styles.loginButtonText}>Select Group</Text>
-          </TouchableHighlight>
-          */}
         </View>
+        </TouchableWithoutFeedback>
       </View>
     </KeyboardAvoidingView>
   );
@@ -135,17 +229,18 @@ export default PayeeOpenBill;
 const styles = StyleSheet.create({
   view: {
     height: "100%",
+    width: "100%",
     display: "flex",
-    backgroundColor: "#6e6e6e",
-    justifyContent: "flex-start",
+    flex: 1,
+    backgroundColor: "black",
+    flexDirection: "column",
+    justifyContent: "space-around",
     alignContent: "center",
     textAlign: "left",
     alignItems: "center",
-    top: 0,
-    bottom: 55,
   },
   textFields: {
-    backgroundColor: "white",
+    backgroundColor: "#A8A8A8",
     width: "100%",
     height: "100%",
     display: "flex",
@@ -153,65 +248,129 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     flex: 9,
-    paddingTop: 5,
+    paddingTop: 0,
+  },
+  infoText: {
+    textAlign: "left",
+    fontSize: 16,
+    color: "black",
+    width: "100%",
+    paddingLeft: 15,
   },
   inputField: {
+    backgroundColor: "#C4C4C4",
     display: "flex",
-    flex: 6,
-    width: "100%",
+    flexDirection: "column",
+    flex: 4,
+    width: "95%",
     height: "100%",
-    minHeight: 38,
+    alignContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    marginHorizontal: 40,
   },
   lineItemInputField: {
-    backgroundColor: "white",
+    backgroundColor: "#C4C4C4",
     display: "flex",
-    flex: 4,
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-evenly",
+    alignContent: "center",
+    alignSelf: "center",
     width: "100%",
     height: "100%",
+    marginTop: 10,
     minHeight: 20,
   },
+  lineInput: {
+    textAlign: "center",
+    fontSize: 20,
+    backgroundColor: "white",
+    width: "55%",
+    borderRadius: 45,
+    marginTop: 0,
+    top: 0,
+    
+  },
+  addButton: {
+    width: "20%",
+    height: "100%",
+    backgroundColor: "#ED3B5B",
+    borderRadius: 45,
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  addButtonText: {
+    fontSize: 25,
+    color: "white",
+  },
   lineItemSumField: {
-    backgroundColor: "#ababab",
-    display: "flex",
-    flex: 3,
+    backgroundColor: "#C4C4C4",
     width: "100%",
     height: "100%",
-    minHeight: 15,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
   lineItemSumText: {
     textAlign: "center",
-    fontSize: 12,
+    fontSize: 18,
+    fontStyle: "italic",
     color: "black",
     width: "100%",
-    top: 0,
   },
   totalField: {
-    backgroundColor: "#ababab",
-    width: "100%",
+    backgroundColor: "#C4C4C4",
+    width: "95%",
     height: "100%",
+    minHeight: 10,
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignSelf: "center",
     alignItems: "center",
-    justifyContent: "flex-start",
-    flex: 2,
+    marginHorizontal: 40,
+    top: 5,
+    flex: 1,
   },
-  totalText: {
+  currentTotalLabel: {
     textAlign: "left",
-    fontSize: 12,
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "italic",
     color: "black",
-    width: "100%",
-    top: 0,
+    right: 20,
   },
-  loginButton: {
+  currentTotalText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "italic",
+    color: "black",
+    right: 5,
+  },
+  doneButton: {
     width: "50%",
-    // backgroundColor: "#3bedac",
     backgroundColor: "#ED3B5B",
-    // backgroundColor: "#32d197",
     borderRadius: 45,
     marginTop: 10,
+    alignItems: "center",
+    alignSelf: "center",
   },
-  loginButtonText: {
-    fontSize: 20,
+  restrictedDoneButton: {
+    width: "50%",
+    backgroundColor: "#828282",
+    borderRadius: 45,
+    marginTop: 10,
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  doneButtonText: {
+    fontSize: 22,
     color: "white",
     padding: 10,
     textAlign: "center",

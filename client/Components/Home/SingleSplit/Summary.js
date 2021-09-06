@@ -80,7 +80,7 @@ const Summary = () => {
         title: info.name,
         total: info.total,
         group: info.group,
-        userAmounts: infoArray[0].value,
+        userAmounts: infoArray[0].value, //I am planning on making this point towards the bill owner's portion
         data: infoArray,
       };
     }

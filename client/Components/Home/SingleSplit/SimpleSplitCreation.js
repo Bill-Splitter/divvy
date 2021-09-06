@@ -74,6 +74,7 @@ const SimpleSplitCreation = (props) => {
             style={styles.input2}
             maxLength={6}
             onChangeText={(text) => setTotal(text)}
+            keyboardType="numeric"
           ></TextInput>
         </View>
 
@@ -84,6 +85,7 @@ const SimpleSplitCreation = (props) => {
           style={styles.input2}
           maxLength={6}
           onChangeText={(text) => setTip(text)}
+          keyboardType="numeric"
         ></TextInput>
         </View>
 
