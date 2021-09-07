@@ -1,4 +1,4 @@
-//probably can use original summary, but should probably move that to a central/different folder if soimport React, { useState } from "react";
+//probably can use original summary, but should probably move that to a central/different folder if so
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
