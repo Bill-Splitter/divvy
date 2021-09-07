@@ -12,6 +12,8 @@ import SoloSplitCreation from "../Components/Home/SingleSplit/SoloSplitCreation.
 import ItemizedSplitCreation from "../Components/Home/ItemizedSplit/ItemizedSplitCreation.js";
 import SendItemizedBills from "../Components/Home/ItemizedSplit/SendItemizedBills.js";
 import OwnerOpenBill from "../Components/Home/ItemizedSplit/OwnerOpenBill.js";
+import ItemizedSummary from "../Components/Home/ItemizedSplit/ItemizedSummary.js";
+
 import PayeeOpenBill from "../Components/Home/ItemizedSplit/PayeeOpenBill.js";
 import Cameras from "../Components/Home/Camera/Camera.js";
 import GroupList from "../Components/Home/Group/GroupList.js";
@@ -87,6 +89,7 @@ const Home = () => {
       <HomeStack.Screen name="Settings" component={Settings} />
       <HomeStack.Screen name="Friends" component={Friends} />
       <HomeStack.Screen name="Summary" component={Summary} />
+      <HomeStack.Screen name="ItemizedSummary" component={ItemizedSummary} />
       <HomeStack.Screen name="AddFriend" component={AddFriend} />
       <HomeStack.Screen name="Transactions" component={Transactions} />
       <HomeStack.Screen name="Messages" component={Messages} />
