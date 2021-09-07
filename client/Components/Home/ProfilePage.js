@@ -18,8 +18,8 @@ import { fetchBillsThunk } from "../../store/bill";
 
 const ProfilePage = (props) => {
   const navigation = useNavigation();
-  const user = useSelector((state) => state.user);
-  const bills = useSelector((state) => state.bill.bills || []);
+  let user = useSelector((state) => state.user);
+  let bills = useSelector((state) => state.bill.bills || []);
   const [notis, setNotis] = React.useState(user.requestee);
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
