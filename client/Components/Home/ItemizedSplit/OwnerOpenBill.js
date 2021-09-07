@@ -49,15 +49,15 @@ const OwnerOpenBill = (props) => {
 
   const [allFriendsPaid, setAllFriendsPaid] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
+
   //1000ms * time you want between polls in seconds
-  const [updateRate, setUpdateRate] = useState((oneSecond * 10)); 
+  const [updateRate, setUpdateRate] = useState(oneSecond * 10);
   const [count, setCount] = useState(0);
 
   //used to poll for bill/parsedBill updates
   useInterval(() => {
     //allows initial api call to be loaded into bill state
-    if(Object.keys(bill).length !== 0 && bill.owes){
+    if (Object.keys(bill).length !== 0 && bill.owes) {
       checkAllFriendsPaid();
       dispatch(fetchBillThunk(route.params.bill.id));
     }
@@ -66,7 +66,7 @@ const OwnerOpenBill = (props) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   //fetches only the parsedBill & loads it into state (not used)
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
@@ -81,7 +81,7 @@ const OwnerOpenBill = (props) => {
     //checks if all friends paid
     if (Object.keys(bill).length !== 0 && bill.owes) {
       let allFriendsPaidTemp = true;
-      
+
       //if any of them are false, the whole thing returns false;
       bill.owes.forEach((payee) => {
         if (checkIfFriendPaid(payee.id) === null) {
@@ -93,7 +93,7 @@ const OwnerOpenBill = (props) => {
       if (!allFriendsPaid && allFriendsPaidTemp) {
         setAllFriendsPaid(true);
       }
-      
+
       //catches if there is a time where all parsedBill had all friends,
       //but then gets updated to no longer include all of them.
       if (allFriendsPaid && !allFriendsPaidTemp) {
@@ -101,11 +101,11 @@ const OwnerOpenBill = (props) => {
       }
     }
   };
-  
+
   //return index of friend if they paid, returns false if not.
   const checkIfFriendPaid = (friendId) => {
     let friendPaidTemp = null;
-    
+
     if (Object.keys(bill).length !== 0 && bill.parsedBill) {
       userAmounts.forEach((payeeInfo, index) => {
         if (payeeInfo.id === friendId) {
@@ -113,10 +113,10 @@ const OwnerOpenBill = (props) => {
         }
       });
     }
-    
+
     return friendPaidTemp;
   };
-  
+
   if (Object.keys(bill).length !== 0 && bill.parsedBill) {
     userAmounts = bill.parsedBill.userAmounts;
     checkAllFriendsPaid();
@@ -125,7 +125,7 @@ const OwnerOpenBill = (props) => {
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
     setUpdateRate(null);
-    navigation.navigate("ProfilePage");
+    navigation.navigate("ItemizedSummary");
   };
 
   //console.log('route: ', route);
@@ -163,15 +163,14 @@ const OwnerOpenBill = (props) => {
           >
             {Object.keys(bill).length !== 0 && bill.owes ? (
               bill.owes.map((friend, index) => {
-              
-                let nameOutput = '';
-                
-                if((friend.fName.length + friend.lName.length) > 10) {
+                let nameOutput = "";
+
+                if (friend.fName.length + friend.lName.length > 10) {
                   nameOutput = `${friend.fName} ${friend.lName[0]}:`;
                 } else {
                   nameOutput = `${friend.fName} ${friend.lName}:`;
                 }
-                
+
                 return (
                   <View style={styles.textRow} key={friend.id}>
                     <Text
@@ -194,13 +193,11 @@ const OwnerOpenBill = (props) => {
                           "change friend's total to show each line item"
                         )
                       }
-                    > 
+                    >
                       {/*had to say !== null because index 0 returning is a 'falsy' value*/}
-                      {checkIfFriendPaid(friend.id) !== null ? (
-                        userAmounts[checkIfFriendPaid(friend.id)].totalString
-                      ) : ( 
-                        "waiting..."
-                      )}
+                      {checkIfFriendPaid(friend.id) !== null
+                        ? userAmounts[checkIfFriendPaid(friend.id)].totalString
+                        : "waiting..."}
                     </Text>
                   </View>
                 );
@@ -217,7 +214,7 @@ const OwnerOpenBill = (props) => {
                 style={styles.doneButton}
                 onPress={() => clickSubmit()}
               >
-                <Text style={styles.doneButtonText}>Done</Text>
+                <Text style={styles.doneButtonText}>Summary</Text>
               </TouchableHighlight>
             ) : (
               <Text
