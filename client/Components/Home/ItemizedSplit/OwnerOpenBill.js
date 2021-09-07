@@ -126,7 +126,7 @@ const OwnerOpenBill = (props) => {
     //stop useInterval running by passing null
     setUpdateRate(null);
     //make this summary page again, whoops
-    navigation.navigate("ProfilePage", {bill: bill, user: user});
+    navigation.navigate("ItemizedSummary", {bill: bill, user: user});
   };
 
   //console.log('route: ', route);
@@ -218,7 +218,7 @@ const OwnerOpenBill = (props) => {
                 style={styles.doneButton}
                 onPress={() => clickSubmit()}
               >
-                <Text style={styles.doneButtonText}>Done</Text>
+                <Text style={styles.doneButtonText}>Summary</Text>
               </TouchableHighlight>
             ) : (
               <Text
@@ -233,15 +233,6 @@ const OwnerOpenBill = (props) => {
             )}
           </View>
         </View>
-        {/*
-        uncomment when logic for hiding until all payments recieved is done
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => clickSubmit()}
-        >
-          <Text style={styles.loginButtonText}>Select Group</Text>
-        </TouchableHighlight>
-        */}
       </View>
     </View>
   );
