@@ -63,7 +63,7 @@ const PayeeOpenBill = (props) => {
   
   //---time you want between polls in seconds---
   // chose 6 here because I want it to avoid overwriting others' submissions
-  const [updateRate, setUpdateRate] = useState((oneSecond * 6)); 
+  const [updateRate, setUpdateRate] = useState((oneSecond * 2)); 
   
   let total = '$0.00';
   let lineSumOutput = '';
