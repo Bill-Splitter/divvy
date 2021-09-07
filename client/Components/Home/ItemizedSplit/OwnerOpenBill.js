@@ -52,7 +52,6 @@ const OwnerOpenBill = (props) => {
   
   //1000ms * time you want between polls in seconds
   const [updateRate, setUpdateRate] = useState((oneSecond * 10)); 
-  const [count, setCount] = useState(0);
 
   //used to poll for bill/parsedBill updates
   useInterval(() => {
@@ -124,6 +123,7 @@ const OwnerOpenBill = (props) => {
 
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
+    //stop useInterval running by passing null
     setUpdateRate(null);
     navigation.navigate("ProfilePage");
   };
