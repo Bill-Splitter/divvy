@@ -1,9 +1,9 @@
 //probably can use original summary, but should probably move that to a central/different folder if so
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { createBillThunk } from "../../../store/bill";
+import { createBillThunk, completeBillThunk } from "../../../store/bill";
 // import items from "./options";
 import ItemizedItem from "./ItemizedItem";
 // import SplitEvenly from "./SplitEvenly";
@@ -31,11 +31,13 @@ const ItemizedSummary = () => {
   const dispatch = useDispatch();
   const friendArray = friends.friend || [];
   const navigation = useNavigation();
+  const route = useRoute();
   const [selected, setSelected] = React.useState("simple");
   const [valid, setValid] = React.useState(false);
   const [infoArray, setInfoArray] = React.useState([]);
 
   console.log("here is trans info", info);
+  console.log("here is route.params", route.params);
 
   // const sendInvoices = () => {
   //   if (valid || selected === "simple") {

@@ -125,6 +125,10 @@ const OwnerOpenBill = (props) => {
   const clickSubmit = () => {
     //stop useInterval running by passing null
     setUpdateRate(null);
+    
+    //add current user to bill as remaining total:
+    
+    
     //make this summary page again, whoops
     navigation.navigate("ItemizedSummary", {bill: bill, user: user});
   };
