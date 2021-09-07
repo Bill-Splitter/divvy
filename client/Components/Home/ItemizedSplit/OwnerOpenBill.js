@@ -51,8 +51,8 @@ const OwnerOpenBill = (props) => {
   const [mounted, setMounted] = useState(false);
 
   //1000ms * time you want between polls in seconds
-  const [updateRate, setUpdateRate] = useState(oneSecond * 10);
-  const [count, setCount] = useState(0);
+  const [updateRate, setUpdateRate] = useState((oneSecond * 10)); 
+
 
   //used to poll for bill/parsedBill updates
   useInterval(() => {
@@ -63,19 +63,20 @@ const OwnerOpenBill = (props) => {
     }
   }, updateRate);
 
+  //runs on component mount once
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  //fetches only the parsedBill & loads it into state (not used)
-  const fetchStates = async () => {
-    await dispatch(fetchParsedBillThunk(route.params.bill.id));
-  };
 
   //loads bill into state on load
   if (!mounted) {
     dispatch(fetchBillThunk(route.params.bill.id));
   }
+
+  //fetches only the parsedBill & loads it into state (not used)
+  const fetchStates = async () => {
+    await dispatch(fetchParsedBillThunk(route.params.bill.id));
+  };
 
   const checkAllFriendsPaid = () => {
     //checks if all friends paid
@@ -124,6 +125,7 @@ const OwnerOpenBill = (props) => {
 
   //only clickable if allFriendsPaid == true
   const clickSubmit = () => {
+    //stop useInterval running by passing null
     setUpdateRate(null);
     navigation.navigate("ItemizedSummary");
   };
@@ -229,15 +231,6 @@ const OwnerOpenBill = (props) => {
             )}
           </View>
         </View>
-        {/*
-        uncomment when logic for hiding until all payments recieved is done
-        <TouchableHighlight
-          style={styles.loginButton}
-          onPress={() => clickSubmit()}
-        >
-          <Text style={styles.loginButtonText}>Select Group</Text>
-        </TouchableHighlight>
-        */}
       </View>
     </View>
   );

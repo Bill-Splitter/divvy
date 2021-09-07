@@ -39,10 +39,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Banner2 from "../Banner2";
+import useInterval from "../../Helpers/utils";
 
 const adder = (total, num) => {
   return total + num;
 };
+
+const oneSecond = 1000;
 
 const PayeeOpenBill = (props) => {
   const navigation = useNavigation();
@@ -58,8 +61,20 @@ const PayeeOpenBill = (props) => {
   const [userAmounts, setUserAmounts] = useState([]);
   const [itemPrice, setItemPrice] = useState(null);
   
+  //---time you want between polls in seconds---
+  // chose 6 here because I want it to avoid overwriting others' submissions
+  const [updateRate, setUpdateRate] = useState((oneSecond * 6)); 
+  
   let total = '$0.00';
   let lineSumOutput = '';
+  
+  //used to poll for bill/parsedBill updates
+  useInterval(() => {
+    //allows initial api call to be loaded into bill state
+    if(Object.keys(bill).length !== 0 && bill.owes){
+      dispatch(fetchBillThunk(route.params.bill.id));
+    }
+  }, updateRate);
 
   const fetchStates = async () => {
     await dispatch(fetchParsedBillThunk(route.params.bill.id));
@@ -74,15 +89,13 @@ const PayeeOpenBill = (props) => {
     setMounted(true);
   }, []);
 
-  //console.log("parsedBill: ", parsedBill);
-
   //only clickable if paid === true
   const clickSubmit = () => {
     if(!paid){
       Alert.alert("Error", "You must add all of your individual reciept items using input before submitting");
       
     } else {
-      //append this users parsedBill to parsedBill from state
+      //append this users parsedBill to current parsedBill from state
       const newUserAmounts = [...bill.parsedBill.userAmounts, {
         id: user.id,
         username: user.username,
@@ -103,6 +116,9 @@ const PayeeOpenBill = (props) => {
       
       //send parsed bill to store to update bill in DB
       dispatch(updateParsedBillThunk(route.params.bill.id, newParsedBill));
+      
+      //stop useInterval running by passing null
+      setUpdateRate(null);
       
       //maybe go to a "Split Sucessfully Submitted" page?
       navigation.navigate("ProfilePage");
